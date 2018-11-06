@@ -1,0 +1,108 @@
+﻿@model GurukulAppAdminPanel.Models.IasMangement
+<!-- page content start -->
+<div class="right_col" role="main">
+    <div class="row">
+        <ul id="breadcrumb">
+            <li><a href="@ViewBag.breadcrumbHomeURL"><i class="fa fa-home mar_right_5" aria-hidden="true"></i> Home </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-calendar-o mar_right_5" aria-hidden="true"></i> IAScoaching </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-pencil-square-o mar_right_5" aria-hidden="true"></i> IAScoaching </a></li>
+        </ul>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="panel panel-default widget1">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-table"></i> @ViewBag.breadcrumbAction </h4>
+             @*@using (Html.BeginForm("", "", FormMethod.Post, new { @id = "add_ias" }))
+             {*@
+                <form id="add_ias">
+                    <div class="row row-margin-0 form-row-addIAS">
+                        <div class="col-sm-3 com-md-3">
+                            <h5>Subject: </h5>
+                            @Html.DropDownListFor(model => Model.Subject, Model.subjectlist, new { @class = "form-control", @id = "subject" })
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <h5> Date</h5>
+                            @Html.EditorFor(model => Model.Date, new { htmlAttributes = new { @id = "iasMainDate", @class = "form-control bod_rad_0 common-date-picker", @placeholder = "Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                            <label for="iasMainDate"><i class="fa fa-calendar date-icon" aria-hidden="true"></i></label>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <h5>&nbsp;</h5>
+                            <button type="button" id="btn_save" class="btn btn-success ">Save</button>
+                        </div>
+                        <div class="col-sm-3 col-md-3"></div>
+                  </div>
+                </form>
+                <div>
+                    <div id="div_of_Ias" >
+
+                    </div>
+                    <div class="modal fade" id="myModal3" role="dialog">
+                        <div class="modal-dialog  panal-modal">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Update IAS Coaching Details</h4>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <form id="update_ias">
+                                        <div class="row row-margin-0">
+                                            @Html.HiddenFor(model => Model.Record_id, new { @id = "hide_record_id" })
+                                           
+                                            <div class="col-sm-3 col-md-3">
+                                                <h5>Subject: </h5>
+                                                @Html.DropDownListFor(model => Model.Subject, Model.subjectlist, new { @class = "form-control", @id = "subject_" })
+                                            </div>
+                                            <div class="col-sm-3 col-md-3">
+                                                <h5> Date</h5>
+                                                @Html.EditorFor(model => Model.Date, new { htmlAttributes = new { @id = "popupdate", @class = "form-control bod_rad_0 common-date-picker", @placeholder = "Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                                <label for="popupdate"><i class="fa fa-calendar date-icon" aria-hidden="true"></i></label>
+                                            </div>
+                                            <div class="col-sm-3 col-md-3">
+                                                <h5>&nbsp;</h5>
+                                                <button type="button" id="btn_update_" class="btn btn-success ">Save</button>
+                                            </div>
+                                            <div class="col-sm-3 col-md-3">
+                                                </div>
+                                            </div>
+                                    </form>
+                                    
+                                </div>
+                                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>*@
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myModal6" role="dialog">
+                        <div class="modal-dialog  panal-modal">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Delete IAS Coaching </h4>
+                                </div>
+                                <div class="modal-body">
+
+                                    <input type="hidden" id="record_id_hide" />
+                                    Are You really sure you want to delete IAS Coaching?
+                                    <button type="button" id="btn_delete_ias" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                </div>
+                                <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    </div>

@@ -1,0 +1,43 @@
+﻿@model GurukulAppAdminPanel.Models.AuthenticateManagement
+<img src="~/Images/bg-header.jpg" class="img-responsive" width="100%" style="max-height: 100%;position: fixed;top: 0;bottom: 0;" />
+<div class="abs_outer clearfix">
+    <div class="inner_abs clearfix">
+    @using (@Html.BeginForm()) { 
+        <div class="row">
+            <div class="col-sm-6">
+                <label class="form-input">
+                    <i class="material-icons"><i class="fa fa-user"></i></i>
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "txtBox_bod login_textbox_bg", @autofocus = "true", @required = "true" } })
+                    <span class="label">Username</span>
+                    <!-- <span class="underline"></span> -->
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-input">
+                    <i class="material-icons"><i class="fa fa-key"></i></i>
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "txtBox_bod login_textbox_bg", @autofocus = "true", @required = "true" } })
+                    <span class="label">Password</span>
+                    <!-- <div class="underline"></div> -->
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                @*<label class="form-input">
+                    <i class="material-icons"><i class="fa fa-user"></i></i>
+                    <input class="txtBox_bod" type="text" style="background: none;border-bottom: 1px dotted #ed545a" autofocus="true" required />
+                    <span class="label">Enter OTP</span>
+                    <span class="underline"></span>
+                </label>*@
+            </div>
+            <div class="col-sm-6">
+                <div class="Download_btn"> 
+                    @*@Html.TextBox("btnLogin", "LOG IN", new { @type = "submit", @class = "Download_btn_dwn", @style = "color: #000" })*@
+                    <button type="submit" id="" name="btnLogin" value="LOG IN" class="Download_btn_dwn" style="color: #ED545A">Log In</button>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+</div>
+

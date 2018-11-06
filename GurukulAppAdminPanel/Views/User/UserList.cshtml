@@ -1,0 +1,189 @@
+﻿@model GurukulAppAdminPanel.Models.UserManagement
+<link href="@Url.Content("~/Content/dataTables.min.css")" rel="stylesheet">
+<!-- page content start -->
+<div class="right_col" role="main">
+    <div class="row">
+        <ul id="breadcrumb">
+            <li><a href="@ViewBag.breadcrumbHomeURL"><i class="fa fa-home mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbHome </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-user mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbController </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-table mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbAction </a></li>
+        </ul>
+    </div>
+    <br />
+    <div class="row margin-row-0">
+        <div class="col-sm-3 col-md-3">
+         <h5>User Status:</h5>
+    <select id="dd_status" class="form-control">
+        <option value="0">Status</option>
+    </select>
+            </div>
+        </div>
+    <div class="row" style="margin-top:20px">
+        <div class="panel panel-default widget1">
+            
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-table"></i> @ViewBag.breadcrumbAction </h4>
+            </div>
+           
+            <div class="panel-body table-responsive">
+                <table class="table table-hover kullaniciTablosu table-responsive" id="userTabledata" style="border: 1px solid#eee;background: #ffffff">                    
+                    <thead>
+                        <tr>
+                            <th>USER ID</th>
+                            <th>NAME</th>
+                            <th>GENDER</th>
+                            @*<th>DOB</th>*@
+                            <th>MOBILE</th>
+                            <th>EMAIL ID</th>
+                            <th>COUNTRY</th>
+                            <th>CITY</th>
+                            <th>STATUS</th>
+                            <th>BUSINESS PROFILE</th>
+                            @*<th>EDUCATION</th>*@
+                            <th>Update Profile</th>
+                            <th style="width:120px">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.UserData.Count > 0)
+                        {
+                            int i = 0;
+                            foreach (Dictionary<string, object> user in Model.UserData)
+                            { 
+                                ++i;
+                                <tr>
+                                    <td>@user["USER_ID"] </td>
+                                    <td>
+                                        <a href="javascript:void(0);" id="showVolunteerProfile" data-id="@user["USER_ID"]" class="text-danger" title="Show Profile" data-toggle="modal" data-target="#myModal5">@user["NAME"]</a>                                        
+                                    </td>
+                                    <td>@user["GENDER"]</td>                                   
+                                    <td>@user["MOBILE_NO"]</td>
+                                    <td>@user["EMAIL_ID"]</td>
+                                    <td>@user["COUNTRY"]</td>
+                                    <td>@user["CITY"]</td>
+                                    <td>@user["STATUS"]</td>
+                                    <td>@user["ROLE"]</td>
+                                    
+                                    <td><button id="btn_update_bp" class="btn-info" data-toggle="modal" data-target="#myModal2" value="@user["USER_ID"]"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
+                                    <td style="text-align:center">
+                                       
+                                            @if (Convert.ToString(user["STATUS"]) =="Deleted")
+                                            {
+                                                <label class="label label-danger">Deleted</label>
+                                            }
+                                            else
+                                            {
+                                                string DeleteActionURL = "user/update-status/" + user["USER_ID"]+ "/" + 21;
+                                                <div class="btn-group">
+                                                    @if (Convert.ToString(user["STATUS"]) == "Approved")
+                                                    {
+                                                        @*<a href="javascript:void(0)" title="Approved" class="btn btn-success btn-xs">Approved</a>*@
+                                                    string RejectActionURL = "user/update-status/" + user["USER_ID"]+ "/" + 19;
+                                                        <a href="@Url.Action("",RejectActionURL)" title="Reject" class="btn btn-warning btn-xs"> <i class="fa fa-ban"></i> </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        string ApproveActionURL = "user/update-status/" + user["USER_ID"]+ "/"+18;
+                                                        <a href="@Url.Action("",ApproveActionURL)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
+                                                        @*<a href="javascript:void(0)" title="Rejected" class="btn btn-warning btn-xs">Rejected </a>*@
+                                                    }
+                                                    <a href="@Url.Action("",DeleteActionURL)" onclick="return confirm('Do you want to delete this user?')" title="Delete" class="btn btn-danger btn-xs"> <i class="fa fa-times"> </i> </a>
+                                                </div>
+                                            }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal2" role="dialog">
+            <div class="modal-dialog  panal-modal">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Update Business Profile</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="update_bp_frm">
+                            <div>
+                                <input type="hidden" id="hide_user_id" />
+                                Business Profile: <select id="bp_dd"><option value="0">New</option></select>
+                            </div>
+                            <div>
+                                <button type="button" id="btn_save_bp">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile  -->
+    <div class="modal fade" id="myModal5" role="dialog">
+        <div class="modal-dialog  panal-modal">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">User Profile</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="user_profile_div">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @*<div class="modal common-popup" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header"><h3>Profile Details</h3></div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                   
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+<!-- page content end -->
+<script src="@Url.Content("~/Scripts/dataTables.min.js")"></script>
+<script>
+    $(document).ready(function () {
+        $('#userTabledata').DataTable();
+        //$(document).on("click", "#btn_update_bp", function () {
+        //    var $this = $(this);
+        //    var user_id = $this.val();
+        //    $("#hide_user_id").val(user_id);
+        //    var URL = _BaseURL + "/user/user-profile-data/" + user_id
+        //    $.getJSON(URL, function (data) {
+        //        var responseData = data.response[0];
+                
+
+        //    });
+
+        //});
+
+    });
+</script>
+
+

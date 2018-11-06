@@ -1,0 +1,149 @@
+﻿@model GurukulAppAdminPanel.Models.MasterManagement
+<!-- page content start -->
+<div class="right_col" role="main">
+    <div class="row">
+        <ul id="breadcrumb">
+            <li><a href="@ViewBag.breadcrumbHomeURL"><i class="fa fa-home mar_right_5" aria-hidden="true"></i> Home </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-calendar-o mar_right_5" aria-hidden="true"></i> Master Management </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-pencil-square-o mar_right_5" aria-hidden="true"></i> Master Data </a></li>
+        </ul>
+    </div>
+    <div class="row" style="margin-top:20px">
+        @*<div class="panel panel-default widget1">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-table"></i> @ViewBag.breadcrumbAction </h4>
+            </div>
+        </div>*@
+        <div class="row" id="add_category_btn">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-info" id="add_category_OpenBtn" data-toggle="modal" data-target="#add_category_div">
+
+                    <i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;&nbsp;Add Category
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="MasterGridview" class="container-fluid Ownershop_background view_activity_table">
+        @*table_matrix container-fluid*@
+
+    </div>
+    <div class="modal fade common-popup" id="myModal1" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Category List</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="ViewParentGridview" class="container-fluid Ownershop_background view_activity_table"></div>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>*@
+            </div>
+
+        </div>
+    </div>
+    <div>
+
+
+    </div>
+
+    @*<div class="modal fade common-popup" id="AddSubMasterCategoryModal" role="dialog">
+
+        <div class="mdal_co">*@
+    <div class="modal fade" id="AddSubMasterCategoryModal" role="dialog">
+        <div class="modal-dialog  panal-modal">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Event Details</h4>
+                </div>
+                <div class="modal-body">
+
+                    @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "AddSubCategoryForm" }))
+            {
+                        @Html.HiddenFor(model => Model.CATEGORYID, new { @id = "category_id" })
+                        <h5 class="Sub-Category">Sub Category Name</h5>
+                        <div class="row margin-row-0">
+                            <div class="col-md-5 Sub-Category-btn addCategory_button">
+                                @Html.EditorFor(model => Model.ADDSUBCATEGORY, new { htmlAttributes = new { @id = "TxtSavesabcategory", @placeholder = "Enter Sub Category Name", @class = "form-control category_input" } })
+                            </div>
+                            <div class="col-md-7"></div>
+                        </div>
+                                <h5>&nbsp;</h5>
+                                <div class="row margin-row-0">
+                                    <div class="col-sm-12 col-md-12 addCategory_button">
+                                        <button type="button" class="btn btn-info" id="Save_sub_category_btn" data-dismiss="modal">
+                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;&nbsp;Save
+                                        </button>
+                                        <button type="button" class="btn btn-danger close_pop_button" data-dismiss="modal">
+                                            <i class="fa fa-times-circle-o" aria-hidden="true"></i>&nbsp;&nbsp;Close
+                                        </button>
+                                    </div>
+                                </div>
+                    }
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>*@
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="add_category_div" role="dialog">
+    <div class="modal-dialog  panal-modal">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Event Details</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "AddCategoryName" }))
+            {
+                    <div class="col-md-12 ">
+                        <h5>Category Name</h5>
+                    </div>
+                    //input_catecory
+                    <div class="row " id="save_master_category_div">
+                        <div class="col-md-5">
+                            @Html.EditorFor(model => Model.ADDCATEGORY, new { htmlAttributes = new { @id = "TxtSavecategory", @placeholder = "Enter Category Name", @class = "form-control category_input" } })
+                        </div>
+                        <div class="col-md-7"></div>
+                    </div>
+                                <div class="col-md-12 addCategory_button">
+                                    <h5> &nbsp; </h5>
+                                    <button type="button" class="btn btn-info" id="save_catagory_Btn" data-dismiss="modal">
+                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save
+                                    </button>
+                                    <button type="button" class="btn btn-danger" id="cancel_catagory_Btn" data-dismiss="modal">
+                                        <i class="fa fa-times-circle-o fa-fw"></i>Cancel
+                                    </button>
+                                </div>
+                }
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+
+    </div>
+</div>
+
+
+            
+        @*</div>
+            </div>*@
+
+
+
+
+
+

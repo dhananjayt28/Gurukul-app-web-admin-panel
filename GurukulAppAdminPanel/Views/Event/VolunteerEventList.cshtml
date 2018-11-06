@@ -1,0 +1,158 @@
+﻿@model GurukulAppAdminPanel.Models.EventManagement
+
+<link href="@Url.Content("~/Content/dataTables.min.css")" rel="stylesheet">
+<!-- page content start -->
+<div class="right_col" role="main">
+    <div class="row">
+        <ul id="breadcrumb">
+            <li><a href="@ViewBag.breadcrumbHomeURL"><i class="fa fa-home mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbHome </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-thumbs-o-up mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbController </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-table mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbAction </a></li>
+        </ul>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="panel panel-default widget1">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-table"></i> @ViewBag.breadcrumbAction </h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-responsive kullaniciTablosu" id="eventTabledata" style="border: 1px solid#eee;background: #ffffff">
+                    <thead>
+                        <tr>
+                            <th>SL</th>
+                            <th>Volunteer Name</th>
+                            <th>Event Name</th>
+                            <th>Event Date</th>
+                            <th>Volunteer's Date</th>
+                            <th>Applied On</th>
+                            <th>Message</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.VolunteerEventList.Count > 0)
+                        {
+                            int i = 0;
+                            foreach (Dictionary<string, object> _volunteer in Model.VolunteerEventList)
+                            {
+                                string approveval = string.Empty, rejectval = string.Empty;
+                                byte[] byt;
+                                int _statusVal = Convert.ToInt16(_volunteer["STATUS"]);
+                                string _event_reg_id = _volunteer["EVENT_REG_ID"].ToString();
+
+                                switch (_statusVal)
+                                {
+                                    case 1: { approveval = Url.Encode(_event_reg_id + "-2"); rejectval = Url.Encode(_event_reg_id + "-3"); } break;
+                                    case 4: { approveval = Url.Encode(_event_reg_id + "-5"); rejectval = Url.Encode(_event_reg_id + "-6"); } break;
+                                    case 7: { approveval = Url.Encode(_event_reg_id + "-8"); } break;
+                                }
+
+                                //--------------- Approve Val Encode --------------
+                                byt = System.Text.Encoding.UTF8.GetBytes(approveval);
+                                approveval = Convert.ToBase64String(byt);
+
+                                //--------------- Reject Val Encode --------------
+                                byt = System.Text.Encoding.UTF8.GetBytes(rejectval);
+                                rejectval = Convert.ToBase64String(byt);
+
+                                string _approveUrl = "event/volunteer-event-approved/" + approveval;
+                                ++i;
+                                <tr>
+                                    <td> @i </td>
+                                    <td> <a href="javascript:void(0);" id="showVolunteerProfile" data-id="@_volunteer["USER_ID"]" class="text-danger" title="Show Profile">@_volunteer["VOLUNTEER_NAME"]</a> </td>
+                                    <td> @_volunteer["EVENT_NAME"] </td>
+                                    <td> @_volunteer["EVENT_DATE"] </td>
+                                    <td> @_volunteer["USER_DATE"] </td>
+                                    <td> @_volunteer["REG_DATE"] </td>
+                                    <td> @_volunteer["STATUS_NAME"] </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            @if (_statusVal == 7)
+                                            {
+                                                <a href="javascript:void(0);" title="Allocate Topic" id="topicAllocate" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("",_approveUrl)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
+                                            }
+                                            <a title="Reject" id="rejectBtn" data-eventid="@rejectval" class="btn btn-warning btn-xs"> <i class="fa fa-ban"></i> </a>
+                                        </div>
+                                    </td>                                    
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- Reject Modal Start -->
+            <div id="rejectVolunteerEvent" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle text-danger"> </i></button>
+                            <h5 class="modal-title">Volunteer Event Registration Reject</h5>
+                        </div>
+                        <div class="modal-body">
+                            @using (Html.BeginForm("volunteereventrejection", "event", FormMethod.Post))
+                            {
+                                @Html.HiddenFor(model => model.EventId, new { @id = "event_id" })
+                                @Html.LabelFor(model => model.RejectMessage)
+                                @Html.TextAreaFor(model => model.RejectMessage, new { @required = true, @class = "form-control", @style = "margin-bottom:5px" })
+
+                                <div class="clearfix">
+                                    <div class="col-md-12 text-right">
+                                        <div class="btn-group">
+                                            <input type="submit" class="btn btn-success" value="Submit" />
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Reject Modal End -->
+            <!-- Profile  -->
+            <div class="modal common-popup" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header"><h3>Profile Details</h3></div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            @*<button type="button" class="btn btn-success"><i class="fa fa-check"></i>Save changes</button>*@
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- page content end -->
+<script src="@Url.Content("~/Scripts/dataTables.min.js")"></script>
+<script src="@Url.Content("~/Scripts/alert-popup.js")"></script>
+<script>
+    $(document).ready(function () {
+        $('#eventTabledata').DataTable();
+        jQuery(document).on("click", "#rejectBtn", function () {
+            var _eventid = $(this).data("eventid");
+            $("#event_id").val(_eventid);
+            $("#rejectVolunteerEvent").modal("show");
+        });
+
+        $.AlertBox({ type: "abc", con: "jay" });
+        //$.AlertBox([{ type: "abc", con: "jay" }]);
+        //$.AlertBox("Abc");
+        //$.AlertBox("1");
+    });
+</script>
+
+
+
+

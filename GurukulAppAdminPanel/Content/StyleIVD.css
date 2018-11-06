@@ -1,0 +1,25 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans|Archivo+Narrow|Nanum+Myeongjo|Play|Rokkitt|Work+Sans');
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
+/*font-family: 'Rokkitt', serif;
+font-family: 'Play', sans-serif;
+font-family: 'Alegreya Sans', sans-serif;
+font-family: 'Nanum Myeongjo', serif;
+font-family: 'Archivo Narrow', sans-serif;
+font-family: 'Work Sans', sans-serif;*/
+
+
+/*****Home Page Css*********/
+.rotate-180{transform:rotate(90deg);}
+.Actions_iconSize {
+    font-size: 17px;
+    color: #ffcd69 !important;
+}
+.clickable:active {
+    color: #3598db;
+}
+i.material-icons:active{
+    color: #3598db;
+}
+i.clickable.material-icons.hand {
+    font-size: 28px;
+}

@@ -1,0 +1,205 @@
+﻿@model GurukulAppAdminPanel.Models.MasterManagement
+<div class="right_col" role="main">
+    <div class="row">
+        <ul id="breadcrumb">
+            <li><a href="@ViewBag.breadcrumbHomeURL"><i class="fa fa-home mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbHome </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-calendar-o mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbController </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-table mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbAction </a></li>
+        </ul>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="panel panel-default widget1">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-table"></i> @ViewBag.breadcrumbAction </h4>
+            </div>
+            <div class="panel-body">
+                @Html.Label("Choose Event Type -")
+                @Html.DropDownList("eventMasterType", Model.List, new { @class = "form-control", @onchange = "Redirect()" })
+                <input type="hidden" id="baseurl" value="@ViewBag.BASEURL" />
+            </div>
+            <div class="panel-body">
+                @if (Convert.ToInt16(ViewBag.eventid) == 1)
+                {
+                    <table class="table kullaniciTablosu" id="eventTabledata" style="border: 1px solid#eee;background: #ffffff">
+                        <thead>
+                            <tr>
+                                <th>Event id</th>
+                                <th>Event Name</th>
+                                <th>Start Date</th>
+                                <th>Action</th>
+                                <th>End Date</th>
+                                <th>Expire Date</th>
+                                <th>Male</th>
+                                <th>Female</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.EventNivrittilist.Count > 0)
+                            {
+
+                                int i = 0;
+                                foreach (Dictionary<string, object> _event in Model.EventNivrittilist)
+                                {
+                                    int _eventid = Convert.ToInt16(_event["EVENT_ID"]);
+                                    int _activecheck = Convert.ToInt16(_event["ISACTIVE"]);
+                                    string _approveURL = "event/approve-event-calender/" + _eventid;
+                                    ++i;
+                                    <tr>
+                                        <td> @_event["EVENT_ID"] </td>
+                                        <td> @_event["EVENT_NAME"] </td>
+                                        <td> @_event["START_DATE"] </td>
+                                        <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
+                                        <td> @_event["END_DATE"] </td>
+                                        <td> @_event["EXPIRE"] </td>
+                                        <td> @_event["MALE"] </td>
+                                        <td> @_event["FEMALE"] </td>
+                                        <td>
+                                            @if (_activecheck == 1)
+                                            {
+                                                <label class="label label-success">Show Project</label>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("",_approveURL)" title="Show Project" class="btn btn-default btn-xs"><i class="fa fa-eye"> </i> </a>
+                                            }
+                                        </td>
+                                        @*EVENT_ID*@
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                }
+                else if (Convert.ToInt16(ViewBag.eventid) == 2)
+                {
+                    <table class="table kullaniciTablosu" id="eventTabledata" style="border: 1px solid#eee;background: #ffffff">
+                        <thead>
+                            <tr>
+                                <th>Event id</th>
+                                <th>Event Name</th>
+                                <th>Start Date</th>
+                                <th>Action</th>
+                                <th>End Date</th>
+                                <th>Expire Date</th>
+                                <th>Holiday Start</th>
+                                <th>Holiday End</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.EventWorkshoplist.Count > 0)
+                            {
+                                int i = 0;
+                                foreach (Dictionary<string, object> _event in Model.EventWorkshoplist)
+                                {
+                                    int _eventid = Convert.ToInt16(_event["EVENT_ID"]);
+                                    int _activecheck = Convert.ToInt16(_event["ISACTIVE"]);
+                                    string _approveURL = "event/approve-event-calender/" + _eventid;
+                                    ++i;
+                                    <tr>
+                                        <td> @_event["EVENT_ID"]</td>
+                                        <td> @_event["EVENT_NAME"] </td>
+                                        <td> @_event["START_DATE"] </td>
+                                        <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
+                                        <td> @_event["END_DATE"] </td>
+                                        <td> @_event["EXPIRE"] </td>
+                                        <td> @_event["HOLY_START_DATE"] </td>
+                                        <td> @_event["HOLY_END_DATE"] </td>
+                                        <td>
+                                            @if (_activecheck == 1)
+                                            {
+                                                <label class="label label-success">Show Project</label>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("",_approveURL)" title="Show Project" class="btn btn-default btn-xs"><i class="fa fa-eye"> </i> </a>
+                                            }
+                                        </td>
+                                        @*EVENT_ID*@
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                }
+                else if (Convert.ToInt16(ViewBag.eventid) == 3)
+                {
+                    <table class="table kullaniciTablosu" id="eventTabledata" style="border: 1px solid#eee;background: #ffffff">
+                        <thead>
+                            <tr>
+                                <th>Event id</th>
+                                <th>Event Name</th>
+                                <th>Start Date</th>
+                                <th>Action</th>
+                                <th>End Date</th>
+                                <th>Expire Date</th>
+                                <th>Location</th>
+                                <th>Message</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.EventGitalist.Count > 0)
+                            {
+                                int i = 0;
+                                foreach (Dictionary<string, object> _event in Model.EventGitalist)
+                                {
+                                    int _eventid = Convert.ToInt16(_event["EVENT_ID"]);
+                                    int _activecheck = Convert.ToInt16(_event["ISACTIVE"]);
+                                    string _approveURL = "event/approve-event-calender/" + _eventid;
+                                    ++i;
+                                    <tr>
+                                        <td> @_event["EVENT_ID"] </td>
+                                        <td> @_event["EVENT_NAME"] </td>
+                                        <td> @_event["START_DATE"] </td>
+                                        <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
+                                        <td> @_event["END_DATE"] </td>
+                                        <td> @_event["EXPIRE"] </td>
+                                        <td> @_event["LOCATION"] </td>
+                                        <td> @_event["MESSAGE"] </td>
+                                        <td>
+                                            @if (_activecheck == 1)
+                                            {
+                                                <label class="label label-success">Show Project</label>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("",_approveURL)" title="Show Project" class="btn btn-default btn-xs"><i class="fa fa-eye"> </i> </a>
+                                            }
+                                        </td>
+                                        @*EVENT_ID*@
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="myModal1" role="dialog">
+        <div class="modal-dialog  panal-modal">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Daywise Event Breakup</h4>
+                </div>
+                <div class="modal-body">
+                    <a href="@Url.Action("","event/gen-excel")" class="btn btn-success pull-right"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Download Excel</a>
+                    <div id="div_of_panel"></div>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>*@
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

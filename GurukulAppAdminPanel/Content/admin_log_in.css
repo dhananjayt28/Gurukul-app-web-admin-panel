@@ -1,0 +1,30 @@
+.abs_outer{position: absolute;top: 200px;max-width: 800px;width: 800px;background: rgba(255,255,255,0.5);left: 50%;transform: translatex(-50%);padding: 30px;}
+.inner_abs{background: rgba(255,255,255,0.8);padding: 30px;}
+.form-input { display: block;  position: relative;  margin-bottom:2rem;background: none}
+.form-input > .material-icons { position: absolute;background: #39ae99;color: #fff;padding: 7px;  /*font-size: 1.5rem;*/  top: 2px}
+.form-input > .material-icons ~ input, .form-input > .material-icons ~ .label, .form-input > .material-icons ~ .underline { margin-left: 3.25rem;  width: calc(100% - 6.25rem);padding-left: 30px}
+.form-input input {  border: none;  box-shadow: none;  padding-top: 1.5rem;  padding-right: 0;  padding-bottom: 0.5rem;  padding-left: 0;  outline-style: none;  width: 100%;}
+.form-input input ~ .label {  color: #ed545a;  font-size: 14px;  margin: 0;  pointer-events: none;  position: absolute;  top: 1.5rem;  left: 0;  transition: top .2s,font .2s;  z-index: 1;}
+.form-input input ~ .underline {  background-color: #bdc1c5;  height: 1px;  width: 100%;  position: absolute;  bottom: 0;}
+.form-input input:hover ~ .underline, .form-input input:focus ~ .underline {  background-color: #07beb8;}
+.form-input input:hover ~ .label, .form-input input:focus ~ .label {  color: #07beb8;}.form-input input:focus ~ .underline {  height: 2px;}
+.form-input input:focus ~ .label, .form-input input:valid ~ .label { top: -15px;  font-size: 17px;color: #ffffff;background: #ed545a;width: 50%;text-align: center;padding-left: 0;margin-left: 55px;border:1px solid#ff0000}
+.form-input input:-webkit-autofill ~ .label {  top: -15px;  font-size: 17px;color: #ffffff;background: #543215;width: 40%;border:1px solid#ff0000}
+.form-input input:focus.txtBox_bod{border: 1px dotted #ed545a}
+.form-input input:active.txtBox_bod{border: 1px dotted #ed545a}
+/*.form-input input:hover.txtBox_bod{border: 1px dotted #ed545a}*/
+.form-input input:visited.txtBox_bod{border: 1px dotted #ed545a}
+.label {display: inline;padding: .2em .6em .3em;font-size: 75%;font-weight: 400;line-height: 1;color: #fff;text-align: left;white-space: nowrap;vertical-align: baseline;border-radius: .25em;}
+.Download_btn .Download_btn_dwn{display: inline-block;padding: 11px 35px;font-size: 14px;color: #fff;text-transform: uppercase;box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.08);border: 2px solid #23CEC1;perspective: 300px;position: relative;transition: all 0.3s ease 0s;/*z-index: 1;*/}
+.Download_btn .Download_btn_dwn:hover{ color:#ffffff;border-color:#ed545a;}
+.Download_btn .Download_btn_dwn:before{content: "";width: 100%;height: 100%;background: #23CEC1;position: absolute;top: 0;left: 0;z-index: -1;transform-origin: left center 0;transition: all 0.3s ease 0s;}
+.Download_btn .Download_btn_dwn:hover:before{transform: rotateY(95deg);background:#ed545a;}
+.login_textbox_bg{background: none;border-bottom: 1px dotted #ed545a !important;}
+/* Modal Custom */
+.modal-content{border:0!important;border-radius:0!important}
+.modal-header{padding:10px 15px!important}
+.modal-header h3{font-size:20px!important;line-height:20px!important;text-align:center!important;margin:0!important}
+.modal-footer{background:#2A3F54;padding:5px 15px;text-align:right}
+.modal-footer .btn{margin:0!important;border-radius:0!important;}
+.modal-footer .btn i{margin-right:5px;border-right:1px solid; padding-right:5px}
+

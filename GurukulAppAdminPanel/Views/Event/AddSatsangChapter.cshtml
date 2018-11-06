@@ -1,0 +1,70 @@
+﻿@model GurukulAppAdminPanel.Models.SatsangManagement
+<div class="right_col" role="main">
+    <div class="row">
+        <ul id="breadcrumb">
+            <li><a href="@ViewBag.breadcrumbHomeURL"><i class="fa fa-home mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbHome </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-code-fork mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbController </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-pencil-square-o mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbAction </a></li>
+        </ul>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="panel panel-default widget1">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-table"></i> @ViewBag.breadcrumbAction </h4>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
+                                        @Html.DropDownListFor(model => model.countryid, Model.CountryList, new { @class = "form-control bod_rad_0", @required = true })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon bg_pink"><i class="fa fa-pencil-square-o"></i></span>
+                                        @Html.EditorFor(model => model.chaptername, new { htmlAttributes = new { @placeholder = "Chapter Name", @class = "form-control bod_rad_0", @required = true, @autocomplete = "off" } })
+                                    </div>
+                                    <div class="text-danger">@Html.ValidationMessageFor(model => model.chaptername)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon bg_pink"><i class="fa fa-pencil-square-o"></i></span>
+                                        @Html.EditorFor(model => model.chaperdescription, new { htmlAttributes = new { @placeholder = "Chapter Description (optional)", @class = "form-control bod_rad_0", @autocomplete = "off" } })
+                                    </div>
+                                    <div class="text-danger">@Html.ValidationMessageFor(model => model.chaperdescription)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <div class="col-sm-12 text-right">
+                            <div class="btn-group">
+                                <input type="submit" class="btn btn-success" value="Submit" />
+                                <input type="reset" class="btn btn-primary" value="Reset" />
+                                <button id="btnClose" type="button" onclick="window.location.href = 'chapter-list'" class="btn btn-warning">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
