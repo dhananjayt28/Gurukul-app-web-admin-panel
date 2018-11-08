@@ -58,7 +58,10 @@
                                 string _approveUrl = "event/volunteer-event-approved/" + approveval;
                                 ++i;
                                 <tr>
-                                    <td> @_volunteer["EVENT_REG_ID"] </td>
+                                    @*<td> @_volunteer["EVENT_REG_ID"] </td>*@
+                                    <td>
+                                        <a href="javascript:void(0);" id="showEventDetails" data-id="@_volunteer["EVENT_REG_ID"]" class="text-danger showEventDetails" title="Show Event Details" data-toggle="modal" data-target="#myModal4">@_volunteer["EVENT_REG_ID"]</a>
+                                    </td>
                                     <td> <a href="javascript:void(0);" id="showVolunteerProfile" data-id="@_volunteer["USER_ID"]" class="text-danger" title="Show Profile">@_volunteer["VOLUNTEER_NAME"]</a> </td>
                                     <td> @_volunteer["EVENT_NAME"] </td>
                                     <td> @_volunteer["EVENT_DATE"] </td>
@@ -132,6 +135,25 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal4" role="dialog">
+    <div class="modal-dialog  panal-modal">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Event Details</h4>
+            </div>
+            <div class="modal-body">
+                <div id="event_details_Div"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
     </div>
 </div>
 <!-- page content end -->
