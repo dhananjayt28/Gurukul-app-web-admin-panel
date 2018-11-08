@@ -56,7 +56,18 @@
                                     <td>
                                         <a href="javascript:void(0);" id="showVolunteerProfile" data-id="@user["USER_ID"]" class="text-danger" title="Show Profile" data-toggle="modal" data-target="#myModal5">@user["NAME"]</a>                                        
                                     </td>
-                                    <td>@user["GENDER"]</td>                                   
+                                    <td>
+@if (Convert.ToString(user["GENDER"]) == "1")
+{
+    <label >Male</label>
+}
+else
+{
+    <label >Female</label>
+}
+
+
+                                    </td>                                   
                                     <td>@user["MOBILE_NO"]</td>
                                     <td>@user["EMAIL_ID"]</td>
                                     <td>@user["COUNTRY"]</td>

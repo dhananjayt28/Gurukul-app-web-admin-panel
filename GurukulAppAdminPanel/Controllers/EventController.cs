@@ -436,8 +436,8 @@ namespace GurukulAppAdminPanel.Controllers
                     item.Add(new SelectListItem() { Value = "", Text = "Choose Country", Selected = true });
                     foreach (Dictionary<string, object> _data in _EventType)
                     {
-                        string _val = _data["COUNTRY_ID"].ToString();
-                        string _text = _data["COUNTRY_NAME"].ToString();
+                        string _val = _data["country_id"].ToString();
+                        string _text = _data["country_name"].ToString();
                         item.Add(new SelectListItem() { Value = _val, Text = _text });
                     }
                     _smObj.CountryList = item;

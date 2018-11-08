@@ -53,7 +53,7 @@ namespace GurukulAppAdminPanel.Controllers
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.View_Master_List("BUSINESS PROFILE");
+            _dtable = _MM.View_Master_List("BUSINESS ROLE");
 
 
             if (_dtable.Rows.Count > 0)

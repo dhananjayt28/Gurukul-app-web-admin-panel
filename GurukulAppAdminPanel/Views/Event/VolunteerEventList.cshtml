@@ -19,7 +19,7 @@
                 <table class="table table-responsive kullaniciTablosu" id="eventTabledata" style="border: 1px solid#eee;background: #ffffff">
                     <thead>
                         <tr>
-                            <th>SL</th>
+                            <th>EVENT ID</th>
                             <th>Volunteer Name</th>
                             <th>Event Name</th>
                             <th>Event Date</th>
@@ -58,7 +58,7 @@
                                 string _approveUrl = "event/volunteer-event-approved/" + approveval;
                                 ++i;
                                 <tr>
-                                    <td> @i </td>
+                                    <td> @_volunteer["EVENT_REG_ID"] </td>
                                     <td> <a href="javascript:void(0);" id="showVolunteerProfile" data-id="@_volunteer["USER_ID"]" class="text-danger" title="Show Profile">@_volunteer["VOLUNTEER_NAME"]</a> </td>
                                     <td> @_volunteer["EVENT_NAME"] </td>
                                     <td> @_volunteer["EVENT_DATE"] </td>
