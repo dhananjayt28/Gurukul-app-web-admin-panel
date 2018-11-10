@@ -37,7 +37,8 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                        @Html.EditorFor(model => model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @placeholder = "Event Start Date", @class = "form-control bod_rad_0", @required = true, @autocomplete = "off",@data_date_format = "dd-mm-yyyy" } })
+                                        @Html.EditorFor(model => Model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @class = "form-control bod_rad_0 common-date-picker", @placeholder = "Start Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                        @*@Html.EditorFor(model => model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @placeholder = "Event Start Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off",@data_date_format = "dd-mm-yyyy" } })*@
                                     </div>
                                     <div class="text-danger">@Html.ValidationMessageFor(model => model.EventStartDate)</div>
                                 </div>
@@ -48,7 +49,8 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                        @Html.EditorFor(model => model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @placeholder = "Event End Date", @class = "form-control bod_rad_0", @required = true, @autocomplete = "off" } })
+                                        @Html.EditorFor(model => Model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "End Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                        @*@Html.EditorFor(model => model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @placeholder = "Event End Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
                                     </div>
                                     <div class="text-danger">@Html.ValidationMessageFor(model => model.EventEndDate)</div>
                                 </div>
@@ -61,7 +63,8 @@
                                 <div class="col-md-12">
                                     <div class="input-group">
                                         <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                        @Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0", @required = true, @autocomplete = "off" } })
+                                        @Html.EditorFor(model => Model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Expire Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                        @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
                                     </div>
                                     <div class="text-danger">@Html.ValidationMessageFor(model => model.EventExpireDate)</div>
                                 </div>
@@ -136,7 +139,7 @@
                     <div class="clearfix">
                         <div class="col-sm-12 text-right">
                             <div class="btn-group">
-                                <input type="submit" class="btn btn-success" value="Submit" />
+                                <input type="submit" id="submit_event" class="btn btn-success" value="Submit" />
                                 <input type="reset" class="btn btn-primary" value="Reset" />
                                 <button id="btnClose" type="button" onclick="window.location.href = 'event-list'" class="btn btn-warning">Close</button>
                             </div>

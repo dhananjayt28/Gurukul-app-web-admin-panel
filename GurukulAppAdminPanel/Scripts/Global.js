@@ -19,33 +19,50 @@
     };
     
     // Using in Event Create Page
-    $("#startDate").datepicker({
-        changeYear: true,
-        changeMonth: true,
-        minDate: 0,
-        dateFormat: 'dd-mm-yy',
-        onSelect: function (selected) {
-            var dt = new Date(selected);
-            dt.setDate(dt.getDate() + 1);
-            $("#endDate").datepicker({
-                changeYear: true,
-                changeMonth: true,
-                minDate: dt,
-                dateFormat: 'dd-mm-yy',
-                onSelect: function (selected) {
-                    var dt = new Date(selected);
-                    dt.setDate(dt.getDate());
-                    $("#expireDate").datepicker({
-                        changeYear: true,
-                        changeMonth: true,
-                        minDate: dt,
-                        dateFormat: 'dd-mm-yy'
-                    });
-                }
-            });
-        }
-    });
-
+    //$("#startDate").datepicker({
+    //    changeYear: true,
+    //    changeMonth: true,
+    //    minDate: 0,
+    //    dateFormat: 'dd-mm-yy',
+    //    onSelect: function (selected) {
+    //        var dt = new Date(selected);
+    //        dt.setDate(dt.getDate() + 1);
+    //        $("#endDate").datepicker({
+    //            changeYear: true,
+    //            changeMonth: true,
+    //            minDate: dt,               
+    //            dateFormat: 'dd-mm-yy',
+    //            onSelect: function (selected) {
+    //                var dt = new Date(selected);
+    //                dt.setDate(dt.getDate());
+    //                $("#expireDate").datepicker({
+    //                    changeYear: true,
+    //                    changeMonth: true,
+    //                     minDate: dt,                       
+    //                    dateFormat: 'dd-mm-yy'
+    //                });
+    //            }
+    //        });
+    //    }
+    //});
+    //$("#startDate").datepicker({
+    //    changeYear: true,
+    //    changeMonth: true,
+    //    minDate: 0,
+    //    dateFormat: 'dd-mm-yy',
+    //});
+    //$("#endDate").datepicker({
+    //    changeYear: true,
+    //    changeMonth: true,
+    //    minDate: 0,
+    //    dateFormat: 'dd-mm-yy',
+    //});
+    //$("#expireDate").datepicker({
+    //    changeYear: true,
+    //    changeMonth: true,
+    //    minDate: 0,
+    //    dateFormat: 'dd-mm-yy',
+    //});
     $(".common-date-picker").datepicker({
         changeYear: true,
         changeMonth: true,
@@ -384,6 +401,22 @@
             }
         });
     }
+    //submit_event
+    $(document).on("click", "#submit_event", function () {
+        //EventMaleNo
+        //EventFemaleNo
+       var male_no= $("#EventMaleNo").val();
+       var female_no = $("#EventFemaleNo").val();
+       var start_date = $("#startDate").val();
+       var end_date = $("#endDate").val();
+       var expiry_date = $("#expireDate").val();
+       if (male_no <= 0 || female_no <= 0 || start_date === "" || end_date === "" || expiry_date === "") {
+           alert("Plesae enter male and female req no more than 0 and also please put start date,end date and expiry date ");
+       }
+
+    });
+
+
     //add_ias
     $(document).on("click", "#btn_save", function () {
         var sub_ = $("#subject option:selected").text();

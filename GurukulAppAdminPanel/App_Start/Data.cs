@@ -195,5 +195,23 @@ namespace GurukulAppAdminPanel.App_Start
             }
             return dTable;
         }
+        public static dynamic Deserialize(string content, Type convertType = null)
+        {
+            if (content != null)
+            {
+                if (convertType != null)
+                {
+                    return _jsObj.Deserialize(content, convertType);
+                }
+                else
+                {
+                    return _jsObj.Deserialize(content, content.GetType());
+                }
+            }
+            else
+            {
+                return Constant.EMPTY_DATA_MSG;
+            }
+        }
     }
 }

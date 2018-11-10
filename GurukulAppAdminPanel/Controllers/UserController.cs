@@ -15,6 +15,7 @@ namespace GurukulAppAdminPanel.Controllers
     public class UserController : MasterController
     {
         private DataTable _dtable;
+        private Dictionary<string, object> errordata, dictionaryObj;
         /*******************************
          * Title :: Index
          * Description :: it use for call by default, when this controller action by user.
@@ -55,10 +56,22 @@ namespace GurukulAppAdminPanel.Controllers
                     JavaScriptSerializer jsObj = new JavaScriptSerializer();
                     var data = jsObj.Deserialize<Dictionary<string, object>>(response);
                     bool status = Convert.ToBoolean(data["status"]);
-                    if (status)
-                    {
+                    //if (status)
+                    //{
+                    //    _umObj.UserData = (ArrayList)data["response"];
+                    //}
+                    dictionaryObj = new Dictionary<string, object>();
+                    dictionaryObj = Data.Deserialize(response, typeof(Dictionary<string, object>));
+                    if (dictionaryObj.ContainsKey("response")) {
                         _umObj.UserData = (ArrayList)data["response"];
                     }
+                    else
+                    {
+
+
+                    }
+
+                   
                 }
                 return View(_umObj);
             }

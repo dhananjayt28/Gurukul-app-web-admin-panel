@@ -12,8 +12,8 @@
     <br />
     <div class="row margin-row-0">
         <div class="col-sm-3 col-md-3">
-         <h5>User Status:</h5>
-    <select id="dd_status" class="form-control">
+         @*<h5>User Status:</h5>*@
+            User Status: <select id="dd_status" class="form-control">
         <option value="0">Status</option>
     </select>
             </div>
@@ -59,11 +59,11 @@
                                     <td>
 @if (Convert.ToString(user["GENDER"]) == "0")
 {
-    <label >Female</label>
+    <label >Male</label>
 }
 else
 {
-    <label >Male</label>
+    <label >Female</label>
 }
 
 

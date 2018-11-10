@@ -33,12 +33,12 @@
                             <tr>
                                 <th>Event id</th>
                                 <th>Event Name</th>
-                                <th>Start Date</th>
+                                <th>Start Date</th>                               
+                                @*<th>End Date</th>*@
                                 <th>Action</th>
-                                <th>End Date</th>
                                 <th>Expire Date</th>
-                                <th>Male</th>
-                                <th>Female</th>
+                                @*<th>Male</th>
+                                <th>Female</th>*@
                                 @*<th>Action</th>*@
                             </tr>
                         </thead>
@@ -58,12 +58,12 @@
                                             @*<a href="javascript:void(0);" id="showEventDetails" data-id="@_event["EVENT_ID"]" class="text-danger showEventDetails" title="Show Event Details" data-toggle="modal" data-target="#myModal4">@_event["EVENT_ID"]</a>*@
                                         </td>
                                         <td> @_event["EVENT_NAME"] </td>
-                                        <td > @_event["START_DATE"] </td>
+                                        <td > @_event["START_DATE"] </td>                                        
+                                        @*<td> @_event["END_DATE"] </td>*@
                                         <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
-                                        <td> @_event["END_DATE"] </td>
                                         <td> @_event["EXPIRE"] </td>
-                                        <td> @_event["MALE"] </td>
-                                        <td> @_event["FEMALE"] </td>
+                                        @*<td> @_event["MALE"] </td>
+                                        <td> @_event["FEMALE"] </td>*@
                                         @*<td>
                                             @if (_activecheck == 1)
                                             {
@@ -88,9 +88,9 @@
                             <tr>
                                 <th>Event id</th>
                                 <th>Event Name</th>
-                                <th>Start Date</th>
-                                <th>Action</th>
+                                <th>Start Date</th>                              
                                 <th>End Date</th>
+                                <th>Action</th>
                                 <th>Expire Date</th>
                                 <th>Holiday Start</th>
                                 <th>Holiday End</th>
@@ -113,9 +113,9 @@
                                             @*<a href="javascript:void(0);" id="showEventDetails" data-id="@_event["EVENT_ID"]" class="text-danger" title="Show Profile" data-toggle="modal" data-target="#myModal4">@_event["EVENT_ID"]</a>*@
                                         </td>
                                         <td> @_event["EVENT_NAME"] </td>
-                                        <td > @_event["START_DATE"] </td>
-                                        <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
+                                        <td > @_event["START_DATE"] </td>                                       
                                         <td> @_event["END_DATE"] </td>
+                                        <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
                                         <td> @_event["EXPIRE"] </td>
                                         <td> @_event["HOLY_START_DATE"] </td>
                                         <td> @_event["HOLY_END_DATE"] </td>
@@ -144,8 +144,9 @@
                                 <th>Event id</th>
                                 <th>Event Name</th>
                                 <th>Start Date</th>
-                                <th>Action</th>
+                             
                                 <th>End Date</th>
+                                <th>Action</th>
                                 <th>Expire Date</th>
                                 <th>Location</th>
                                 @*<th>Message</th>*@
@@ -167,9 +168,9 @@
                                             @*<a href="javascript:void(0);" id="showEventDetails" data-id="@_event["EVENT_ID"]" class="text-danger" title="Show Profile" data-toggle="modal" data-target="#myModal4">@_event["EVENT_ID"]</a>*@
                                         </td>
                                         <td> @_event["EVENT_NAME"] </td>
-                                        <td > @_event["START_DATE"] </td>
-                                        <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
+                                        <td > @_event["START_DATE"] </td>                                       
                                         <td> @_event["END_DATE"] </td>
+                                        <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
                                         <td> @_event["EXPIRE"] </td>
                                         <td> @_event["LOCATION"] </td>
                                         @*<td> @_event["MESSAGE"] </td>*@

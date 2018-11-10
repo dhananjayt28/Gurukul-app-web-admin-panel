@@ -89,10 +89,10 @@
             _male_no = Convert.ToInt32(data.EventMaleNo);
             _female_no = Convert.ToInt32(data.EventFemaleNo);
             _isactive = data.IsActive ? 1 : 0;
-            DateTime s_date = Convert.ToDateTime(_endDate);
-            _month = s_date.Month;
-            _year = s_date.Year;
-
+            //DateTime s_date = Convert.ToDateTime(_endDate);
+            //_month = s_date.Month;
+            //_year = s_date.Year;
+            
             // Ready Array
             _data.Add("EVENT_ID", _eventid);
             _data.Add("USER_ID", createdby);
@@ -101,8 +101,8 @@
             _data.Add("EXPIRE_DATE", _expiredate);
             _data.Add("NO_OF_MALE", _male_no);
             _data.Add("NO_OF_FEMALE", _female_no);
-            _data.Add("YEAR", _year);
-            _data.Add("MONTH", _month);
+            //_data.Add("YEAR", _year);
+            //_data.Add("MONTH", _month);
             _data.Add("STATUS", _isactive);
 
             if (_eventid == 2)
