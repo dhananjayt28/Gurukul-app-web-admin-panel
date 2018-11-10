@@ -176,6 +176,58 @@ namespace GurukulAppAdminPanel.Models
             _dtable = _dbObj.Select("USP_USERS_MANAGEMENT", _param);
             return _dtable;
         }
+
+        public DataTable event_registration(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=2
+                new SqlParameter("@OPERATIONID",2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
+
+        public DataTable update_event_data(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=2
+                new SqlParameter("@OPERATIONID",6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
+
+        public DataTable View_Approved_Event_Data(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=7,@JSON={}
+                new SqlParameter("@OPERATIONID",7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
+
+        public DataTable View_Rejected_Event_Data(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=8,@JSON={}
+                new SqlParameter("@OPERATIONID",8) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
     }
 
 }
