@@ -14,6 +14,45 @@ namespace GurukulAppAdminPanel.App_Start
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
             config.Routes.MapHttpRoute(
+              name: "ADD REJECTED DATA ",
+              routeTemplate: "api/get-rejected-event-data",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "get_rejected_event_data",
+                  
+              }
+          );
+            
+        config.Routes.MapHttpRoute(
+              name: "GET APPROVED EVENT DATA ",
+              routeTemplate: "api/get-approved-event-data",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "get_approved_event_data",
+                  
+              }
+          );
+            config.Routes.MapHttpRoute(
+              name: "ADD EVENT REGISTRATION DATA ",
+              routeTemplate: "api/update-event-data",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "update_event_data",
+              }
+          );
+            config.Routes.MapHttpRoute(
+              name: "ADD EVENT REGISTRATION DATA ",
+              routeTemplate: "api/event-registration",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "event_registration",
+              }
+          );
+            config.Routes.MapHttpRoute(
               name: "UPDATE STATUS DATA ",
               routeTemplate: "api/update-user-status",
               defaults: new
