@@ -619,10 +619,10 @@
                         value: "LOV_ID"
                     }
                 });
-                var vstatus = getUrlParameter('vstatus');
-                if (!$.isNull(ustatus)) {
-                    $("#dd_statuses option:selected").text(vstatus);
-                }
+                //var vstatus = getUrlParameter('vstatus');
+                //if (!$.isNull(vstatus)) {
+                //    $("#dd_statuses option:selected").text(vstatus);
+                //}
             }
         });
 
@@ -631,17 +631,7 @@
             //var formArray = {};
             //formArray["user_status"] = user_status;
             $.redirect(_BaseURL + "/user/get-status?vstatus=" + volunteer_status);
-            //$.ajax({
-            //    url: _BaseURL + "/user/user-list",
-            //    type: "POST",
-            //    async: false,
-            //    dataType: "json",
-            //    data: formArray,
-            //    success: function (data) {
-
-            //       // $('#userTabledata').DataTable();
-            //    }
-            //});
+            
         });
     }
 
