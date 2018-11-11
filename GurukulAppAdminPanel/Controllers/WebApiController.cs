@@ -561,6 +561,8 @@ namespace GurukulAppAdminPanel.Controllers
                 _dtable = _MM.View_User_Data(User_id, Status, Role);
 
 
+
+
                 if (_dtable.Rows.Count > 0)
                 {
                     _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
@@ -777,9 +779,6 @@ namespace GurukulAppAdminPanel.Controllers
 
                 _dtable = new DataTable();
                 _MM = new MasterManagement();
-                //int status = 0;
-                //JavaScriptSerializer JsonArray = new JavaScriptSerializer();
-                //Dictionary<string, object> _data = (Dictionary<string, object>)JsonArray.Deserialize(data, typeof(Dictionary<string, object>));
                 if (data != null)
                 {
                     _dtable = _MM.update_event_data(Jsondata);
@@ -794,7 +793,6 @@ namespace GurukulAppAdminPanel.Controllers
                     _jsonString = Data.DatatableEmpty();
                     response = this.Request.CreateResponse(HttpStatusCode.OK);
                 }
-
             }
             catch (Exception ex)
             {
@@ -805,6 +803,8 @@ namespace GurukulAppAdminPanel.Controllers
             response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
             return response;
         }
+
+
         [HttpPut]
         //[Route("api/get-approved-event-data")]
         public HttpResponseMessage get_approved_event_data(HttpRequestMessage request)
@@ -812,15 +812,18 @@ namespace GurukulAppAdminPanel.Controllers
             try
             {
                 MasterManagement _MM = new MasterManagement();
-               
                 var data = request.Content.ReadAsStringAsync().Result;
                 string Jsondata = data.ToString();
+
                 _dtable = new DataTable();
                 _MM = new MasterManagement();
-                _dtable = _MM.View_Approved_Event_Data(Jsondata);
+                if (data != null)
+                {
+                    _dtable = _MM.View_Approved_Event_Data(Jsondata);
+                }
                 if (_dtable.Rows.Count > 0)
                 {
-                    _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
                     response = this.Request.CreateResponse(HttpStatusCode.OK);
                 }
                 else
@@ -838,8 +841,13 @@ namespace GurukulAppAdminPanel.Controllers
             response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
             return response;
         }
+
+
+
+
+
         [HttpPut]
-        //[Route[("api/get-rejected-event-data")]
+        //[Route[("api/get-rejected-event-data/{id}")]
         public HttpResponseMessage get_rejected_event_data(HttpRequestMessage request)
         {
             try
@@ -847,9 +855,45 @@ namespace GurukulAppAdminPanel.Controllers
                 MasterManagement _MM = new MasterManagement();
                 var data = request.Content.ReadAsStringAsync().Result;
                 string Jsondata = data.ToString();
+
                 _dtable = new DataTable();
                 _MM = new MasterManagement();
-                _dtable = _MM.View_Rejected_Event_Data(Jsondata);
+                if (data != null)
+                {
+                    _dtable = _MM.View_Rejected_Event_Data(Jsondata);
+                }
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/get_event_volunteer_reg_data")]
+        public HttpResponseMessage get_event_volunteer_reg_data()
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data();
+
+
                 if (_dtable.Rows.Count > 0)
                 {
                     _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
@@ -870,6 +914,10 @@ namespace GurukulAppAdminPanel.Controllers
             response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
             return response;
         }
-
     }
 }
+
+
+        
+
+    

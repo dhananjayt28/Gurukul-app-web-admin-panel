@@ -14,7 +14,17 @@ namespace GurukulAppAdminPanel.App_Start
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
             config.Routes.MapHttpRoute(
-              name: "ADD REJECTED DATA ",
+              name: "GET EVENT VOLUNTEER DATA ",
+              routeTemplate: "api/get_event_volunteer_reg_data",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = " get_event_volunteer_reg_data",
+
+              }
+          );
+            config.Routes.MapHttpRoute(
+              name: "GET REJECTED EVENT DATA ",
               routeTemplate: "api/get-rejected-event-data",
               defaults: new
               {
@@ -35,7 +45,7 @@ namespace GurukulAppAdminPanel.App_Start
               }
           );
             config.Routes.MapHttpRoute(
-              name: "ADD EVENT REGISTRATION DATA ",
+              name: "UPDATE EVENT DATA ",
               routeTemplate: "api/update-event-data",
               defaults: new
               {
