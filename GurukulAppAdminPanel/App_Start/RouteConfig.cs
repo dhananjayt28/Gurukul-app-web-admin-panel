@@ -7,7 +7,12 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//UserStatusUpdate
+        {//GetTopic
+            routes.MapRoute(
+              name: "GetTopic",
+              url: "iascoaching/get-topic",
+              defaults: new { controller = "IAScoaching", action = "GetTopic" }
+         );
             routes.MapRoute(
             name: "UserStatusUpdate",
             url: "user/update-status/{userid}/{status}",

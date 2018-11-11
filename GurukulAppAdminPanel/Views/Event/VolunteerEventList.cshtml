@@ -27,6 +27,7 @@
                             <th>Applied On</th>
                             <th>Message</th>
                             <th>Action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,6 +69,7 @@
                                     <td> @_volunteer["USER_DATE"] </td>
                                     <td> @_volunteer["REG_DATE"] </td>
                                     <td> @_volunteer["MESSAGE"] </td>
+                                    <td><a href="javascript:void(0);" id="updateContent" data-id="@_volunteer["EVENT_REG_ID"]" class="text-danger" title="Update" data-toggle="modal" data-target="#myModal8"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> </td>
                                     <td>
                                         <div class="btn-group">
                                             @if (_statusVal == 18)
@@ -88,7 +90,53 @@
                 </table>
 
             </div>
+            <div class="modal fade" id="myModal8" role="dialog">
+                <div class="modal-dialog  panal-modal">
 
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Content Update</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table>
+                                <tr><td>
+    Subject:
+    <select id="id_of_sub">
+        <option value="0">Select</option>
+    </select>
+</td>
+                                </tr>
+                               
+                                <tr><td>
+
+    Tpoic:
+    <select id="id_of_topic">
+        <option value="0">Select</option>
+    </select>
+</td>
+                                </tr>
+                                
+                                <tr><td>
+    Content:
+    <input type="text" id="content_id" />
+</td>
+                                </tr>
+                              
+                                <tr><td>
+    <button type="button" class="btn btn-success">Save</button>
+</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <!-- Reject Modal Start -->
             <div id="rejectVolunteerEvent" class="modal fade" role="dialog">
                 <div class="modal-dialog">

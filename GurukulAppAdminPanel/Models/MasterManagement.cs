@@ -211,13 +211,13 @@ namespace GurukulAppAdminPanel.Models
             return _dtable;
         }
 
-        public DataTable View_Approved_Event_Data(string jsondata)
+        public DataTable View_Approved_Event_Data(string user_id)
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
             {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=7,@JSON=''
                 new SqlParameter("@OPERATIONID",7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+                new SqlParameter("@USER_ID", user_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
 
             };
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);

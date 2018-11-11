@@ -740,7 +740,41 @@
 
 
     });
-   
+    $(document).on("click", "#updateContent", function () {
+        var thisObj = $(this);
+        var id = thisObj.data("id");
+        $.ajax({
+            url: _BaseURL + "/iascoaching/get-subject",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#id_of_sub").Dropdown(data.response, {
+                    value: {
+                        text: "LOV_NAME",
+                        value: "LOV_ID"
+                    }
+                });
+            }
+        });
+        //iascoaching/get-topic
+        $.ajax({
+            url: _BaseURL + "/iascoaching/get-topic",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#id_of_topic").Dropdown(data.response, {
+                    value: {
+                        text: "LOV_NAME",
+                        value: "LOV_ID"
+                    }
+                });
+            }
+        });
+
+
+    });
      
     
 });
