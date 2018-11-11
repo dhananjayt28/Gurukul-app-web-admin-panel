@@ -773,6 +773,9 @@
             }
         });
 
+        $("#event_reg_id_hide").val(id);
+
+
 
     });
      
