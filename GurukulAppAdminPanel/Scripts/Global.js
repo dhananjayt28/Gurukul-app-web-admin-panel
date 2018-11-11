@@ -304,7 +304,7 @@
                                             {
                                                 name: "Action",
                                                 dbcol: "TYPE",
-                                                value: '<a href="javascript:void(0);" class="BtnViewParentMaster" ><i class="fa fa-sort-desc clickable material-icons hand" aria-hidden="true" data-toggle="modal" data-target="#myModal1" id="i_of_master"></i></a>',
+                                                value: '<a href="javascript:void(0);" class="BtnViewParentMaster" ><i class="fa fa-eye clickable material-icons hand" aria-hidden="true" data-toggle="modal" data-target="#myModal1" id="i_of_master"></i></a>',
                                                 data: {
                                                     listname: "TYPE"
                                                 }
