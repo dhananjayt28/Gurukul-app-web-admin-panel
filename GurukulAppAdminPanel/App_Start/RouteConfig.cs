@@ -139,6 +139,11 @@ namespace GurukulAppAdminPanel.App_Start
                 defaults: new { controller = "Event", action = "VolunteerEventApprove", urldata = UrlParameter.Optional }
             );
             routes.MapRoute(
+               name: "Volunteer Event Rejected",
+               url: "event/volunteer-event-rejected/{_statusVal}/{_event_reg_id}",
+               defaults: new { controller = "Event", action = "VolunteerEventRejections", urldata = UrlParameter.Optional }
+           );
+            routes.MapRoute(
                 name: "User Profile Data",
                 url: "user/user-profile-data/{userid}",
                 defaults: new { controller = "User", action = "GetUserProfileData", userid = UrlParameter.Optional }

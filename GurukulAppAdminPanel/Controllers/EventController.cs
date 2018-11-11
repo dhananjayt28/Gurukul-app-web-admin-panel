@@ -349,43 +349,66 @@ namespace GurukulAppAdminPanel.Controllers
          * Param :: 
          * Return :: Volunteer Event list View part.
          **************************************/
-        [HttpPost]
-        public ActionResult VolunteerEventRejection(EventManagement _eventobj)
+        //[HttpPost]
+        //public ActionResult VolunteerEventRejection(EventManagement _eventobj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        string _response = string.Empty, _msg = string.Empty, _eventid = string.Empty, _status = string.Empty;
+        //        string[] data = Base64.Decode(_eventobj.EventId).Split(new[] { "-" }, StringSplitOptions.None);
+        //        _eventid = data[0];
+        //        _status = data[1];
+        //        _msg = _eventobj.RejectMessage;
+        //        int UserId = Convert.ToInt32(Session["USER_ID"]);
+        //        _response = _eventobj.RejectionVolunteerEventRegData(_eventid, _status, _msg, UserId);
+        //        if(_response != string.Empty)
+        //        {
+        //            JavaScriptSerializer jsObj = new JavaScriptSerializer();
+        //            var responsedata = jsObj.Deserialize<Dictionary<string, object>>(_response);
+        //            bool status = Convert.ToBoolean(responsedata["status"]);
+        //            if (status)
+        //            {
+        //                _msg = responsedata["response"].ToString();
+        //            }
+        //            else
+        //            {
+        //                _msg = responsedata["response"].ToString();
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (ModelState modelState in ViewData.ModelState.Values)
+        //        {
+        //            foreach (ModelError error in modelState.Errors)
+        //            {
+
+        //            }
+        //        }
+        //    }
+        //    return Redirect(Constant.BASEURL + "event/volunteer-event-reg-list");
+        //}
+        public ActionResult VolunteerEventRejections(string _statusVal, string _event_reg_id)
         {
-            if (ModelState.IsValid)
-            {
-                string _response = string.Empty, _msg = string.Empty, _eventid = string.Empty, _status = string.Empty;
-                string[] data = Base64.Decode(_eventobj.EventId).Split(new[] { "-" }, StringSplitOptions.None);
-                _eventid = data[0];
-                _status = data[1];
-                _msg = _eventobj.RejectMessage;
-                int UserId = Convert.ToInt32(Session["USER_ID"]);
-                _response = _eventobj.RejectionVolunteerEventRegData(_eventid, _status, _msg, UserId);
-                if(_response != string.Empty)
-                {
-                    JavaScriptSerializer jsObj = new JavaScriptSerializer();
-                    var responsedata = jsObj.Deserialize<Dictionary<string, object>>(_response);
-                    bool status = Convert.ToBoolean(responsedata["status"]);
-                    if (status)
-                    {
-                        _msg = responsedata["response"].ToString();
-                    }
-                    else
-                    {
-                        _msg = responsedata["response"].ToString();
-                    }
-                }
-            }
-            else
-            {
-                foreach (ModelState modelState in ViewData.ModelState.Values)
-                {
-                    foreach (ModelError error in modelState.Errors)
-                    {
-                        
-                    }
-                }
-            }
+
+            int UserId = Convert.ToInt32(Session["USER_ID"]);
+
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+
+            _postArrData.Add("STATUS", 19);
+            _postArrData.Add("MESSAGE", 79);
+            _postArrData.Add("USER_ID", UserId);
+            _postArrData.Add("EVENT_REG_ID", _event_reg_id);
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _dtable = _MM.VolunteerEventRejectAction(_postContent);
+
+
+
             return Redirect(Constant.BASEURL + "event/volunteer-event-reg-list");
         }
 
