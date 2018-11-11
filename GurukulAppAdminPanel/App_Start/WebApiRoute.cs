@@ -35,7 +35,7 @@ namespace GurukulAppAdminPanel.App_Start
               }
           );
             config.Routes.MapHttpRoute(
-              name: "ADD EVENT REGISTRATION DATA ",
+              name: "UPDATE EVENT DATA ",
               routeTemplate: "api/update-event-data",
               defaults: new
               {
