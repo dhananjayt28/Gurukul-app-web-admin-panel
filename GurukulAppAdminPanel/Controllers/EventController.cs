@@ -636,7 +636,7 @@ namespace GurukulAppAdminPanel.Controllers
             List<object> postdata = new List<object>();
             SortedList<string, object> _postArrData = new SortedList<string, object>();
 
-            _postArrData.Add("EVENT_REG_SYS_ID", enent_reg_id);
+            _postArrData.Add("EVENT_REG_ID", enent_reg_id);
             _postArrData.Add("SUBJECT_ID", subject_id);
             _postArrData.Add("TOPIC_ID", topic_id);
             _postArrData.Add("USER_ID", UserId);

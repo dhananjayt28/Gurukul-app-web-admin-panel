@@ -11,7 +11,7 @@ namespace GurukulAppAdminPanel.App_Start
             routes.MapRoute(
               name: "AddTopicContent",
               url: "event/add-topic-event/{enent_reg_id}/{subject_id}/{topic_id}/{content}",
-              defaults: new { controller = "Event", action = "AddTopicContent" }
+              defaults: new { controller = "Event", action = "AddTopicContent", enent_reg_id = UrlParameter.Optional, subject_id = UrlParameter.Optional, topic_id = UrlParameter.Optional, content = UrlParameter.Optional }
          );
             routes.MapRoute(
               name: "GetTopic",

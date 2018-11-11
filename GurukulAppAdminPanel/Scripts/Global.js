@@ -810,6 +810,14 @@
 
 
     });
+    $(document).on("click", "#btn_save_topic_content", function () {
+        var event_reg_id_hide = $("#event_reg_id_hide").val();
+        var id_of_sub = $("#id_of_sub option:selected").val();
+        var id_of_topic = $("#id_of_topic option:selected").val();
+        var content_id = $("#content_id").val();
+        $.redirect(_BaseURL + "/event/add-topic-event?enent_reg_id=" + event_reg_id_hide + "&subject_id=" + id_of_sub + "&topic_id=" + id_of_topic + "&content=" + content_id);
+
+    });
      
     
 });
