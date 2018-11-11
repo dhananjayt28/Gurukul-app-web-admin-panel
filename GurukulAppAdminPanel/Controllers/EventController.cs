@@ -628,8 +628,37 @@ namespace GurukulAppAdminPanel.Controllers
             }
             return _jsonString;
         }
+        //TopicContent
+        public string AddTopicContent(string enent_reg_id,string subject_id,string topic_id,string content)
+        {
+            string _jsonString = string.Empty;
+            int UserId = Convert.ToInt32(Session["USER_ID"]);
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
 
+            _postArrData.Add("EVENT_REG_SYS_ID", enent_reg_id);
+            _postArrData.Add("SUBJECT_ID", subject_id);
+            _postArrData.Add("TOPIC_ID", topic_id);
+            _postArrData.Add("USER_ID", UserId);
+            _postArrData.Add("CONTENT_SOURCE", content);
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
 
+            MasterManagement _mm = new MasterManagement();
+            _dtable = _mm.TopicContent(_postContent);
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                _jsonString = Data.DatatableEmpty();
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            return _jsonString;
+
+        }
 
 
 
