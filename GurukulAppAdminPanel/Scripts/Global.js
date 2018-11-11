@@ -619,10 +619,10 @@
                         value: "LOV_ID"
                     }
                 });
-                //var vstatus = getUrlParameter('vstatus');
-                //if (!$.isNull(vstatus)) {
-                //    $("#dd_statuses option:selected").text(vstatus);
-                //}
+                var vstatus = getUrlParameter('vstatus');
+                if (!$.isNull(vstatus)) {
+                    $("#dd_statuses option:selected").text(vstatus);
+                }
             }
         });
 
