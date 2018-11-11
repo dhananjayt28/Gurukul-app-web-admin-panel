@@ -883,7 +883,7 @@ namespace GurukulAppAdminPanel.Controllers
             return response;
         }
         [HttpGet]
-        //[Route[("api/get_event_volunteer_reg_data")]
+        //[Route[("api/get-event-volunteer-reg-data")]
         public HttpResponseMessage get_event_volunteer_reg_data()
         {
             try
