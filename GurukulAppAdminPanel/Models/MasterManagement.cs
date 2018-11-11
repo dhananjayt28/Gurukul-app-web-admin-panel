@@ -194,7 +194,7 @@ namespace GurukulAppAdminPanel.Models
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
-            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=2
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=2,@JSON=''
                 new SqlParameter("@OPERATIONID",6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
@@ -207,7 +207,7 @@ namespace GurukulAppAdminPanel.Models
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
-            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=7,@JSON={}
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=7,@JSON=''
                 new SqlParameter("@OPERATIONID",7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
@@ -220,10 +220,21 @@ namespace GurukulAppAdminPanel.Models
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
-            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=8,@JSON={}
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=8,@JSON=''
                 new SqlParameter("@OPERATIONID",8) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
+            };
+            _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
+
+        public DataTable Get_Event_Volunteer_Reg_Data()
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=9
+                new SqlParameter("@OPERATIONID",9) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
             };
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
             return _dtable;
