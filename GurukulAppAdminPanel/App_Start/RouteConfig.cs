@@ -38,6 +38,7 @@ namespace GurukulAppAdminPanel.App_Start
               url: "user/get-status",
               defaults: new { controller = "User", action = "GetStatus" }
          );
+           
             routes.MapRoute(
               name: "GetRecordDetails",
               url: "iascoaching/get-record",

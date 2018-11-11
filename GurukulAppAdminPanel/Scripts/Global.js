@@ -605,6 +605,49 @@
 
 
     }
+    if (action_name === "volunteer-event-reg-list") {
+        //dd_status
+        $.ajax({
+            url: _BaseURL + "/user/get-status",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#dd_statuses").Dropdown(data.response, {
+                    value: {
+                        text: "LOV_NAME",
+                        value: "LOV_ID"
+                    }
+                });
+                var vstatus = getUrlParameter('vstatus');
+                if (!$.isNull(ustatus)) {
+                    $("#dd_statuses option:selected").text(vstatus);
+                }
+            }
+        });
+
+        $(document).on("change", "#dd_statuses", function () {
+            var volunteer_status = $("#dd_statuses option:selected").text();
+            //var formArray = {};
+            //formArray["user_status"] = user_status;
+            $.redirect(_BaseURL + "/user/get-status?vstatus=" + volunteer_status);
+            //$.ajax({
+            //    url: _BaseURL + "/user/user-list",
+            //    type: "POST",
+            //    async: false,
+            //    dataType: "json",
+            //    data: formArray,
+            //    success: function (data) {
+
+            //       // $('#userTabledata').DataTable();
+            //    }
+            //});
+        });
+    }
+
+
+
+    
     $(document).on("click", ".showEventDetails", function () {
         var $this = $(this);
         var event_id_ = $this.data("id");

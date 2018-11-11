@@ -411,6 +411,7 @@ namespace GurukulAppAdminPanel.Controllers
 
             return Redirect(Constant.BASEURL + "event/volunteer-event-reg-list");
         }
+       
 
         /***************************************
          * Title :: Event Approve
