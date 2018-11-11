@@ -134,7 +134,7 @@ namespace GurukulAppAdminPanel.Models
             _param = new SqlParameter[]
             {
                 new SqlParameter("@OPERATIONID",25) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                new SqlParameter("@EVENT_SYS_ID",Event_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+                new SqlParameter("@EVENT_REG_ID",Event_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
 
             };
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
@@ -235,6 +235,22 @@ namespace GurukulAppAdminPanel.Models
             _param = new SqlParameter[]
             {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=9
                 new SqlParameter("@OPERATIONID",9) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
+        public DataTable VolunteerRegisterEventAction(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=10
+                new SqlParameter("@OPERATIONID", 10) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                //new SqlParameter("@STATUS", Status) { SqlDbType = SqlDbType.SmallInt, Direction = ParameterDirection.Input },
+                //new SqlParameter("@MESSAGE", Message) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                //new SqlParameter("@USER_ID", UserID) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                //new SqlParameter("@EVENT_ID", EventId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+
             };
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
             return _dtable;
