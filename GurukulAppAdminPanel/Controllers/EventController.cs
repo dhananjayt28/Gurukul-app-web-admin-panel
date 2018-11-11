@@ -281,12 +281,28 @@ namespace GurukulAppAdminPanel.Controllers
         public ActionResult VolunteerEventList()
         {
             EventManagement _emObj = new EventManagement();
-            string _response = string.Empty;
-            _response = _emObj.GetVolunteerEventRegData();
-            if (_response != string.Empty)
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _dtable = _MM.Get_Event_Volunteer_Reg_Data();
+
+
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                _jsonString = Data.DatatableEmpty();
+               // response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            //_response = _emObj.GetVolunteerEventRegData();
+            if (_jsonString != string.Empty)
             {
                 JavaScriptSerializer jsObj = new JavaScriptSerializer(); 
-                var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
+                var data = jsObj.Deserialize<Dictionary<string, object>>(_jsonString);
                 bool status = Convert.ToBoolean(data["status"]);
                 if (status)
                 {
