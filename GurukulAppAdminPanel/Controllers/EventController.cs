@@ -285,7 +285,7 @@ namespace GurukulAppAdminPanel.Controllers
             _response = _emObj.GetVolunteerEventRegData();
             if (_response != string.Empty)
             {
-                JavaScriptSerializer jsObj = new JavaScriptSerializer();
+                JavaScriptSerializer jsObj = new JavaScriptSerializer(); 
                 var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
                 bool status = Convert.ToBoolean(data["status"]);
                 if (status)
