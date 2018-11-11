@@ -630,7 +630,7 @@
             var volunteer_status = $("#dd_statuses option:selected").text();
             //var formArray = {};
             //formArray["user_status"] = user_status;
-            $.redirect(_BaseURL + "/user/get-status?vstatus=" + volunteer_status);
+            $.redirect(_BaseURL + "/event/volunteer-event-reg-list?vstatus=" + volunteer_status);
             
         });
     }
