@@ -135,7 +135,7 @@ namespace GurukulAppAdminPanel.App_Start
             );
             routes.MapRoute(
                 name: "Volunteer Event Approved",
-                url: "event/volunteer-event-approved/{urldata}",
+                url: "event/volunteer-event-approved/{_statusVal}/{_event_reg_id}",
                 defaults: new { controller = "Event", action = "VolunteerEventApprove", urldata = UrlParameter.Optional }
             );
             routes.MapRoute(

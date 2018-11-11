@@ -142,7 +142,7 @@ namespace GurukulAppAdminPanel.Models
             _param = new SqlParameter[]
             {
                 new SqlParameter("@OPERATIONID",25) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                new SqlParameter("@EVENT_SYS_ID",Event_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+                new SqlParameter("@EVENT_REG_ID",Event_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
 
             };
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);

@@ -320,58 +320,27 @@ namespace GurukulAppAdminPanel.Controllers
          * Param :: 
          * Return :: Volunteer Event list View part.
          **************************************/
-        public ActionResult VolunteerEventApprove(string _statusVal, string _event_reg_id )
+        public ActionResult VolunteerEventApprove(string _statusVal, string _event_reg_id)
         {
-            
-               // string _response = string.Empty, _msg = string.Empty, _eventid = string.Empty, _status = string.Empty;
-                //string[] data = Base64.Decode(urldata).Split(new[] { "-" }, StringSplitOptions.None);
-                //_eventid = data[0];
-                //_status = data[1];
-                int UserId = Convert.ToInt32(Session["USER_ID"]);
-                string _jsonString = string.Empty;
-                EventManagement _eventobj = new EventManagement();
-                //_MM = new MasterManagement();
-                List<object> postdata = new List<object>();
-                SortedList<string, object> _postArrData = new SortedList<string, object>();
 
-                _postArrData.Add("STATUS", _statusVal);
-                _postArrData.Add("MESSAGE", "78");
-                _postArrData.Add("USER_ID", UserId);
-                _postArrData.Add("EVENT_REG_ID", _event_reg_id);
-                postdata.Add(_postArrData);
-                var _postContent = System.Web.Helpers.Json.Encode(postdata);
-              //  _response = _eventobj.ApproveVolunteerEventRegData(_eventid, _status, UserId);
-                MasterManagement _MM = new MasterManagement();
-                _MM = new MasterManagement();
-                _dtable = new DataTable();
-                _dtable = _MM.VolunteerRegisterEventAction(_postContent);
+            int UserId = Convert.ToInt32(Session["USER_ID"]);
+           
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+
+            _postArrData.Add("STATUS", 18);
+            _postArrData.Add("MESSAGE", 78);
+            _postArrData.Add("USER_ID", UserId);
+            _postArrData.Add("EVENT_REG_ID", _event_reg_id);
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _dtable = _MM.VolunteerRegisterEventAction(_postContent);
 
 
-                if (_dtable.Rows.Count > 0)
-                {
-                    _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
-                    //response = this.Request.CreateResponse(HttpStatusCode.OK);
-                }
-                else
-                {
-                    _jsonString = Data.DatatableEmpty();
-                    // response = this.Request.CreateResponse(HttpStatusCode.OK);
-                }
-                if (_jsonString != string.Empty)
-                {
-                    JavaScriptSerializer jsObj = new JavaScriptSerializer();
-                   // var responsedata = jsObj.Deserialize<Dictionary<string, object>>(_response);
-                   // bool status = Convert.ToBoolean(responsedata["status"]);
-                    //if (status)
-                    //{
-                    //    _msg = responsedata["response"].ToString();
-                    //}
-                    //else
-                    //{
-                    //    _msg = responsedata["response"].ToString();
-                    //}
-                }
-            
+
             return Redirect(Constant.BASEURL + "event/volunteer-event-reg-list");
         }
         /***************************************
