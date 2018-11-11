@@ -16,6 +16,14 @@ namespace GurukulAppAdminPanel.Models
         public string CATEGORYID { get; set; }
         public string ADDCATEGORY { get; set; }
         public string ADDSUBCATEGORY { get; set; }
+        public string CHECKIN_DATE { get; set; }
+        public string CHECKIN_TIME { get; set; }
+        public string CHECKOUT_DATE { get; set; }
+        public string CHECKOUT_TIME{ get; set; }
+        public string EVENT_REG_ID { get; set; }
+        public string STATUS { get; set; }
+        public string MESSAGE { get; set; }
+       public string UserId { get; set; }
 
 
         public DataTable View_Master_List(String category_name)
@@ -190,7 +198,7 @@ namespace GurukulAppAdminPanel.Models
             return _dtable;
         }
 
-        public DataTable update_event_data(string jsondata)
+        public DataTable UPDATE_EVENT_DATA(string jsondata)
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
@@ -235,6 +243,22 @@ namespace GurukulAppAdminPanel.Models
             _param = new SqlParameter[]
             {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=9
                 new SqlParameter("@OPERATIONID",9) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
+        public DataTable VolunteerRegisterEventAction(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=10
+                new SqlParameter("@OPERATIONID", 10) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                //new SqlParameter("@STATUS", Status) { SqlDbType = SqlDbType.SmallInt, Direction = ParameterDirection.Input },
+                //new SqlParameter("@MESSAGE", Message) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                //new SqlParameter("@USER_ID", UserID) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                //new SqlParameter("@EVENT_ID", EventId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+
             };
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
             return _dtable;

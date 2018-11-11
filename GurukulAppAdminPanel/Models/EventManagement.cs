@@ -208,8 +208,8 @@
             string _response = string.Empty;
             SortedList<string, object> _list = new SortedList<string, object>();
             _list.Add("USER_ID", sessionUserId);
-            _list.Add("EVENT_ID", eventid);
-            _list.Add("STATUS", status);
+            _list.Add("EVENT_REG_ID", eventid);
+            _list.Add("STATUS", 18);
 
             RestClient _client = new RestClient();
             _client.URL = Constant.VOLUNTER_EVENT_DATA_ACTION;

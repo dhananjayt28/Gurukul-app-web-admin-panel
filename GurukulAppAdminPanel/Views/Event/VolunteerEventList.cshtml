@@ -40,6 +40,7 @@
                                 int _statusVal = Convert.ToInt16(_volunteer["STATUS"]);
                                 string _event_reg_id = _volunteer["EVENT_REG_ID"].ToString();
 
+
                                 switch (_statusVal)
                                 {
                                     case 1: { approveval = Url.Encode(_event_reg_id + "-2"); rejectval = Url.Encode(_event_reg_id + "-3"); } break;
@@ -55,7 +56,7 @@
                                 byt = System.Text.Encoding.UTF8.GetBytes(rejectval);
                                 rejectval = Convert.ToBase64String(byt);
 
-                                string _approveUrl = "event/volunteer-event-approved/" + approveval;
+                                string _approveUrl = "event/volunteer-event-approved/" + _statusVal+ _event_reg_id;
                                 ++i;
                                 <tr>
                                     @*<td> @_volunteer["EVENT_REG_ID"] </td>*@
@@ -67,10 +68,10 @@
                                     <td> @_volunteer["EVENT_DATE"] </td>
                                     <td> @_volunteer["USER_DATE"] </td>
                                     <td> @_volunteer["REG_DATE"] </td>
-                                    <td> @_volunteer["STATUS_NAME"] </td>
+                                    <td> @_volunteer["MESSAGE"] </td>
                                     <td>
                                         <div class="btn-group">
-                                            @if (_statusVal == 7)
+                                            @if (_statusVal == 18)
                                             {
                                                 <a href="javascript:void(0);" title="Allocate Topic" id="topicAllocate" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
                                             }

@@ -781,7 +781,7 @@ namespace GurukulAppAdminPanel.Controllers
                 _MM = new MasterManagement();
                 if (data != null)
                 {
-                    _dtable = _MM.update_event_data(Jsondata);
+                    _dtable = _MM.UPDATE_EVENT_DATA(Jsondata);
                 }
                 if (_dtable.Rows.Count > 0)
                 {
