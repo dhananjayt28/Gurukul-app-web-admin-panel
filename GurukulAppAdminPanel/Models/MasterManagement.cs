@@ -229,7 +229,7 @@ namespace GurukulAppAdminPanel.Models
             return _dtable;
         }
 
-        public DataTable Get_Event_Volunteer_Reg_Data()
+        public DataTable Get_Event_Volunteer_Reg_Data(string Status = null)
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
