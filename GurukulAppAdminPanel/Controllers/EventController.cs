@@ -278,25 +278,33 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Event list View part.
          **************************************/
         [HttpGet]
-        public ActionResult VolunteerEventList()
+        public ActionResult VolunteerEventList(string ustatus = "")
         {
             EventManagement _emObj = new EventManagement();
             string _jsonString = string.Empty;
+            string response = string.Empty;
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.Get_Event_Volunteer_Reg_Data();
+            if (ustatus == "")
+            {
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data("Waiting For Approval");
 
+            }
+            else
+            {
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data(ustatus);
+            }
 
             if (_dtable.Rows.Count > 0)
             {
                 _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
-                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+               
             }
             else
             {
                 _jsonString = Data.DatatableEmpty();
-               // response = this.Request.CreateResponse(HttpStatusCode.OK);
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
             }
             //_response = _emObj.GetVolunteerEventRegData();
             if (_jsonString != string.Empty)
