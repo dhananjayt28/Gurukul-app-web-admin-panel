@@ -625,7 +625,6 @@
                 }
             }
         });
-
         $(document).on("change", "#dd_statuses", function () {
             var volunteer_status = $("#dd_statuses option:selected").text();
             //var formArray = {};
