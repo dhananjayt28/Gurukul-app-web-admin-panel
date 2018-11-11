@@ -7,7 +7,12 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//GetTopic
+        {//AddTopicContent
+            routes.MapRoute(
+              name: "AddTopicContent",
+              url: "event/add-topic-event/{enent_reg_id}/{subject_id}/{topic_id}/{content}",
+              defaults: new { controller = "Event", action = "AddTopicContent" }
+         );
             routes.MapRoute(
               name: "GetTopic",
               url: "iascoaching/get-topic",
