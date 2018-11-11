@@ -604,7 +604,6 @@ namespace GurukulAppAdminPanel.Controllers
             }
             return _jsonString;
         }
-
         //TopicContent
         public string AddTopicContent(string enent_reg_id,string subject_id,string topic_id,string content)
         {
