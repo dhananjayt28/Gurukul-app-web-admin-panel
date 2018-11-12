@@ -14,6 +14,16 @@ namespace GurukulAppAdminPanel.App_Start
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
             config.Routes.MapHttpRoute(
+              name: "VOLUNTEER EVENT CHECKINOUT UPDATE ",
+              routeTemplate: "api/volunteer-event-checkinout-update",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "volunteer_event_checkinout_update",
+
+              }
+          );
+            config.Routes.MapHttpRoute(
               name: "GET EVENT VOLUNTEER DATA ",
               routeTemplate: "api/get-event-volunteer-reg-data",
               defaults: new
