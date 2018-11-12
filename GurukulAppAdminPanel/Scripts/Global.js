@@ -1,6 +1,7 @@
 ﻿$(function () {
     "use strict"
     var _BaseURL = window.location.origin;
+    var url = "";
     
     var action_name = !$.isNull($.getactionname()) ? $.getactionname().toLowerCase() : "";
     var getUrlParameter = function getUrlParameter(sParam) {
@@ -625,9 +626,9 @@
                 }
             }
         });
-
         $(document).on("change", "#dd_statuses", function () {
             var volunteer_status = $("#dd_statuses option:selected").text();
+            //alert(volunteer_status);
             //var formArray = {};
             //formArray["user_status"] = user_status;
             $.redirect(_BaseURL + "/event/volunteer-event-reg-list?vstatus=" + volunteer_status);
@@ -811,6 +812,39 @@
 
 
     });
+    $(document).on("click", "#btn_save_topic_content", function () {
+        var event_reg_id_hide = $("#event_reg_id_hide").val();
+        var id_of_sub = $("#id_of_sub option:selected").val();
+        var id_of_topic = $("#id_of_topic option:selected").val();
+        var content_id = $("#content_id").val();
+        $.redirect(_BaseURL + "/event/add-topic-event?enent_reg_id=" + event_reg_id_hide + "&subject_id=" + id_of_sub + "&topic_id=" + id_of_topic + "&content=" + content_id);
+
+    });
      
     
+    $(document).on("click", "#rejectBtn", function () {
+        var thisObj = $(this);
+        url = thisObj.data("url");
+        $.ajax({
+            url: _BaseURL + "/event/get-reason",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#message_dd").Dropdown(data.response, {
+                    value: {
+                        text: "LOV_NAME",
+                        value: "LOV_ID"
+                    }
+                });
+            }
+        });
+    });
+    $(document).on("click", "#btn_reject_with_msg", function () {
+        var msg_id = $("#message_dd option:selected").val();
+        var full_url = _BaseURL +"/"+ url + "/" + msg_id
+       // alert(full_url);
+        $.redirect(full_url);
+
+    });
 });

@@ -846,21 +846,21 @@ namespace GurukulAppAdminPanel.Controllers
 
 
 
-        [HttpPut]
+        [HttpGet]
         //[Route[("api/get-rejected-event-data/{id}")]
-        public HttpResponseMessage get_rejected_event_data(HttpRequestMessage request)
+        public HttpResponseMessage get_rejected_event_data(string user_id)
         {
             try
             {
                 MasterManagement _MM = new MasterManagement();
-                var data = request.Content.ReadAsStringAsync().Result;
-                string Jsondata = data.ToString();
+                //var data = request.Content.ReadAsStringAsync().Result;
+               //string Jsondata = data.ToString();
 
                 _dtable = new DataTable();
                 _MM = new MasterManagement();
-                if (data != null)
+                if (user_id != null)
                 {
-                    _dtable = _MM.View_Rejected_Event_Data(Jsondata);
+                    _dtable = _MM.View_Rejected_Event_Data(user_id);
                 }
                 if (_dtable.Rows.Count > 0)
                 {
