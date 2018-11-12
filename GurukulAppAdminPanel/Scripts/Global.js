@@ -655,10 +655,25 @@
                 if (data.status==="true") {
                     if (data.response != null) {
                         var responseData = data.response[0];
-                        var _content = '<table class="table table-responsive"><tbody><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr><tr><td>Content Source</td><th>' + responseData.CONTENT_SOURCE + '</th></tr><tr><td>Subject</td><th>' + responseData.SUBJECT + '</th></tr><tr><td>Topic</td><th>' + responseData.TOPIC + '</th></tr></tbody></table>';
+                        var _content = '<table class="table table-responsive"><tbody><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr></tbody></table>';
                         // var modalbody = modalBlock.children("div.modal-dialog").children("div.modal-content").children("div.modal-body");
                         //modalbody.html(_content);
+                        //content_div
+                        //<tr><td>Content Source</td><th>' + responseData.CONTENT_SOURCE + '</th></tr><tr><td>Subject</td><th>' + responseData.SUBJECT + '</th></tr><tr><td>Topic</td><th>' + responseData.TOPIC + '</th></tr>
+
                         $("#event_details_Div").html(_content);
+
+
+                        $("#content_div").Gridview(data.response, {
+                            autocolumn: false,
+                            column: [
+                                        { name: "CONTENT SOURCE", dbcol: "CONTENT_SOURCE" },
+                                        { name: "SUBJECT", dbcol: "SUBJECT" },
+                                         { name: "TOPIC", dbcol: "TOPIC" }
+                            ],
+                            
+                        });
+
                     }
                     else {
                         $("#event_details_Div").html(null);
@@ -817,6 +832,10 @@
         var id_of_sub = $("#id_of_sub option:selected").val();
         var id_of_topic = $("#id_of_topic option:selected").val();
         var content_id = $("#content_id").val();
+        if (id_of_sub === "0" || id_of_topic==="0" || content_id === "") {
+            alert("Please fill all the value");
+            return false;
+        }
         $.redirect(_BaseURL + "/event/add-topic-event?enent_reg_id=" + event_reg_id_hide + "&subject_id=" + id_of_sub + "&topic_id=" + id_of_topic + "&content=" + content_id);
 
     });
