@@ -298,6 +298,18 @@ namespace GurukulAppAdminPanel.Models
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
             return _dtable;
         }
+        public DataTable Volunteer_Event_Cancel(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=10
+                new SqlParameter("@OPERATIONID",12) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
     }
 
 }
