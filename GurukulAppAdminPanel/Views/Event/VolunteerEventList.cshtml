@@ -31,7 +31,7 @@
                             <th>EVENT ID</th>
                             <th>Volunteer Name</th>
                             <th>Event Name</th>
-                            @*<th>Event Date</th>*@
+                            <th>Event Date</th>
                             <th>Volunteer's Date</th>
                             <th>Applied On</th>
                             <th>Message</th>
@@ -75,7 +75,7 @@
                                     </td>
                                     <td> <a href="javascript:void(0);" id="showVolunteerProfile" data-id="@_volunteer["USER_ID"]" class="text-danger" title="Show Profile" data-toggle="modal" data-target="#myModal7">@_volunteer["VOLUNTEER_NAME"]</a> </td>
                                     <td> @_volunteer["EVENT_NAME"] </td>
-                                    @*<td> @_volunteer["EVENT_DATE"] </td>*@
+                                    <td> @_volunteer["EVENT_DATE"] </td>
                                     <td> @_volunteer["USER_DATE"] </td>
                                     <td> @_volunteer["REG_DATE"] </td>
                                     <td> @_volunteer["MESSAGE"] </td>
@@ -84,10 +84,16 @@
                                         <div class="btn-group">
                                             @if (_statusVal == 18 && _volunteer["MESSAGE"].ToString() == "Check-In & Check-Out approval pending")
                                             {
-                                                <a href="javascript:void(0);" id="updateContent" data-id="@_volunteer["EVENT_REG_ID"]" class="text-danger" title="Update" data-toggle="modal" data-target="#myModal8"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                                <a href="javascript:void(0);" id="updateContent" data-id="@_volunteer["EVENT_REG_ID"]" class="btn btn-danger btn-xs" title="Update" data-toggle="modal" data-target="#myModal8"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                             }
-                                            else
+                                            else if(_statusVal==17 && _volunteer["MESSAGE"].ToString() == "Check-In & Check-Out approval pending")
                                             {
+                                                _approveUrl = "event/volunteer-event-approved/" + _statusVal + "/" + _event_reg_id+ "/"+80;
+                                                <a href="@Url.Action("",_approveUrl)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
+                                            }
+                                            else if(_statusVal == 17)
+                                            {
+                                                _approveUrl = "event/volunteer-event-approved/" + _statusVal + "/" + _event_reg_id + "/" + 78;
                                                 <a href="@Url.Action("",_approveUrl)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
                                             }
                                             <a href="javascript:void(0);" title="Reject" id="rejectBtn" data-eventid="@rejectval" data-url="@_rejectUrl" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal9"> <i class="fa fa-ban"></i> </a>

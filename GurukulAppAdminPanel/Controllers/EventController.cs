@@ -337,7 +337,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Param :: 
          * Return :: Volunteer Event list View part.
          **************************************/
-        public ActionResult VolunteerEventApprove(string _statusVal, string _event_reg_id)
+        public ActionResult VolunteerEventApprove(string _statusVal, string _event_reg_id,string msg_id="")
         {
 
             int UserId = Convert.ToInt32(Session["USER_ID"]);
@@ -346,7 +346,7 @@ namespace GurukulAppAdminPanel.Controllers
             SortedList<string, object> _postArrData = new SortedList<string, object>();
 
             _postArrData.Add("STATUS", 18);
-            _postArrData.Add("MESSAGE", 78);
+            _postArrData.Add("MESSAGE", msg_id);
             _postArrData.Add("USER_ID", UserId);
             _postArrData.Add("EVENT_REG_ID", _event_reg_id);
             postdata.Add(_postArrData);
