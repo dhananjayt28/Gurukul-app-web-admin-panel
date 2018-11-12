@@ -396,7 +396,7 @@ namespace GurukulAppAdminPanel.Controllers
         //    }
         //    return Redirect(Constant.BASEURL + "event/volunteer-event-reg-list");
         //}
-        public ActionResult VolunteerEventRejections(string _statusVal, string _event_reg_id)
+        public ActionResult VolunteerEventRejections(string _statusVal, string _event_reg_id,string message)
         {
 
             int UserId = Convert.ToInt32(Session["USER_ID"]);
@@ -405,7 +405,7 @@ namespace GurukulAppAdminPanel.Controllers
             SortedList<string, object> _postArrData = new SortedList<string, object>();
 
             _postArrData.Add("STATUS", 19);
-            _postArrData.Add("MESSAGE", 79);
+            _postArrData.Add("MESSAGE", message);
             _postArrData.Add("USER_ID", UserId);
             _postArrData.Add("EVENT_REG_ID", _event_reg_id);
             postdata.Add(_postArrData);
@@ -667,6 +667,28 @@ namespace GurukulAppAdminPanel.Controllers
             string _url = Constant.BASEURL + "event/volunteer-event-reg-list";
             return Redirect(_url);
 
+        }
+        //GetReason
+        public string GetReason()
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _dtable = _MM.View_Master_List("MASTER REASON");
+
+
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                _jsonString = Data.DatatableEmpty();
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            return _jsonString;
         }
 
 

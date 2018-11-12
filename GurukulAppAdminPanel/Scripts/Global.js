@@ -1,6 +1,7 @@
 ﻿$(function () {
     "use strict"
     var _BaseURL = window.location.origin;
+    var url = "";
     
     var action_name = !$.isNull($.getactionname()) ? $.getactionname().toLowerCase() : "";
     var getUrlParameter = function getUrlParameter(sParam) {
@@ -820,4 +821,29 @@
     });
      
     
+    $(document).on("click", "#rejectBtn", function () {
+        var thisObj = $(this);
+        url = thisObj.data("url");
+        $.ajax({
+            url: _BaseURL + "/event/get-reason",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#message_dd").Dropdown(data.response, {
+                    value: {
+                        text: "LOV_NAME",
+                        value: "LOV_ID"
+                    }
+                });
+            }
+        });
+    });
+    $(document).on("click", "#btn_reject_with_msg", function () {
+        var msg_id = $("#message_dd option:selected").val();
+        var full_url = _BaseURL +"/"+ url + "/" + msg_id
+       // alert(full_url);
+        $.redirect(full_url);
+
+    });
 });

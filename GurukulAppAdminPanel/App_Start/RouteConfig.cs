@@ -7,7 +7,12 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//AddTopicContent
+        {//GetReason
+            routes.MapRoute(
+              name: "GetReason",
+              url: "event/get-reason",
+              defaults: new { controller = "Event", action = "GetReason"}
+         );
             routes.MapRoute(
               name: "AddTopicContent",
               url: "event/add-topic-event/{enent_reg_id}/{subject_id}/{topic_id}/{content}",
@@ -151,7 +156,7 @@ namespace GurukulAppAdminPanel.App_Start
             );
             routes.MapRoute(
                name: "Volunteer Event Rejected",
-               url: "event/volunteer-event-rejected/{_statusVal}/{_event_reg_id}",
+               url: "event/volunteer-event-rejected/{_statusVal}/{_event_reg_id}/{message}",
                defaults: new { controller = "Event", action = "VolunteerEventRejections", urldata = UrlParameter.Optional }
            );
             routes.MapRoute(
