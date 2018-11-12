@@ -637,7 +637,7 @@ namespace GurukulAppAdminPanel.Controllers
             return _jsonString;
         }
         //TopicContent
-        public string AddTopicContent(string enent_reg_id,string subject_id,string topic_id,string content)
+        public ActionResult AddTopicContent(string enent_reg_id,string subject_id,string topic_id,string content)
         {
             string _jsonString = string.Empty;
             int UserId = Convert.ToInt32(Session["USER_ID"]);
@@ -664,7 +664,8 @@ namespace GurukulAppAdminPanel.Controllers
                 _jsonString = Data.DatatableEmpty();
                 //response = this.Request.CreateResponse(HttpStatusCode.OK);
             }
-            return _jsonString;
+            string _url = Constant.BASEURL + "event/volunteer-event-reg-list";
+            return Redirect(_url);
 
         }
 
