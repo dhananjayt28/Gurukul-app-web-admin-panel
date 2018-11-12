@@ -425,7 +425,7 @@
         //Select Subject
        //alert(sub_);
         //alert(date_);
-       if (sub_ === "Select Subject" || date_ === "") {
+       if (sub_ === "Select" || date_ === "") {
            alert("Please Put Date and Subject Both");
            return false;
        }
