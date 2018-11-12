@@ -35,7 +35,7 @@
                             <th>Volunteer's Date</th>
                             <th>Applied On</th>
                             <th>Message</th>
-                            <th>Action</th>
+                            @*<th>Action</th>*@
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -79,12 +79,12 @@
                                     <td> @_volunteer["USER_DATE"] </td>
                                     <td> @_volunteer["REG_DATE"] </td>
                                     <td> @_volunteer["MESSAGE"] </td>
-                                    <td><a href="javascript:void(0);" id="updateContent" data-id="@_volunteer["EVENT_REG_ID"]" class="text-danger" title="Update" data-toggle="modal" data-target="#myModal8"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> </td>
+                                    @*<td><a href="javascript:void(0);" id="updateContent" data-id="@_volunteer["EVENT_REG_ID"]" class="text-danger" title="Update" data-toggle="modal" data-target="#myModal8"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> </td>*@
                                     <td>
                                         <div class="btn-group">
-                                            @if (_statusVal == 18)
+                                            @if (_statusVal == 18 && _volunteer["MESSAGE"].ToString() == "Check-In & Check-Out approval pending")
                                             {
-                                                <a href="javascript:void(0);" title="Allocate Topic" id="topicAllocate" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
+                                                <a href="javascript:void(0);" id="updateContent" data-id="@_volunteer["EVENT_REG_ID"]" class="text-danger" title="Update" data-toggle="modal" data-target="#myModal8"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                             }
                                             else
                                             {

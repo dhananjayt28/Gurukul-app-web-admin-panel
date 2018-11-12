@@ -628,6 +628,7 @@
         });
         $(document).on("change", "#dd_statuses", function () {
             var volunteer_status = $("#dd_statuses option:selected").text();
+            //alert(volunteer_status);
             //var formArray = {};
             //formArray["user_status"] = user_status;
             $.redirect(_BaseURL + "/event/volunteer-event-reg-list?vstatus=" + volunteer_status);

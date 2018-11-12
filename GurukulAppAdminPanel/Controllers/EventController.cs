@@ -22,7 +22,8 @@ namespace GurukulAppAdminPanel.Controllers
     public class EventController : MasterController
     {
         private DataTable _dtable;
-        
+        private Dictionary<string, object> errordata, dictionaryObj;
+
         public EventController() { }
         /***************************************
          * Title :: Event Add View
@@ -278,7 +279,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Event list View part.
          **************************************/
         [HttpGet]
-        public ActionResult VolunteerEventList(string ustatus = "")
+        public ActionResult VolunteerEventList(string vstatus = "")
         {
             EventManagement _emObj = new EventManagement();
             string _jsonString = string.Empty;
@@ -286,14 +287,14 @@ namespace GurukulAppAdminPanel.Controllers
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            if (ustatus == "")
+            if (vstatus == "")
             {
                 _dtable = _MM.Get_Event_Volunteer_Reg_Data("Waiting For Approval");
 
             }
             else
             {
-                _dtable = _MM.Get_Event_Volunteer_Reg_Data(ustatus);
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data(vstatus);
             }
 
             if (_dtable.Rows.Count > 0)
@@ -312,10 +313,18 @@ namespace GurukulAppAdminPanel.Controllers
                 JavaScriptSerializer jsObj = new JavaScriptSerializer(); 
                 var data = jsObj.Deserialize<Dictionary<string, object>>(_jsonString);
                 bool status = Convert.ToBoolean(data["status"]);
-                if (status)
+                dictionaryObj = new Dictionary<string, object>();
+                dictionaryObj = Data.Deserialize(_jsonString, typeof(Dictionary<string, object>));
+                if (dictionaryObj.ContainsKey("response"))
                 {
                     _emObj.VolunteerEventList = (ArrayList)data["response"];
                 }
+                else
+                {
+
+
+                }
+               
             }
             ViewBag.breadcrumbController = "Approval";
             ViewBag.breadcrumbAction = "Volunteer Event Registration List";
