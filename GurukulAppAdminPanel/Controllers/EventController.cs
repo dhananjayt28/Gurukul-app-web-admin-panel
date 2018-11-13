@@ -345,7 +345,7 @@ namespace GurukulAppAdminPanel.Controllers
             List<object> postdata = new List<object>();
             SortedList<string, object> _postArrData = new SortedList<string, object>();
 
-            _postArrData.Add("STATUS", 18);
+            _postArrData.Add("STATUS", _statusVal);
             _postArrData.Add("MESSAGE", msg_id);
             _postArrData.Add("USER_ID", UserId);
             _postArrData.Add("EVENT_REG_ID", _event_reg_id);
@@ -413,7 +413,7 @@ namespace GurukulAppAdminPanel.Controllers
             List<object> postdata = new List<object>();
             SortedList<string, object> _postArrData = new SortedList<string, object>();
 
-            _postArrData.Add("STATUS", 19);
+            _postArrData.Add("STATUS", _statusVal);
             _postArrData.Add("MESSAGE", message);
             _postArrData.Add("USER_ID", UserId);
             _postArrData.Add("EVENT_REG_ID", _event_reg_id);

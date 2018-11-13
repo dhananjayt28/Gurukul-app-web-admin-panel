@@ -7,15 +7,35 @@ namespace GurukulAppAdminPanel.App_Start
         public static void Configure(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
-            //event_registration_cancel
+            //itinary_conformation_update
             //config.Routes.MapHttpRoute(
             //    name: "",
             //    routeTemplate: "",
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
             config.Routes.MapHttpRoute(
+              name: "ITINARY CONFIRMATION UPDATE",
+              routeTemplate: "api/itinary-conformation-update",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "itinary_conformation_update",
+
+              }
+          );
+            config.Routes.MapHttpRoute(
+              name: "USER LOGIN",
+              routeTemplate: "api/user-login",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "user_login",
+
+              }
+          );
+            config.Routes.MapHttpRoute(
               name: "VOLUNTEER EVENT CANCEL",
-              routeTemplate: "api/event_registration_cancel",
+              routeTemplate: "api/event-registration-cancel",
               defaults: new
               {
                   Controller = "WebApi",

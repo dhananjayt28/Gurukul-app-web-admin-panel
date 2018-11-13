@@ -12,23 +12,26 @@
 
     public partial class AuthenticateManagement
     {
+        private DataTable _dtable;
+       // private Dictionary<string, object> errordata, dictionaryObj;
         private DatabaseManagement _dbObj = new DatabaseManagement("ConnectDB");
         private DataTable _dtObj;
         private SqlParameter[] _param;
 
         [Display(Name = "User Name")]
-        [Required(ErrorMessage = "User Name shoud be required.")]
+        [Required(ErrorMessage = "User Name should be required.")]
         public string UserName { get; set; }
 
         [Display(Name = "Password")]
-        [Required(ErrorMessage = "Password shoud be required.")]
+        [Required(ErrorMessage = "Password should be required.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public string LoginAction(AuthenticateManagement authData)
         {
+            string _jsonString = string.Empty;
             string _user_name = string.Empty, _password = string.Empty;
-            bool _isadmin = true;
+           // bool _isadmin = true;
             _user_name = authData.UserName;
             _password = authData.Password;
             // Initialize Post Data
@@ -36,21 +39,38 @@
             SortedList<string, object> _postArrData = new SortedList<string, object>();
             _postArrData.Add("USER_ID", _user_name);
             _postArrData.Add("PASSWORD", _password);
-            _postArrData.Add("IS_ADMIN", _isadmin);
+           // _postArrData.Add("IS_ADMIN", _isadmin);
+           //role id is hardcode in backend
 
             var _postContent = Json.Encode(_postArrData);
-            RestClient _client = new RestClient();
-            _client.URL = Constant.LOGIN;
-            _client.Method = HttpMethod.POST;
-            _client.Content = _postContent;
-            _client.Type = ContentType.URLENCODE;
-            _client.Execute();
-            var response = _client.Response();
-            if (response == string.Empty)
+            MasterManagement _mmob = new MasterManagement();
+            _dtable = _mmob.Admin_Login(_postContent);
+
+
+            if (_dtable.Rows.Count > 0)
             {
-                response = _client.errordata();
+                _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
             }
-            return response;
+            else
+            {
+                _jsonString = Data.DatatableEmpty();
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+
+            //previous code which was  logging in with service 
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.LOGIN;
+            //_client.Method = HttpMethod.POST;
+            //_client.Content = _postContent;
+            //_client.Type = ContentType.URLENCODE;
+            //_client.Execute();
+            //var response = _client.Response();
+            //if (response == string.Empty)
+            //{
+            //    response = _client.errordata();
+            //}
+            return _jsonString;
         }
 
         public DataTable insert_patient(string requestdata)

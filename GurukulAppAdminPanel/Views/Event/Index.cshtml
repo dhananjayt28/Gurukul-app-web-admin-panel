@@ -118,6 +118,10 @@
                                     </div>
                                     <div class="text-danger">@Html.ValidationMessageFor(model => model.EventLocationId)</div>
                                 </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon bg_pink"><i class="fa fa-user"></i></span>
+                                    @Html.EditorFor(model => model.Message_to_user, new { htmlAttributes = new { @type = "number", @placeholder = "Message to Volunteer", @class = "form-control bod_rad_0", @required = true } })
+                                </div>
                             </div>
                         </div>
                     </div>

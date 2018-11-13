@@ -302,7 +302,7 @@ namespace GurukulAppAdminPanel.Models
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
-            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=10
+            {
                 new SqlParameter("@OPERATIONID",12) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                  new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
@@ -310,6 +310,51 @@ namespace GurukulAppAdminPanel.Models
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
             return _dtable;
         }
+        //Login Operation ID call
+        public DataTable Login(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=1, @USER_ID='jayanta@tangenttechsolutions.com', @PASSWORD='215023'
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 1) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+               
+            };
+
+            dt = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _param);
+
+            return dt;
+        }
+        public DataTable Admin_Login(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=1, @USER_ID='jayanta@tangenttechsolutions.com', @PASSWORD='215023'
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _param);
+
+            return dt;
+        }
+        public DataTable Itinary_Update(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON='[{"ID_CARD_TYPE":"","TRANSPORTAION_ARRANGEMENT":"","ACCOMODATION_ARRANGEMENT":"","EVENT_REG_ID":""}]'
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 26) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
+
+
     }
 
 }

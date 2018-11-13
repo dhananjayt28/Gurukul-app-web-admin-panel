@@ -35,7 +35,7 @@ namespace GurukulAppAdminPanel.Controllers
         public ActionResult Index(AuthenticateManagement login)
         {
              if (ModelState.IsValid)
-            {
+            {//login is working with Admin_Login function of MasterManagement  
                 var response = login.LoginAction(login);
                 if (response != string.Empty)
                 {

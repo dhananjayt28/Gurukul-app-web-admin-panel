@@ -46,6 +46,7 @@
         public string RejectMessage { get; set; }
 
         public bool IsActive { get; set; }
+        public string Message_to_user { get; set; }
 
 
 
@@ -71,7 +72,8 @@
             string _response = string.Empty,
                    _endDate = string.Empty,
                    _enddate = string.Empty,
-                   _expiredate = string.Empty;
+                   _expiredate = string.Empty,
+                   Message_to_user = string.Empty;
             int _eventid = 0,
                 _male_no = 0,
                 _female_no = 0,
@@ -89,10 +91,12 @@
             _male_no = Convert.ToInt32(data.EventMaleNo);
             _female_no = Convert.ToInt32(data.EventFemaleNo);
             _isactive = data.IsActive ? 1 : 0;
+           
+
             //DateTime s_date = Convert.ToDateTime(_endDate);
             //_month = s_date.Month;
             //_year = s_date.Year;
-            
+
             // Ready Array
             _data.Add("EVENT_ID", _eventid);
             _data.Add("USER_ID", createdby);
@@ -112,10 +116,14 @@
             }
             else if (_eventid == 3)
             {
+                Message_to_user = Convert.ToString(data.Message_to_user);
                 _stateid = Convert.ToInt32(data.EventStateId);
                 _locationid = Convert.ToInt32(data.EventLocationId);
                 _data.Add("STATE_ID", _stateid);
                 _data.Add("LOCATION_ID", _locationid);
+                //Message_to_user
+                _data.Add("MESSAGE_TO_USER", Message_to_user);
+
             }
 
             RestClient _client = new RestClient();
