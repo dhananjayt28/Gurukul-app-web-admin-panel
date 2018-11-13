@@ -126,7 +126,7 @@ namespace GurukulAppAdminPanel.Controllers
                 }
                 else
                 {
-                    string _url = Constant.BASEURL + "event/event-list";
+                    string _url = Constant.BASEURL + "event/event-add";
                     return Redirect(_url);
                 }
                 
@@ -210,6 +210,7 @@ namespace GurukulAppAdminPanel.Controllers
                 _eventid = Convert.ToInt32(eventid);
             }
             // Dropdown Data
+            //View_Master_List("MASTER EVENT")
             _response = _emObj.GetEventMasterType();
             if (_response != string.Empty)
             {

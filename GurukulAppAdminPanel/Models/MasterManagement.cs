@@ -353,6 +353,129 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        public DataTable Itinary_Status_Update(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON='[{"ID_CARD_TYPE":"","TRANSPORTAION_ARRANGEMENT":"","ACCOMODATION_ARRANGEMENT":"","EVENT_REG_ID":""}]'
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 27) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
+        /*************************************
+         * Title :: User Approved by Admin
+         * Description :: Fetch Data method using Procedure name by Opeation Id
+         * Parameter :: UserId,Value
+         * Return :: row affected count
+         *************************************/
+        public Int32 UserApprovedAction(string jsondata)
+        {
+            int _response = 0;
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=10,@USER_ID = 3
+            SqlParameter[] _Param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 10) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _response = _dbObj.Update("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return _response;
+        }
+        /*************************************
+         * Title :: User Rejected by Admin
+         * Description :: Fetch Data method using Procedure name by Opeation Id
+         * Parameter :: UserId,Value
+         * Return :: row affected count
+         *************************************/
+        public Int32 UserRejectedAction(string jsondata)
+        {
+            int _response = 0;
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=11,@USER_ID = 3
+            SqlParameter[] _Param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 11) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _response = _dbObj.Update("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return _response;
+        }
+        /*************************************
+         * Title :: User Rejected by Admin
+         * Description :: Fetch Data method using Procedure name by Opeation Id
+         * Parameter :: UserId,Value
+         * Return :: row affected count
+         *************************************/
+        public Int32 UserDeleteAction(string jsondata)
+        {
+            int _response = 0;
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=11,@USER_ID = 3
+            SqlParameter[] _Param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 12) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _response = _dbObj.Update("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return _response;
+        }
+        //get-event-master-type
+        public DataTable GetEventMasterType()
+        {
+            //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=2 
+            DataTable _datatable;
+            _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return _datatable;
+        }
+        //get-state-data
+        public DataTable GetStateData()
+        {
+            //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=5
+            DataTable _datatable;
+            _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 5) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return _datatable;
+        }
+        //get-country-list
+        public DataTable GetCountryData()
+        {
+            //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=7
+            DataTable _datatable;
+            _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return _datatable;
+        }
+        public int AddChapterData(string jsondata)
+        {
+           int  _queryResponse = 0;
+            try
+            {
+                //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=8, @CHAPTER_NAME = 'Manama', @CHAPTER_DESC='', @COUNTRYID = '1'
+                SqlParameter[] _Param = new SqlParameter[] {
+                    new SqlParameter("@OPERATIONID", 8) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                    new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                    
+                };
+                _queryResponse = _dbObj.Insert("USP_MASTER_MANAGEMENT", _Param);
+            }
+            catch (SqlException ex)
+            {
+                string Msg = ex.Message.ToString();
+            }
+           
+            return _queryResponse;
+        }
+
+
 
 
     }

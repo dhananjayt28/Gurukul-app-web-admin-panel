@@ -50,18 +50,18 @@ namespace GurukulAppAdminPanel.Controllers
                         Dictionary<string, object> user = (Dictionary<string, object>)UserData[0];
                         if(user.Count > 0)
                         {
-                            UserId = Convert.ToInt32(user["USERID"]);
+                            UserId = Convert.ToInt32(user["USER_ID"]);
                             RoleId = Convert.ToInt32(user["ROLE_ID"]);
                             name = user["NAME"].ToString();
-                            email = user["EMAILID"].ToString();
-                            mobile = user["MOBILE_NO"].ToString();
+                            email = user["EMAIL_ID"].ToString();
+                            //mobile = user["MOBILE_NO"].ToString();
 
                             SortedList<string, object> _sessData = new SortedList<string, object>();
                             Session.Add("USER_ID", UserId);
                             Session.Add("ROLE_ID", RoleId);
                             Session.Add("NAME", name);
                             Session.Add("EMAIL", email);
-                            Session.Add("MOBILE", mobile);
+                            //Session.Add("MOBILE", mobile);
                             //Session.Add("SessData",_sessData);
                             if(Session.Count > 0)
                             {

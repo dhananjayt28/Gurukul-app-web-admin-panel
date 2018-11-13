@@ -7,12 +7,22 @@ namespace GurukulAppAdminPanel.App_Start
         public static void Configure(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
-            //itinary_conformation_update
+            //itinary_status_update
             //config.Routes.MapHttpRoute(
             //    name: "",
             //    routeTemplate: "",
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
+            config.Routes.MapHttpRoute(
+              name: "ITINARY STATUS UPDATE",
+              routeTemplate: "api/itinary-status-update",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "itinary_status_update",
+
+              }
+          );
             config.Routes.MapHttpRoute(
               name: "ITINARY CONFIRMATION UPDATE",
               routeTemplate: "api/itinary-conformation-update",
