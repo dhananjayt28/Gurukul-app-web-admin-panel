@@ -1095,6 +1095,42 @@ namespace GurukulAppAdminPanel.Controllers
             response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
             return response;
         }
+        [HttpPost]
+        //[Route("api/topic-status-update")]
+        public HttpResponseMessage topic_status_update(HttpRequestMessage request)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                var data = request.Content.ReadAsStringAsync().Result;
+                string Jsondata = data.ToString();
+
+                _dtable = new DataTable();
+                _MM = new MasterManagement();
+                if (data != null)
+                {
+                    _dtable = _MM.Topic_Status_Update(Jsondata);
+                }
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+            }
+
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
 
 
 

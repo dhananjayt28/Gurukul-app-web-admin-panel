@@ -474,6 +474,20 @@ namespace GurukulAppAdminPanel.Models
            
             return _queryResponse;
         }
+        public DataTable Topic_Status_Update(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON='[{"ID_CARD_TYPE":"","TRANSPORTAION_ARRANGEMENT":"","ACCOMODATION_ARRANGEMENT":"","EVENT_REG_ID":""}]'
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 25) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
 
 
 

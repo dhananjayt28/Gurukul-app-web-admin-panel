@@ -126,7 +126,7 @@
                                                
                                                 _approveUrl = "event/volunteer-event-approved/" + _statusVal + "/" + _event_reg_id + "/" + _msg_id;
                                                 <a href="@Url.Action("", _approveUrl)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
-                                               
+
                                             }
                                             //Waiting for Approval
                                             else if (_statusVal == 17)
@@ -134,7 +134,8 @@
                                                 _statusVal = 18;//Event Approved
                                                 _msg_id = 78;//Event Approved
                                                 reject_msg = 79;//Event Rejected
-                                                _rejectUrl = "event/volunteer-event-rejected/" + _statusVal + "/" + _event_reg_id;
+                                                reject_status = 19;//Event Reject
+                                                _rejectUrl = "event/volunteer-event-rejected/" + reject_status + "/" + _event_reg_id;
                                                 _approveUrl = "event/volunteer-event-approved/" + _statusVal + "/" + _event_reg_id + "/" + _msg_id;
                                                 <a href="@Url.Action("", _approveUrl)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
                                                 <a href="javascript:void(0);" title="Reject" id="rejectBtn" data-eventid="@rejectval" data-url="@_rejectUrl" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal9"> <i class="fa fa-ban"></i> </a>
