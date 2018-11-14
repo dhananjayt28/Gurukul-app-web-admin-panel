@@ -116,11 +116,13 @@ namespace GurukulAppAdminPanel.Controllers
                     if (status)
                     {
                         string _url = Constant.BASEURL + "event/event-list";
+                        TempData["MSG"] = "Event Added Successfully";
                         return Redirect(_url);
                     }
                     else
                     {
                         string _url = Constant.BASEURL + "event/event-list";
+                        TempData["MSG"] = "";
                         return Redirect(_url);
                     }
                 }
@@ -270,6 +272,7 @@ namespace GurukulAppAdminPanel.Controllers
             ViewBag.breadcrumbController = "Event";
             ViewBag.breadcrumbAction = "Event List";
             ViewBag.Title = "Event List" + Constant.PROJECT_NAME;
+           
             return View(_emObj);
         }
 

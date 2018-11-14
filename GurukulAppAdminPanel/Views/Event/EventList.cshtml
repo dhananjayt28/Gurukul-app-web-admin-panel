@@ -25,6 +25,9 @@
                 @Html.DropDownList("eventMasterType", Model.List, new { @class = "form-control", @onchange = "Redirect()" })
                 <input type="hidden" id="baseurl" value="@ViewBag.BASEURL" />
             </div> 
+            <div>
+                <span>@TempData["MSG"]</span>
+            </div>
             <div class="panel-body">
                 @if (Convert.ToInt16(ViewBag.eventid) == 1)
                 {

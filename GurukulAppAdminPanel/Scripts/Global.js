@@ -76,22 +76,27 @@
         var _dropValue = $(this).val();
         var _workshop = $("#GitaAndWorkshop");
         var _gita = $("#GitaDistribute");
+        var only_workshop = $("#only_workshop");
         switch (_dropValue) {
             case "1": {
                 _workshop.hide();
                 _gita.hide();
+                only_workshop.hide();
             } break;
             case "2": {
                 _workshop.show();
                 _gita.hide();
+                only_workshop.show();
             } break;
             case "3": {
                 _workshop.show();
                 _gita.show();
+                only_workshop.hide();
             } break;
             default: {
                 _workshop.hide();
                 _gita.hide();
+                only_workshop.hide();
             } break;
         }
 
@@ -413,6 +418,7 @@
        var expiry_date = $("#expireDate").val();
        if (male_no <= 0 || female_no <= 0 || start_date === "" || end_date === "" || expiry_date === "") {
            alert("Plesae enter male and female req no more than 0 and also please put start date,end date and expiry date ");
+           $.redirect(_BaseURL + "/event/event-add");
        }
 
     });

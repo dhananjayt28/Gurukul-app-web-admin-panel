@@ -47,6 +47,7 @@
 
         public bool IsActive { get; set; }
         public string Message_to_user { get; set; }
+        public string Holiday { get; set; }
 
 
 
@@ -73,7 +74,8 @@
                    _endDate = string.Empty,
                    _enddate = string.Empty,
                    _expiredate = string.Empty,
-                   Message_to_user = string.Empty;
+                   Message_to_user = string.Empty,
+                   Holiday = string.Empty;
             int _eventid = 0,
                 _male_no = 0,
                 _female_no = 0,
@@ -112,7 +114,9 @@
             if (_eventid == 2)
             {
                 _stateid = Convert.ToInt32(data.EventStateId);
+                Holiday = Convert.ToString(data.Holiday);
                 _data.Add("STATE_ID", _stateid);
+                //_data.Add("HOLIDAY_DATE", Holiday);
             }
             else if (_eventid == 3)
             {
