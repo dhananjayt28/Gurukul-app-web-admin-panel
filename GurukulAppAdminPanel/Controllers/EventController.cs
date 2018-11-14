@@ -751,9 +751,9 @@ namespace GurukulAppAdminPanel.Controllers
         }
 
         [HttpPost]
-        public string UploadItinerary(UploadItinerary ob)
+        public string UploadItinerary(EventManagement ob)
         {
-            string file_name = ob.event_reg_id;
+            string file_name = ob.file.FileName;
             string response = string.Empty;
           
 
@@ -768,8 +768,18 @@ namespace GurukulAppAdminPanel.Controllers
                 string errordata = ex.ToString();
                 return errordata;
             }
-           // string response = ob.UploadMouFile(file_name, mou_id, user_id);
+            MasterManagement _mmobj = new MasterManagement();
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
 
+            _postArrData.Add("EVENT_REG_ID", ob.hide_event_reg_id);            
+            _postArrData.Add("ITINERARY_FILES", file_name);
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            DataTable dt= new DataTable();
+            dt = _mmobj.Upload_Itinerary(_postContent);
+
+            response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
 
 
             return response;

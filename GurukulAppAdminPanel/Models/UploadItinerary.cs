@@ -7,8 +7,8 @@ namespace GurukulAppAdminPanel.Models
 {
     public class UploadItinerary
     {
-        public string event_reg_id { get; set; }
-        public HttpPostedFileBase file { get; set; }
+        public string hide_event_reg_id { get; set; }
+        public HttpPostedFileBase file_ { get; set; }
         
 
         //public string UploadMouFile(string file_name, string mou_id, string user_id)

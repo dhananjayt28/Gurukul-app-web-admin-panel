@@ -11,13 +11,15 @@
     using System.Data;
     using System.Data.SqlClient;
     using DatabaseManagementClient;
+    using System.Web;
 
     public class EventManagement
     {
         private DatabaseManagement _dbObj = new DatabaseManagement("ConnectDB");
         private DataTable _dtable;
         private SqlParameter[] _param;
-
+        public string hide_event_reg_id { get; set; }
+        public HttpPostedFileBase file { get; set; }
         public string EventId { get; set; }
 
         //public string LocationId { get; set; }

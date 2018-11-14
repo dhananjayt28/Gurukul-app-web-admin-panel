@@ -872,4 +872,35 @@
         $.redirect(full_url);
 
     });
+
+    $(document).on("click", "#sv_file", function () {
+        alert(_BaseURL + "/event/upload-itinerary");
+        var formdata = $.formdata("#form_sv_itinerary");
+        //formdata.append("Mou_Id", mou_id);
+        //formdata.append("USer_Id", user_id);
+        $.ajax({
+            url: _BaseURL + "/event/upload-itinerary",
+            type: 'POST',
+            dataType: "json",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            cache: false,
+            enctype: "multipart/form-data",
+            success: function (data) {
+                alert(data.response);
+            },
+            error: function () {
+                alert("network error occurred");
+            }
+        });
+    });
+    $(document).on("click", "#itienary_", function () {
+        var thisObj = $(this);
+        var event_reg_id = thisObj.data("id");
+        $("#hide_event_reg_id").val(event_reg_id);
+
+
+    });
+
 });

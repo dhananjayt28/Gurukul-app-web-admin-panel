@@ -205,8 +205,35 @@
                             <h4 class="modal-title">Itinerary Update</h4>
                         </div>
                         <div class="modal-body">
-                            
+                           
+                            <form id="form_sv_itinerary">
+                                @*<input type="hidden" id="hide_event_reg_id" />
+                                <input type="file" id="file_" name="file_" />
+                                <button type="button" id="sv_file" class="btn">save</button>*@
 
+
+                                @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data", id = "form_sv_itinerary" }))
+                                {
+
+                                    <div>
+                                        @Html.HiddenFor(model => Model.hide_event_reg_id, new { @id = "hide_event_reg_id" })
+                                        @*@Html.HiddenFor(model => Model.file_, new { @id = "file_" })*@
+                                        @*<input type="hidden" id="hidden_mou_id" />*@
+                                        @Html.TextBox("file", "", new { type = "file" }) <br />
+
+                                        <button type="button" id="sv_file" class="btn btn-default" data-dismiss="modal">Save</button>
+
+
+
+                                    </div>
+
+
+                                }
+
+
+
+
+                            </form>
 
                         </div>
                         <div class="modal-footer">
