@@ -339,12 +339,12 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
-        public DataTable Itinary_Update(string jsondata)
+        public DataTable Itinary_Confirmation_Update(string jsondata)
         {
             DataTable dt;
             //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON='[{"ID_CARD_TYPE":"","TRANSPORTAION_ARRANGEMENT":"","ACCOMODATION_ARRANGEMENT":"","EVENT_REG_ID":""}]'
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 28) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATION_ID", 00) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
@@ -356,9 +356,9 @@ namespace GurukulAppAdminPanel.Models
         public DataTable Itinary_Status_Update(string jsondata)
         {
             DataTable dt;
-            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON='[{"ID_CARD_TYPE":"","TRANSPORTAION_ARRANGEMENT":"","ACCOMODATION_ARRANGEMENT":"","EVENT_REG_ID":""}]'
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON=[{"EVENT_REG_ID":"","STATUS_ID":"","HOD_COMMENT":""}]''
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 27) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATION_ID", 28) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
@@ -373,16 +373,17 @@ namespace GurukulAppAdminPanel.Models
          * Parameter :: UserId,Value
          * Return :: row affected count
          *************************************/
-        public Int32 UserApprovedAction(string jsondata)
+        public DataTable UserApprovedAction(string jsondata)
         {
             int _response = 0;
+            _dtable = new DataTable();
             //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=10,@USER_ID = 3
             SqlParameter[] _Param = new SqlParameter[] {
                 new SqlParameter("@OPERATION_ID", 10) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
             };
-            _response = _dbObj.Update("USP_AUTHENTICATE_MANAGEMENT", _Param);
-            return _response;
+            _dtable = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return _dtable;
         }
         /*************************************
          * Title :: User Rejected by Admin
@@ -390,16 +391,17 @@ namespace GurukulAppAdminPanel.Models
          * Parameter :: UserId,Value
          * Return :: row affected count
          *************************************/
-        public Int32 UserRejectedAction(string jsondata)
+        public DataTable UserRejectedAction(string jsondata)
         {
             int _response = 0;
+            _dtable = new DataTable();
             //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=11,@USER_ID = 3
             SqlParameter[] _Param = new SqlParameter[] {
                 new SqlParameter("@OPERATION_ID", 11) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
             };
-            _response = _dbObj.Update("USP_AUTHENTICATE_MANAGEMENT", _Param);
-            return _response;
+            _dtable = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return _dtable;
         }
         /*************************************
          * Title :: User Rejected by Admin
@@ -407,16 +409,17 @@ namespace GurukulAppAdminPanel.Models
          * Parameter :: UserId,Value
          * Return :: row affected count
          *************************************/
-        public Int32 UserDeleteAction(string jsondata)
+        public DataTable UserDeleteAction(string jsondata)
         {
             int _response = 0;
+            _dtable = new DataTable();
             //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=11,@USER_ID = 3
             SqlParameter[] _Param = new SqlParameter[] {
                 new SqlParameter("@OPERATION_ID", 12) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
             };
-            _response = _dbObj.Update("USP_AUTHENTICATE_MANAGEMENT", _Param);
-            return _response;
+            _dtable = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return _dtable;
         }
         //get-event-master-type
         public DataTable GetEventMasterType()
@@ -454,9 +457,10 @@ namespace GurukulAppAdminPanel.Models
             _datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
             return _datatable;
         }
-        public int AddChapterData(string jsondata)
+        public DataTable AddChapterData(string jsondata)
         {
            int  _queryResponse = 0;
+           DataTable datatable = new DataTable();
             try
             {
                 //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=8, @CHAPTER_NAME = 'Manama', @CHAPTER_DESC='', @COUNTRYID = '1'
@@ -465,22 +469,51 @@ namespace GurukulAppAdminPanel.Models
                     new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
                     
                 };
-                _queryResponse = _dbObj.Insert("USP_MASTER_MANAGEMENT", _Param);
+                datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _Param);
             }
             catch (SqlException ex)
             {
                 string Msg = ex.Message.ToString();
             }
            
-            return _queryResponse;
+            return datatable;
         }
         public DataTable Topic_Status_Update(string jsondata)
         {
             DataTable dt;
-            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON='[{"TOPIC_STATUS":"","COMMENT_FOR_HOD":"""EVENT_REG_SYS_ID":""}]'
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON='[{"TOPIC_ID":"","STATUS_ID":"""EVENT_REG_ID":""}]'
             SqlParameter[] _param = new SqlParameter[] {
                 new SqlParameter("@OPERATION_ID", 27) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
+        //AddNewEventCalender
+        public DataTable AddNewEvent(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 1) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
+        public DataTable Get_Event_Data(int event_type)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 5) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EVENT_TYPE", event_type) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
 
             };
 

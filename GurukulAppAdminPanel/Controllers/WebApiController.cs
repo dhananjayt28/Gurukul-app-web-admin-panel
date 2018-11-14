@@ -1024,7 +1024,7 @@ namespace GurukulAppAdminPanel.Controllers
             return response;
         }
         [HttpPost]
-        //[Route("api/itinary-conformation-update")]
+        //[Route("api/itinary-confirmation-update")]
         public HttpResponseMessage itinary_conformation_update(HttpRequestMessage request)
         {
             try
@@ -1037,7 +1037,7 @@ namespace GurukulAppAdminPanel.Controllers
                 _MM = new MasterManagement();
                 if (data != null)
                 {
-                    _dtable = _MM.Itinary_Update(Jsondata);
+                    _dtable = _MM.Itinary_Confirmation_Update(Jsondata);
                 }
                 if (_dtable.Rows.Count > 0)
                 {

@@ -100,13 +100,13 @@
             //_year = s_date.Year;
 
             // Ready Array
-            _data.Add("EVENT_ID", _eventid);
+            _data.Add("EVENT_TYPE", _eventid);
             _data.Add("USER_ID", createdby);
-            _data.Add("START_DATE", _endDate);
-            _data.Add("END_DATE", _enddate);
-            _data.Add("EXPIRE_DATE", _expiredate);
-            _data.Add("NO_OF_MALE", _male_no);
-            _data.Add("NO_OF_FEMALE", _female_no);
+            _data.Add("EVENT_START_DATE", _endDate);
+            _data.Add("EVENT_END_DATE", _enddate);
+            _data.Add("EVENT_EXPIRED_ON", _expiredate);
+            _data.Add("EVENT_REQ_MALE", _male_no);
+            _data.Add("EVENT_REQ_FEMALE", _female_no);
             //_data.Add("YEAR", _year);
             //_data.Add("MONTH", _month);
             _data.Add("STATUS", _isactive);
@@ -115,28 +115,35 @@
             {
                 _stateid = Convert.ToInt32(data.EventStateId);
                 Holiday = Convert.ToString(data.Holiday);
-                _data.Add("STATE_ID", _stateid);
-                //_data.Add("HOLIDAY_DATE", Holiday);
+                _data.Add("EVENT_STATE_ID", _stateid);
+                _data.Add("VACATION_START_DATE", Holiday);
             }
             else if (_eventid == 3)
             {
                 Message_to_user = Convert.ToString(data.Message_to_user);
                 _stateid = Convert.ToInt32(data.EventStateId);
                 _locationid = Convert.ToInt32(data.EventLocationId);
-                _data.Add("STATE_ID", _stateid);
-                _data.Add("LOCATION_ID", _locationid);
+                _data.Add("EVENT_STATE_ID", _stateid);
+                _data.Add("EVENT_LOCATION_ID", _locationid);
                 //Message_to_user
                 _data.Add("MESSAGE_TO_USER", Message_to_user);
 
             }
+            MasterManagement _mmobj = new MasterManagement();
+            DataTable dt = new DataTable();
+            var _postContent = System.Web.Helpers.Json.Encode(_data);
+            dt = _mmobj.AddNewEvent(_postContent);
+            _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
 
-            RestClient _client = new RestClient();
-            _client.URL = Constant.ADD_EVENT_CALENDER;
-            _client.Method = HttpMethod.POST;
-            _client.Content = Json.Encode(_data);
-            _client.Type = ContentType.URLENCODE;
-            _client.Execute();
-            _response = _client.Response();
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.ADD_EVENT_CALENDER;
+            //_client.Method = HttpMethod.POST;
+            //_client.Content = Json.Encode(_data);
+            //_client.Type = ContentType.URLENCODE;
+            //_client.Execute();
+            //_response = _client.Response();
+
+
             return _response;
         }
         /***************************************
@@ -166,13 +173,16 @@
             string _response = string.Empty;
             if (EventId > 0)
             {
-
-                string _URL = Constant.GET_EVENT_DATA + "?eventid=" + EventId + "&isactive=1,0";
-                RestClient _client = new RestClient();
-                _client.URL = _URL;
-                _client.Method = HttpMethod.GET;
-                _client.Execute();
-                _response = _client.Response();
+                MasterManagement _mmObj = new MasterManagement();
+                DataTable dt = new DataTable();
+                dt = _mmObj.Get_Event_Data(EventId);
+                 _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+                //string _URL = Constant.GET_EVENT_DATA + "?eventid=" + EventId + "&isactive=1,0";
+                //RestClient _client = new RestClient();
+                //_client.URL = _URL;
+                //_client.Method = HttpMethod.GET;
+                //_client.Execute();
+                //_response = _client.Response();
             }
             return _response;
         }

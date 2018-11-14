@@ -281,6 +281,7 @@
     <Compile Include="Models\IasMangement.cs" />
     <Compile Include="Models\MasterManagement.cs" />
     <Compile Include="Models\SatsangManagement.cs" />
+    <Compile Include="Models\UploadItinerary.cs" />
     <Compile Include="Models\UserManagement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

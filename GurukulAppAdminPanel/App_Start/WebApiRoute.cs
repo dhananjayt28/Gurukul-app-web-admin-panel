@@ -35,7 +35,7 @@ namespace GurukulAppAdminPanel.App_Start
           );
             config.Routes.MapHttpRoute(
               name: "ITINARY CONFIRMATION UPDATE",
-              routeTemplate: "api/itinary-conformation-update",
+              routeTemplate: "api/itinary-confirmation-update",
               defaults: new
               {
                   Controller = "WebApi",

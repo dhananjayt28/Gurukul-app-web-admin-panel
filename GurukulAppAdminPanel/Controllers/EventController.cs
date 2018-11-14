@@ -38,7 +38,16 @@ namespace GurukulAppAdminPanel.Controllers
             List<SelectListItem> item;
             string _response = string.Empty;
             // Event Type Dropdown Data
-            _response = _eventObj.GetEventMasterType();
+            //View_Master_List("EVENT MASTER")
+            MasterManagement _mmobj = new MasterManagement();
+            DataTable dt = new DataTable();
+            dt = _mmobj.View_Master_List("EVENT MASTER");
+            string response = string.Empty;
+            _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+
+
+
+           // _response = _eventObj.GetEventMasterType();
             if (_response != string.Empty)
             {
                 JavaScriptSerializer jsObj = new JavaScriptSerializer();
@@ -52,8 +61,10 @@ namespace GurukulAppAdminPanel.Controllers
                     item.Add(new SelectListItem() { Value = "", Text = "Choose Project Name" });
                     foreach (Dictionary<string, object> _data in _EventType)
                     {
-                        string _val = _data["EVENT_ID"].ToString();
-                        string _text = _data["EVENT_NAME"].ToString();
+                        //string _val = _data["EVENT_ID"].ToString();
+                        //string _text = _data["EVENT_NAME"].ToString();
+                        string _val = _data["LOV_ID"].ToString();
+                        string _text = _data["LOV_NAME"].ToString();
                         item.Add(new SelectListItem() { Value = _val, Text = _text });
                     }
                     _eventObj.List = item;
@@ -138,7 +149,16 @@ namespace GurukulAppAdminPanel.Controllers
                 List<SelectListItem> item;
                 string _response = string.Empty;
                 // Event Type Dropdown Data
-                _response = _eventObj.GetEventMasterType();
+                //View_Master_List("EVENT MASTER")
+                MasterManagement _mmobj = new MasterManagement();
+                DataTable dt = new DataTable();
+                dt = _mmobj.View_Master_List("EVENT MASTER");
+                string response = string.Empty;
+                _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+
+
+
+                //_response = _eventObj.GetEventMasterType();
                 if (_response != string.Empty)
                 {
                     JavaScriptSerializer jsObj = new JavaScriptSerializer();
@@ -152,8 +172,10 @@ namespace GurukulAppAdminPanel.Controllers
                         item.Add(new SelectListItem() { Value = "", Text = "Choose Project Name" });
                         foreach (Dictionary<string, object> _data in _EventType)
                         {
-                            string _val = _data["EVENT_ID"].ToString();
-                            string _text = _data["EVENT_NAME"].ToString();
+                            //string _val = _data["EVENT_ID"].ToString();
+                            //string _text = _data["EVENT_NAME"].ToString();
+                            string _val = _data["LOV_ID"].ToString();
+                            string _text = _data["LOV_NAME"].ToString();
                             item.Add(new SelectListItem() { Value = _val, Text = _text });
                         }
                         _eventObj.List = item;
@@ -212,8 +234,13 @@ namespace GurukulAppAdminPanel.Controllers
                 _eventid = Convert.ToInt32(eventid);
             }
             // Dropdown Data
-            //View_Master_List("MASTER EVENT")
-            _response = _emObj.GetEventMasterType();
+            //View_Master_List("EVENT MASTER")
+            MasterManagement _mmobj = new MasterManagement();
+            DataTable dt = new DataTable();
+            dt= _mmobj.View_Master_List("EVENT MASTER");
+            string response = string.Empty;
+            _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            //response = _emObj.GetEventMasterType();
             if (_response != string.Empty)
             {
                 JavaScriptSerializer jsObj = new JavaScriptSerializer();
@@ -227,9 +254,11 @@ namespace GurukulAppAdminPanel.Controllers
                     item.Add(new SelectListItem() { Value = "0", Text = "Choose Event" });
                     foreach (Dictionary<string,object> _data in _EventType)
                     {
-                        string _val = _data["EVENT_ID"].ToString();
-                        string _text = _data["EVENT_NAME"].ToString();
-                        if(_eventid == Convert.ToUInt32(_val))
+                        //string _val = _data["EVENT_ID"].ToString();
+                        //string _text = _data["EVENT_NAME"].ToString();
+                        string _val = _data["LOV_ID"].ToString();
+                        string _text = _data["LOV_NAME"].ToString();
+                        if (_eventid == Convert.ToUInt32(_val))
                         {
                             item.Add(new SelectListItem() { Value = _val, Text = _text, Selected = true });
                         }
@@ -519,15 +548,32 @@ namespace GurukulAppAdminPanel.Controllers
             //SatsangManagement _smObj = new SatsangManagement();
             if (ModelState.IsValid)
             {
-                _response = _smObj.AddChapterData(_smObj);
+
+
+                List<object> postdata = new List<object>();
+                SortedList<string, object> _postArrData = new SortedList<string, object>();
+
+                _postArrData.Add("CHAPTER_NAME", _smObj.chaptername);
+                _postArrData.Add("CHAPTER_DESC", _smObj.chaperdescription);
+                _postArrData.Add("COUNTRY_ID", _smObj.countryid);
+                postdata.Add(_postArrData);
+                var _postContent = System.Web.Helpers.Json.Encode(postdata);
+                MasterManagement _mmobj = new MasterManagement();
+                DataTable dt = new DataTable();
+                dt= _mmobj.AddChapterData(_postContent);
+                _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+
+                //_response = _smObj.AddChapterData(_smObj);
                 var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
                 bool status = Convert.ToBoolean(data["status"]);
                 if (status)
                 {
+                    TempData["CHP_MSG"] = "Chapter Added Successfully";
                     return Redirect(Constant.BASEURL + "chapter/chapter-list");
                 }
                 else
                 {
+                    TempData["CHP_MSG"] = "";
                     return Redirect(Constant.BASEURL + "chapter/chapter-add");
                 }
             }
@@ -702,6 +748,33 @@ namespace GurukulAppAdminPanel.Controllers
                 //response = this.Request.CreateResponse(HttpStatusCode.OK);
             }
             return _jsonString;
+        }
+
+        [HttpPost]
+        public string UploadItinerary(UploadItinerary ob)
+        {
+            string file_name = ob.event_reg_id;
+            string response = string.Empty;
+          
+
+            try
+            {
+                string _FileName = Path.GetFileName(file_name);
+                string _path = Path.Combine(Server.MapPath("~/Uploaded_files"), _FileName);
+                ob.file.SaveAs(_path);
+            }
+            catch (Exception ex)
+            {
+                string errordata = ex.ToString();
+                return errordata;
+            }
+           // string response = ob.UploadMouFile(file_name, mou_id, user_id);
+
+
+
+            return response;
+
+
         }
 
 
