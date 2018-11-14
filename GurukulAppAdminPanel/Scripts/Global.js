@@ -874,7 +874,7 @@
     });
 
     $(document).on("click", "#sv_file", function () {
-        alert(_BaseURL + "/event/upload-itinerary");
+        
         var formdata = $.formdata("#form_sv_itinerary");
         //formdata.append("Mou_Id", mou_id);
         //formdata.append("USer_Id", user_id);

@@ -1,0 +1,583 @@
+$(document).ready(function () {
+  
+    var BASEURL = $.baseurl();
+    var API_BASEURL = $.apiurl();
+    var action_name = !$.isNull($.getactionname()) ? $.getactionname().toLowerCase() : "";
+
+    var escalation_matrix = function () {
+        var org_name = $("#dropdown_Of_Org_name option:selected").text();
+        //alert(org_name);
+        $.ajax({
+            url: API_BASEURL + "api/get-user-data?&orgname=" + org_name + "",
+            type: "GET",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#EscalationMatrixGridview").Gridview(data.response, {
+                    autocolumn: false,
+                    column: [
+                                { name: "Escalation level", dbcol: "ESCALATION_LEVEL" },
+                                { name: "Person Name", dbcol: "PERSON_NAME" },
+                                { name: "Email id", dbcol: "EMAIL_ID" },
+                                { name: "Contact no", dbcol: "MOBILE_NO" },
+                                {
+                                    name: "Update Escalataion Level",
+                                    dbcol: "ESCALATION_LEVEL",
+                                    value: '<select class="update_escalation_level" id="uel" style="width:50px;"><option selected="true">Select escalation level</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>',
+                                    data: {
+                                        uid: "USER_SYS_ID",
+                                        level: "ESCALATION_LEVEL"
+                                    }
+                                }
+                    ],
+
+                    class: "", 
+                    id: "view_Table"
+                });
+                
+            },
+            error: function (errorResponse) {
+                if (!errorResponse.response) {
+                    errorResponse.response = "network error occurred";
+                }
+                $.msgbox(errorResponse.response, "error");
+            }
+        });
+    }
+
+    var firstCapitalAlways = function (event) {
+        var val = $(event).val();
+        var firstLetterUpper = val[0] ? val[0].toUpperCase() : "";
+        $(event).val(firstLetterUpper + val.substr(1, val.length));
+    }
+
+    $(document).on("click", "#btnlogin", function () {
+        var formdata = $.formdata("#userLoginAuthenticate");
+        $.ajax({
+            type: 'POST',
+            url: BASEURL + 'auth/login',
+            dataType: "json",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if ($.parseBool(result.status)) {
+                    $.redirect(BASEURL + "dashboard");
+                }
+                else {
+                    $.msgbox(result.response, "warning");
+                }
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+                $.msgbox(errorThrown.responseJSON.response, "error");
+            }
+        });
+    });
+
+    $(document).on("click", "#BtnSaveUser", function () {    
+        var formdata = $.formdata("#addUser");    
+        $.ajax({
+            type: 'POST',
+            url: BASEURL + 'user/add-user',
+            dataType: "json",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if ($.parseBool(result.status)) {
+                    var user_id = result.USER_ID;
+                    $("#addUser").reset();                    
+                    $.msgbox(result.response, "success");
+                    ShowcurrentUser(user_id);
+                }
+                else {
+                    $.msgbox(result.response, "warning");
+                }
+            },
+            error: function (errorThrown) {
+                $.msgbox(errorThrown.responseJSON.response, "error");
+            }
+        });
+        //$("#ShowCurrentuser").Gridview(data.response, {
+        //    autocolumn: true
+        //});
+    });    
+    
+
+
+    /***************************************
+    * Title - dropdown of org name
+    * Parameter -null
+    * Return - gridview
+    * Syntax - null
+    ***************************************/
+    $(document).on("change", "#dropdown_Of_Org_name", function () {
+        
+        var org_name = $("#dropdown_Of_Org_name option:selected").text();
+        //alert(org_name);
+        $.ajax({
+            url: API_BASEURL + "api/get-user-data?&orgname=" + org_name + "",
+            type: "GET",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#EscalationMatrixGridview").Gridview(data.response, {
+                    autocolumn: false,
+                    column: [
+                                { name: "Escalation level", dbcol: "ESCALATION_LEVEL" },
+                                { name: "Person Name", dbcol: "PERSON_NAME" },
+                                { name: "Email id", dbcol: "EMAIL_ID" },
+                                { name: "Contact no", dbcol: "MOBILE_NO" },
+                                //{
+                                //    name: "User Id",
+                                //    dbcol: "USER_SYS_ID",
+                                //    data: {
+                                //        listname: "USER_SYS_ID"
+                                //    }
+                                //},
+                                {
+                                    name: "Update Escalation Level",
+                                    dbcol: "ESCALATION_LEVEL",                                   
+                                    value: '<select class="update_escalation_level" id="uel" style="width:50px;"><option selected="selected">Select escalation level</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>',
+                                    data: {
+                                        uid: "USER_SYS_ID",
+                                        level: "ESCALATION_LEVEL"
+                                    }
+                                }
+
+                             ],
+                                  
+                    class: "",
+                    id: "view_Table"
+                });
+            },
+            error: function (errorResponse) {
+                if (!errorResponse.response) {
+                    errorResponse.response = "network error occurred";
+                }
+                $.msgbox(errorResponse.response, "error");
+            }
+        });
+    });
+    /***************************************
+    * Title - Update escalation level
+    * Parameter -null
+    * Return - gridview
+    * Syntax - null
+    ***************************************/
+
+    $(document).on("change", ".update_escalation_level", function () {
+        var $this = $(this);
+        var user_sys_id = $this.data("uid");
+        var lvl = $this.val();
+        if (lvl === "Select escalation level")
+        {
+            return false;
+        }      
+
+        var formArray = {};
+        formArray["level"] = lvl;
+        formArray["user_id"] = user_sys_id;        
+        $.ajax({
+            type: 'POST',
+            url: BASEURL + 'escalationmatrix/update',
+            dataType: "json",
+            data: formArray,
+            success: function (result) {                                
+                $.msgbox(result.response, "success");
+                escalation_matrix();
+
+            },
+            error: function ()
+            {
+                alert("error");
+            }
+
+        });
+    });
+
+    /***************************************
+    * Title - Button search
+    * Parameter -null
+    * Return - gridview
+    * Syntax - null
+    ***************************************/
+    $(document).on("click", "#button_Search", function () {
+        var user_status = $("#dropdown_Of_User_status option:selected").text();
+        var user_role = $("#dropdown_Of_user_role option:selected").text();
+        var orga_name = $("#dropdown_Of_organization_name option:selected").text();
+        var con_no = $("#input_of_contact_no").val();
+        var email = $("#input_of_email").val();
+        var base = API_BASEURL + "api/get-user-data?";
+       
+        if (user_status !== "Select Account Status")
+        {
+            base = base.concat("ustatus=" + user_status + "");
+        }
+        if (user_role !== "Select Role")
+        {
+            base = base.concat("&role=" + user_role + "");
+        }
+        if (!$.isNull(email))
+        {
+            base = base.concat("&email=" + email + "");
+        }
+        if (!$.isNull(con_no))
+        {
+            base = base.concat("&contact=" + con_no + "");
+        }
+        if (orga_name !== "Select Organisation")
+        {
+            base = base.concat("&orgname=" + orga_name + "");
+        }     
+        // var id_no =bae.dbcol("USER_SYS_ID");
+        //alert(base); ;      
+       // var user_id = $this.data("userid");
+
+        $.ajax({
+            url:base,
+            
+            type: "GET",
+            async: false,
+            dataType: "json",
+            
+            success: function (data) {
+                $("#divOfGridview").Gridview(data.response, {
+                    autocolumn: false,
+                    column: [
+                                { name: "User Status", dbcol: "STATUS" },
+                                { name: "User Role", dbcol: "ROLE" },
+                                { name: "Email", dbcol: "EMAIL_ID" },
+                                { name: "Contact No", dbcol: "MOBILE_NO" },
+                                { name: "Org Name", dbcol: "ORGANISATION_NAME" },
+                                {
+                                    name: "Action",
+                                    dbcol: "",
+                                    value: '<a href="javascript:void(0);"><i class="clickable_Actions material-icons hand Actions_iconSize" data-toggle="collapse" id ="iOfActions"> arrow_right</i></a><div class="Action_droupicon"><div class="col-md-12 addSubActivity_panle"><a href="' + $.baseurl("user/edit-user?id=") + '"><p><i class="fa fa-pencil-square-o pull-left Actions_iconSize" title="Edit User" aria-hidden="true"></i>Edit User</p></a></div><div class="col-md-12 Configure_panle"><a href="javascript:void(0);"><p><i class="fa fa-cogs pull-left Actions_iconSize" title="Block User"></i>Block User</p></a></div><div class="col-md-12 Description_panle"><a href="javascript:void(0);"><p><i class="fa fa-file-text-o pull-left Actions_iconSize" title="Delete User"></i>Delete User</p></a></div>',
+                                    data: {
+                                        userid: "USER_SYS_ID"
+                                    }
+                                    
+                                    //'<a href="' + $.baseurl("user/add-user") + '" class="BtnGenExcel" ><i class="clickable material-icons hand" id="i_of_user" > arrow_right</i></a>'
+                                    //value: '<a href="' + Html.Action("", "genexcel/index/" + base) + '" class="BtnGenExcel" ><i class="clickable material-icons hand" id="i_of_user" > arrow_right</i></a>'
+                                }
+                    ],
+                    class: "",
+                    id: "view_Table",
+                    onrowbound: function (elem) {
+                        var row = $(elem);
+                        var divBlock = row.children("td:eq(5)").find(".Action_droupicon");
+                        if (divBlock.length > 0) {
+                            var childrenDiv = divBlock.children("div.col-md-12");
+                            var userid = divBlock.data("userid");
+                            $.each(childrenDiv, function () {
+                                var _this = $(this);
+                                var a = _this.children("a");
+                                if (a.length > 0) {
+                                    var href = a.attr("href");
+                                    if ($.validregex(href, "url")) {
+                                        href += userid;
+                                        a.attr("href", href);
+                                    }                                    
+                                }
+                            });
+                        }
+                        
+                    }
+                    
+                });
+
+            },
+            error: function () {
+
+                if (!errorResponse.response) {
+                    errorResponse.response = "network error occurred";
+                }
+                $.msgbox(errorResponse.response, "error");
+
+            }
+        });
+        
+       
+    });
+
+    /***************************************
+    * Title - Capitalize Word
+    * Parameter -null
+    * Return - gridview
+    * Syntax - null
+    ***************************************/
+    $(document).on("keyup", ".firstTextCapital", function () {
+        firstCapitalAlways(this);
+    });
+    /***************************************
+    * Title - Load Gridview of view-master
+    * Parameter -null
+    * Return - gridview
+    * Syntax - null
+    ***************************************/
+    if (action_name === 'view-master') {
+
+        $.ajax({
+            url: API_BASEURL + 'api/get-master-data-list',
+            type: "GET",
+            async: false,
+            crossDomain: true,
+            dataType: "json",
+            success: function (data) {
+                $("#MasterGridview").Gridview(data.response, {
+                    autocolumn: false,
+                    column: [
+                                { name: "CATEGORY MASTER ID", dbcol: "SL_ID" },
+                                { name: "CATEGORY MASTER", dbcol: "TYPE" },                                
+                                {
+                                    name: "Action",
+                                    dbcol: "TYPE",
+                                    value: '<a href="javascript:void(0);" class="BtnViewParentMaster" ><i class="clickable material-icons hand" id="i_of_master" > arrow_right</i></a>',
+                                    data: {
+                                        listname: "TYPE"
+                                    }
+                                },
+                                 {
+                                     name: "Add Sub Category",
+                                     value: '<button id="add_sub_category" class="btn btn-info" data-toggle="modal" data-target="#AddSubMasterCategoryModal">Add Sub Category </button>',
+                                     data: {
+                                         catid: "SL_ID"
+
+                                     }
+                                 }
+                    ],
+                    class: "",
+                    id: "view_Table"
+                });
+            },
+            error: function (errorResponse) {
+                if (!errorResponse.response) {
+                    errorResponse.response = "network error occurred";
+                }
+                $.msgbox(errorResponse.response, "error");
+            }
+        });
+
+        /***************************************
+           * Title - Load Gridview of ParentMaster
+           * Parameter -null
+           * Return - gridview
+           * Syntax - null
+           ***************************************/
+        $(document).on("click", ".BtnViewParentMaster", function () {
+            var value_of_master = $(this).data("listname");
+            var $this = $(this);
+            //alert(value_of_master);
+            $.ajax({
+                url: API_BASEURL + 'api/get-master-data-list?category_name='+value_of_master,//undone
+                type: "GET",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+
+                    var _i_Obj = $this.children("i");
+                    var _tr = $this.closest("tr");
+                    var _sub_tr = $('<tr class="row1 addactivity-row collapse subActivityData in" aria-expanded="true" style=""></tr>');
+                    _sub_tr.append('<td colspan="12"><div id="ViewParentGridview"></div></td>');
+                    _sub_tr.children("td");
+                    _tr.after(_sub_tr);
+                    if (_i_Obj.hasClass("rotate-180")) {
+
+
+                        $("#ViewParentGridview").Gridview(data.response, {
+                            autocolumn: false,
+                            column: [
+                                        { name: "CATEGORY LIST ID", dbcol: "LOV_ID" },
+                                        { name: "CATEGORY LIST", dbcol: "LOV_NAME" }                                                                               
+                            ],
+                            class: "container-fluid Ownershop_background view_activity_table",
+                            id: "view_Table"
+                        });
+                    }
+                    else {
+                        $(".subActivityData").remove();
+                    }
+                    },
+                    error: function () {
+                        alert("error occurred");
+                    
+                    }
+                });
+        
+        });
+
+
+
+    }
+
+    /***************************************
+    * Title - Load Gridview of view-activity
+    * Parameter -null
+    * Return - gridview
+    * Syntax - null
+    ***************************************/
+    if (action_name === 'view-activity') {
+        $(document).on("click", "#Search_Activity_Btn", function () {
+
+
+            var program = $("#view_program_name_dropdown option:selected").text();
+            var project = $("#view_project_name_dropdown option:selected").text();
+            var outcome = $("#view_outcome_dropdown option:selected").text();
+            var base = API_BASEURL + "api/get-activity-data?";
+            if (program !== "Select Interventions") {
+                var base = API_BASEURL + "api/get-activity-data?type=Main Activity";
+                base = base.concat("&program=" + program + "");
+                if (project !== "Select Project") {
+                    var base = API_BASEURL + "api/get-activity-data?type=Main Activity";
+                    base = base.concat("&project=" + project + "");
+                }
+
+            }
+            if (outcome !== "Select Outcome") {
+                base = base.concat("&outcome=" + outcome + "");
+            }
+            $.ajax({
+                //url: API_BASEURL + 'api/get-activity-data?type=Main Activity&parent_activity_id=0&activity_id=',
+                url:base,
+                type: "GET",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    $("#Gridview_of_View_Activity").Gridview(data.response, {
+                        autocolumn: false,
+                        column: [
+                                    {
+                                        name: "",
+                                        dbcol: "",
+                                        value: '<a href="javascript:void(0);" id="BtnViewSubActivity" class="BtnViewSubActivity" ><i class="clickable material-icons hand" data-toggle="collapse"  > arrow_right</i></a>',
+                                        data: {
+                                            activity_id: "ACTIVITY_ID"
+                                        }
+                                    },
+                                    { name: "Interventions", dbcol: "PROGRAM_NAME" },
+                                    { name: "Project", dbcol: "PROJECT_NAME" },
+                                    { name: "Activity Name", dbcol: "ACTIVITY_NAME" },
+                                    { name: "FY", dbcol: "FINANCIAL_YEAR" },
+                                    { name: "Start Date", dbcol: "START_DATE" },
+                                    { name: "End Date", dbcol: "END_DATE" },
+                                    { name: "Pending Days", dbcol: "PENDING_DAYS" },
+                                    { name: "TAT", dbcol: "TAT" },
+                                    { name: "Task Lead", dbcol: "TASK_LEAD" },
+                                    {
+                                        name: "Actions",
+                                        dbcol: "",
+                                        value: '<a href="javascript:void(0);"><i class="clickable_Actions material-icons hand Actions_iconSize" data-toggle="collapse" id ="iOfActions"> arrow_right</i></a><div class="Action_droupicon"><div class="col-md-12 addSubActivity_panle" id="OutcomeModalOpenBtn"><a href="javascript:void(0);"><i class="fa fa-pencil-square-o pull-left Actions_iconSize" title="Add Sub Activity" aria-hidden="true"></i></a><p>Add Sub Activity</p></div><div class="col-md-12 Configure_panle addActivityConfigureModal Btn_sv_configure_planning" data-toggle="modal" data-target="#addActivityConfigureModal" id="Btn_sv_configure_planning"><a href="javascript:void(0);" ><i class="fa fa-cogs pull-left Actions_iconSize" title="Configure Data"></i></a><p>Configure Planning</p></div><div class="col-md-12 Description_panle" id="BtnShowDesc"><a href="javascript:void()"><i class="fa fa-file-text-o pull-left Actions_iconSize" title="Show Description"></i></a><p>Show Description</p></div><div class="col-md-12 Description_panle" id="BtnEditAct" class="BtnEditAct"><a href="javascript:void()"><i class="fa fa-file-text-o pull-left Actions_iconSize" title="Edit Activity"></i></a><p>Edit Activity</p></div>',
+                                        data: {
+                                            activity_id: "ACTIVITY_ID"
+                                        }
+                                    }
+                        ],
+                        class: "",
+                        id: "view_Table",
+                        onrowbound: function (elem) {
+                            var $row = $(elem);
+                            var $div = $row.find(".Action_droupicon");
+                            if (typeof $div.data("activity_id") !== 'undefined') {
+                                var activityId = $div.data("activity_id");
+                                var $divLinks = $div.children("div");
+                                $.each($divLinks, function (k, v) {
+                                    var _this = $(this);
+                                    _this.attr("data-activity_id", activityId);
+                                });
+                                $div.removeAttr("data-activity_id");
+                            }
+                        }
+
+                    });
+                },
+                error: function (errorResponse) {
+                    if (!errorResponse.response) {
+                        errorResponse.response = "error occurred";
+                    }
+                    $.msgbox(errorResponse.response, "error");
+                }
+            });
+        });
+
+        /***************************************
+            * Title - Load Gridview of sub-activity
+            * Parameter -null
+            * Return - gridview
+            * Syntax - null
+            ***************************************/
+        $(document).on("click", ".BtnViewSubActivity", function () {
+            var $this = $(this);
+            var var_activity_id = $this.data("activity_id");
+            $.ajax({
+                url: API_BASEURL + 'api/get-activity-data?type=Sub Activity&parent_activity_id=' + var_activity_id,
+                type: "GET",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    var _i_Obj = $this.children("i");
+                    var _tr = $this.closest("tr");
+                    var _sub_tr = $('<tr class="row1 addactivity-row collapse subActivityData in" aria-expanded="true" style=""></tr>');
+                    _sub_tr.append('<td colspan="12"><div id="Gridview_of_Sub_Activity"></div></td>');
+                    _sub_tr.children("td");
+                    _tr.after(_sub_tr);
+                    if (_i_Obj.hasClass("rotate-180")) {
+                        $("#Gridview_of_Sub_Activity").Gridview(data.response, {
+                            autocolumn: false,
+                            column: [
+                                        
+                                        { name: "Sub Activity Name", dbcol: "ACTIVITY_NAME" },                                        
+                                        { name: "Start Date", dbcol: "START_DATE" },
+                                        { name: "End Date", dbcol: "END_DATE" },
+                                        { name: "Pending Days", dbcol: "PENDING_DAYS" },
+                                        { name: "TAT", dbcol: "TAT" },
+                                        { name: "Task Lead", dbcol: "TASK_LEAD" }
+                            ],
+                            class: "container-fluid Ownershop_background view_activity_table",
+                            id: "view_Table"
+                        });
+                    } else {
+                        $(".subActivityData").remove();
+                    }
+                    
+                    
+                },
+                error: function (errorResponse) {
+
+                    if (!errorResponse.response) {
+                        errorResponse.response = "error occurred";
+                    }
+                    $.msgbox(errorResponse.response, "error");
+                }
+            });
+
+        });
+    }
+    /***************************************
+            * Title -show current created user
+            * Parameter -user_id
+            * Return - gridview
+            * Syntax - null
+            ***************************************/    
+    var ShowcurrentUser = function (user_id)
+    {
+        //alert(user_id);
+        $.ajax({
+            url: API_BASEURL + 'api/get-user-data?userid=' + user_id,
+            type: "GET",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+
+                $("#ShowCurrentuser").Gridview(data.response, {
+                    autocolumn: true,
+                    class: "",
+                    id: "view_Table"
+                });
+            }
+        });       
+        
+    }
+
+});
