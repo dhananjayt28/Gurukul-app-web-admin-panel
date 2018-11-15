@@ -344,7 +344,7 @@ namespace GurukulAppAdminPanel.Models
             DataTable dt;
             //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON='[{"ID_CARD_TYPE":"","TRANSPORTAION_ARRANGEMENT":"","ACCOMODATION_ARRANGEMENT":"","EVENT_REG_ID":""}]'
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 00) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATION_ID", 28) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
@@ -353,12 +353,13 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        //not done currently
         public DataTable Itinary_Status_Update(string jsondata)
         {
             DataTable dt;
             //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON=[{"EVENT_REG_ID":"","STATUS_ID":"","HOD_COMMENT":""}]''
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 28) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATION_ID", 00) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
@@ -481,7 +482,7 @@ namespace GurukulAppAdminPanel.Models
         public DataTable Topic_Status_Update(string jsondata)
         {
             DataTable dt;
-            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON='[{"TOPIC_ID":"","STATUS_ID":"""EVENT_REG_ID":""}]'
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON='[{"TOPIC_ID":"","STATUS_ID":"","EVENT_REG_ID":"","HOD_COMMENT":""}]'
             SqlParameter[] _param = new SqlParameter[] {
                 new SqlParameter("@OPERATION_ID", 27) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
