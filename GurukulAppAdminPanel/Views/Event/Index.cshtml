@@ -128,7 +128,12 @@
                     <div id="only_workshop" class="row col-md-12" style="display:none">
                         <div class="input-group col-md-6">
                             <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                            @Html.EditorFor(model => Model.Holiday, new { htmlAttributes = new { @id = "hoidayDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Holiday Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                            @Html.EditorFor(model => Model.HolidayStartDate, new { htmlAttributes = new { @id = "hoidayDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Holiday Start Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                            @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
+                        </div>
+                        <div class="input-group col-md-6">
+                            <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
+                            @Html.EditorFor(model => Model.HolidayEndDate, new { htmlAttributes = new { @id = "hoidayEndDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Holiday End Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
                             @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
                         </div>
                     </div>

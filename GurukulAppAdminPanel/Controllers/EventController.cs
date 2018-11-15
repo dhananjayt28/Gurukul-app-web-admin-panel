@@ -72,7 +72,12 @@ namespace GurukulAppAdminPanel.Controllers
             }
 
             // State Dropdown Data
-            _response = _eventObj.GetEventData();
+            // _response = _eventObj.GetEventData();
+            //View_Master_List("EVENT MASTER")
+
+            dt = _mmobj.View_Master_List("MASTER STATE");
+          
+            _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
             if (_response != string.Empty)
             {
                 JavaScriptSerializer jsObj = new JavaScriptSerializer();
@@ -86,8 +91,8 @@ namespace GurukulAppAdminPanel.Controllers
                     item.Add(new SelectListItem() { Value = "0", Text = "Choose State" });
                     foreach (Dictionary<string, object> _data in _EventType)
                     {
-                        string _val = _data["STATE_ID"].ToString();
-                        string _text = _data["STATE_NAME"].ToString();
+                        string _val = _data["LOV_ID"].ToString();
+                        string _text = _data["LOV_NAME"].ToString();
                         item.Add(new SelectListItem() { Value = _val, Text = _text });
                     }
                     _eventObj.StateList = item;
@@ -183,7 +188,10 @@ namespace GurukulAppAdminPanel.Controllers
                 }
 
                 // State Dropdown Data
-                _response = _eventObj.GetEventData();
+                dt = _mmobj.View_Master_List("MASTER STATE");
+
+                _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+                //_response = _eventObj.GetEventData();
                 if (_response != string.Empty)
                 {
                     JavaScriptSerializer jsObj = new JavaScriptSerializer();
@@ -197,8 +205,8 @@ namespace GurukulAppAdminPanel.Controllers
                         item.Add(new SelectListItem() { Value = "0", Text = "Choose State" });
                         foreach (Dictionary<string, object> _data in _EventType)
                         {
-                            string _val = _data["STATE_ID"].ToString();
-                            string _text = _data["STATE_NAME"].ToString();
+                            string _val = _data["LOV_ID"].ToString();
+                            string _text = _data["LOV_NAME"].ToString();
                             item.Add(new SelectListItem() { Value = _val, Text = _text });
                         }
                         _eventObj.StateList = item;

@@ -1,0 +1,227 @@
+<asp:Image ID="Img_Sample" runat="server"  src="/image/Blank_Profile_Pic.png" class=" img-responsive" Height="160" Width="145"/>
+           <asp:Image ID="Image_Profile" runat="server" Visible = "false" Height="160" Width="145"/>
+            <asp:FileUpload ID="FileUpload_ProfilePic" runat="server" Visible="false" onchange="previewFile()" ></asp:FileUpload>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator57" runat="server" ErrorMessage="Please Select An Image!" ControlToValidate="FileUpload_ProfilePic" ValidationGroup="Valid_Image" Display="None"></asp:RequiredFieldValidator>
+                        <asp:ValidationSummary ID="ValidationSummary7" runat="server"  ValidationGroup="Valid_Image" 
+                    ShowMessageBox="true" ShowSummary="false"/>
+            <asp:Button ID="Btn_UploadPic" runat="server" class="btn btn-success" Text="Upload" Visible="false" ValidationGroup="Valid_Image" OnClick="BtnUploadPic_Click" Width="100px"></asp:Button>
+
+
+ protected void BtnUploadPic_Click(object sender, EventArgs e)
+        {
+            string UserType = "Stu";
+            int UserId = Convert.ToInt32(Session["USERID"]);
+            int Role_Id = Convert.ToInt32(Session["Role_Id"]);
+            string UserName = Convert.ToString(Session["User_Name"]);
+            string NewUserNm = Convert.ToString(UserName.Substring(0, 3));
+            int Student_ID = Convert.ToInt32(Session["Student_ID"]);
+            string Picture_UploadPath = null;
+            int File_TypeId = 8;
+            try
+            {
+
+
+                DataTable dt = new DataTable();
+                dt = obj_bl.fetch_Config_Path(37, File_TypeId);
+                if (dt.Rows.Count > 0)
+                {
+                    Picture_UploadPath = Convert.ToString(dt.Rows[0]["CONFIG_VALUE"]);
+                }
+
+
+                string User_Profile_Pic = null;
+                string DocumentFile_Name = System.IO.Path.GetFileName(FileUpload_ProfilePic.PostedFile.FileName);
+                string FileExtension = System.IO.Path.GetExtension(Server.HtmlEncode(FileUpload_ProfilePic.FileName));
+                if (FileUpload_ProfilePic.HasFile)
+                {
+
+                    if (FileExtension == ".jpg" || FileExtension == ".JPG" || FileExtension == ".png" || FileExtension == ".PNG" || FileExtension == ".jpeg" || FileExtension == ".JPEG")//-----Only .jpg and .png File Can be Uploaded-------//
+                    {
+                        if (FileUpload_ProfilePic.PostedFile.ContentLength <= 5242880)//----------File Size Must Be Less Than Or Equal 5MB--------//
+                        {
+                            string filename = System.IO.Path.GetFileName(FileUpload_ProfilePic.FileName);
+                            User_Profile_Pic = UserType + "_" + NewUserNm + "_" + UserId + "_" + Role_Id + FileExtension;
+
+
+                            DataTable dtFileInsert = new DataTable();
+                            dtFileInsert = obj_bl.Upload_User_Profile_Pic(55, Student_ID, File_TypeId, User_Profile_Pic, UserName, Picture_UploadPath, Role_Id);
+
+                            if (dt.Rows.Count > 0)
+                            {
+
+                                string newfilename = Convert.ToString(dtFileInsert.Rows[0]["IMAGE_NAME"]);
+                                string strFilePath = Server.MapPath(Picture_UploadPath) + "//" + newfilename;
+                                //string strFilePath = Convert.ToString(dt.Rows[0]["DOCUMENT_UPLOADED_PATH"]);
+                                FileUpload_ProfilePic.SaveAs(strFilePath);
+
+
+
+                                lblmsg_popup.Text = "Profile Picture Uploaded Successfully!!";
+                                ClientScript.RegisterStartupScript(this.GetType(), "alert", "ShowPopup();", true);
+                                lblmsgshow.ForeColor = Color.Green;
+                                //FileUpload_ProfilePic.Enabled = false;
+                                //BtnUploadDoc.Enabled = false;
+
+
+
+
+
+                            }
+
+                        }
+                        else
+                        {
+                            lblmsgshow.Text = "Please Upload Document Within Size 5 MB!!";
+                            lblmsgshow.ForeColor = Color.Red;
+                            // mp7.Show();
+                        }
+                    }
+                    else
+                    {
+                        lblmsgshow.Text = "Please Upload Document With Wxtension .PDF!!";
+                        lblmsgshow.ForeColor = Color.Red;
+                        //mp7.Show();
+                    }
+
+
+                }
+                else
+                {
+                    lblmsgshow.Text = "Please Choose Document File To Upload!!";
+                    lblmsgshow.ForeColor = Color.Red;
+                    //mp7.Show();
+                }
+
+
+
+
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                string strError = ex.Message.Replace("'", "");
+                Response.Write("<script>alert('" + strError + "'); </script>");
+            }
+            finally
+            {
+                //----------This method is used to Display Profile Picture of User-----//
+
+                display_Profile_Picture();
+            }
+
+//----------This method is used to Display Profile Picture of User-----//
+
+
+ private void display_Profile_Picture()
+        {
+            //int UserId = Convert.ToInt32(Session["USERID"]);
+            //int Role_Id = Convert.ToInt32(Session["Role_Id"]);
+            //string UserName = Convert.ToString(Session["User_Name"]);
+            int Student_ID = Convert.ToInt32(Session["Student_ID"]);
+            try
+            {
+                DataTable dt = new DataTable();
+                dt = obj_bl.bind_Profile_Pic(56, Student_ID);
+                if (dt.Rows.Count > 0)
+                {
+                    Image_Profile.Visible = true;
+                    Img_Sample.Visible = false;
+                    Image_Profile.ImageUrl = Convert.ToString(dt.Rows[0]["IMAGE_PATH"]);
+                    FileUpload_ProfilePic.Visible = false;
+                    Btn_UploadPic.Visible = false;
+                }
+                else
+                {
+                    FileUpload_ProfilePic.Visible = true;
+                    Btn_UploadPic.Visible = true;
+                    Image_Profile.Visible = false;
+                    Img_Sample.Visible = true;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                string strError = ex.Message.Replace("'", "");
+                Response.Write("<script>alert('" + strError + "'); </script>");
+            }
+        }
+
+//------IMS Code//------------------------------------------------------------------------
+
+
+public void UPLOAD_FILE(int incidentid)
+        {
+            string UploadFolderPath = "~/UploadFile/PartnerFile_Upload/";
+           
+            string File_name = null;
+            DataTable dt = new DataTable();
+            int Docsave = 0;
+            if (incidentid > 0)
+            {
+                if (DocumentUpload.HasFile)
+                {
+                    string strDocFile = System.IO.Path.GetFileName(DocumentUpload.PostedFile.FileName);
+                    string strExtension = Path.GetExtension(Server.HtmlEncode(DocumentUpload.FileName));
+                    if (strExtension == ".pdf" || strExtension == ".PDF" || strExtension == ".xls" || strExtension == ".XLS" || strExtension == ".XLSX" || strExtension == ".xlsx" || strExtension == ".png" || strExtension == ".PNG" || strExtension == ".jpg" || strExtension == ".JPG")
+                    {
+                        if (strDocFile.Length > 0)
+                        {
+                            if (DocumentUpload.PostedFile.ContentLength <= 15242880)
+                            {
+                                File_name = strDocFile.Substring(0, 3) + "_" + incidentid + "_" + DateTime.Now.ToString("yyyy-MM-dd") + "_" + strExtension;
+
+                                dt = ObjLogin.insert_Document(9, incidentid, File_name);
+                                if (dt.Rows.Count > 0)
+                                {
+
+                                    DocumentUpload.SaveAs(Server.MapPath(UploadFolderPath + File_name));
+                                    Docsave = 1;
+                                }
+                                else
+                                {
+                                    message_insert.ShowError("Error File Upload");
+                                }
+                            }
+                            else
+                            {
+                                //Response.Redirect("MOU_Upload.aspx?target=MOUFail");                    
+
+                                message_insert.ShowWarning("File size exceeded 15 Mb size.Please upload smaller size file.");
+                            }
+                        }
+                        if (Docsave > 0)
+                        {
+
+                            message_insert.ShowSuccess("Document Saved Successfully.");
+                        }
+                    }
+
+                    else
+                    {
+
+                        message_insert.ShowWarning("Only PDF and TIF documents are allowed to be Uploaded.");
+                    }
+                }
+                else
+                {
+
+                    message_insert.ShowWarning("Select Document First.");
+                }
+            }
+
+        }
+
+//-----save data//------------------------------------------------------------------------
+
+if (DocumentUpload.HasFile)
+                    {
+                        
+                        UPLOAD_FILE(incidentid);
+                         
+                    }
+
+//-------aspx page//----------------------------------------
+<asp:FileUpload ID="DocumentUpload" runat="server"/></div>
