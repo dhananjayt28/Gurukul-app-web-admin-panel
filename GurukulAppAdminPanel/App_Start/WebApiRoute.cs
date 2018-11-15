@@ -7,12 +7,23 @@ namespace GurukulAppAdminPanel.App_Start
         public static void Configure(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
-            //topic_status_update
+            //api/get-event-data
+            //get_event_data
             //config.Routes.MapHttpRoute(
             //    name: "",
             //    routeTemplate: "",
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
+            config.Routes.MapHttpRoute(
+              name: "GET EVENT",
+              routeTemplate: "api/get-event-data",
+              defaults: new
+              {
+                  Controller = "WebApi",
+                  Action = "get_event_data",
+
+              }
+          );
             config.Routes.MapHttpRoute(
               name: "TOPIC STATUS UPDATE",
               routeTemplate: "api/topic-status-update",
