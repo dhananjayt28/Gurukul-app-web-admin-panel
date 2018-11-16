@@ -537,6 +537,21 @@ namespace GurukulAppAdminPanel.Models
             return dt;
         }
 
+        public DataTable GetContent(string event_id_)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 30) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EVENT_REG_ID", event_id_) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
+
 
 
 

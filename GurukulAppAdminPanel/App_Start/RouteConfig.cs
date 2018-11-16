@@ -7,7 +7,13 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//UploadItinerary
+        {//GetContent
+
+            routes.MapRoute(
+              name: "GetContent",
+              url: "event/get-content",
+              defaults: new { controller = "Event", action = "GetContent" }
+         );
             routes.MapRoute(
               name: "UploadItinerary",
               url: "event/upload-itinerary",

@@ -794,6 +794,14 @@ namespace GurukulAppAdminPanel.Controllers
 
 
         }
+        public string GetContent(string event_id_)
+        {
+            MasterManagement _mmObj = new MasterManagement();
+            DataTable dt = new DataTable();
+          dt =  _mmObj.GetContent(event_id_);
+           string response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            return response;
+        }
 
 
 
