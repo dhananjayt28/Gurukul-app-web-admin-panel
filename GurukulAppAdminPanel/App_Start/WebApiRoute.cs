@@ -8,12 +8,22 @@ namespace GurukulAppAdminPanel.App_Start
         {
             config.MapHttpAttributeRoutes();
             //api/get-event-data
-            //get_event_data
+            //get_content_data
             //config.Routes.MapHttpRoute(
             //    name: "",
             //    routeTemplate: "",
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
+            config.Routes.MapHttpRoute(
+             name: "GET CONTENT",
+             routeTemplate: "api/get-content-data",
+             defaults: new
+             {
+                 Controller = "WebApi",
+                 Action = "get_content_data",
+
+             }
+         );
             config.Routes.MapHttpRoute(
               name: "GET EVENT",
               routeTemplate: "api/get-event-data",

@@ -1166,7 +1166,38 @@ namespace GurukulAppAdminPanel.Controllers
             response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
             return response;
         }
+        [HttpGet]
+        //[Route[("api/get-content-data")]
+        public HttpResponseMessage get_content_data(string event_reg_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetContent(event_reg_id);
 
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
 
 
 
