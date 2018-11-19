@@ -161,6 +161,17 @@
                                             {
                                                 <label class="btn-danger">Deleted</label>
                                             }
+                                            else if (_statusVal == 27)
+                                            {
+                                                @*<label class="btn-success">Confirmed</label>*@
+                                            }
+                                            else if (_statusVal == 28)
+                                            {
+                                                _statusVal = 27;//Event Rejected
+                                                _msg_id = 75;//Event Approved
+                                                _approveUrl = "event/volunteer-event-approved/" + _statusVal + "/" + _event_reg_id + "/" + _msg_id;
+                                                <a href="@Url.Action("", _approveUrl)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>  
+                                            }
 
                                         </div>
                                     </td>                                    

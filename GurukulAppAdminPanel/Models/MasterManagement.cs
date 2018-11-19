@@ -342,9 +342,9 @@ namespace GurukulAppAdminPanel.Models
         public DataTable Itinary_Confirmation_Update(string jsondata)
         {
             DataTable dt;
-            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON='[{"ID_CARD_TYPE":"","TRANSPORTAION_ARRANGEMENT":"","ACCOMODATION_ARRANGEMENT":"","EVENT_REG_ID":""}]'
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=28, @JSON='[{"ID_CARD_TYPE":92,"TRANSPORTAION_ARRANGEMENT":"YES","ACCOMODATION_ARRANGEMENT":"YES","EVENT_REG_ID":7,"USER_ID":51}]'
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 28) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATIONID", 28) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
@@ -548,6 +548,34 @@ namespace GurukulAppAdminPanel.Models
             };
 
             dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
+        public DataTable GetUserCount()
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 1) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+               
+
+            };
+
+            dt = _dbObj.Select("USP_DASHBOARD", _param);
+
+            return dt;
+        }
+        public DataTable GetEventCount()
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+
+
+            };
+
+            dt = _dbObj.Select("USP_DASHBOARD", _param);
 
             return dt;
         }

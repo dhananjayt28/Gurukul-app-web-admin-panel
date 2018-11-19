@@ -4,6 +4,7 @@
     var url = "";
     
     var action_name = !$.isNull($.getactionname()) ? $.getactionname().toLowerCase() : "";
+    
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
             sURLVariables = sPageURL.split('&'),
@@ -901,5 +902,36 @@
 
 
     });
+    if (action_name === "")
+    {
+        
+        $.ajax({
+            url: _BaseURL + "/event/get-user-count",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#user_count_div").Gridview(data.response, {
+                    autocolumn: true,
+                    
+                    //class: "",
+                    //id: "view_Table"
+                });
+            }
+        });
+        $.ajax({
+            url: _BaseURL + "/event/get-event-count",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#event_count_div").Gridview(data.response, {
+                    autocolumn: true,
 
+                    //class: "",
+                    //id: "view_Table"
+                });
+            }
+        });
+    }
 });

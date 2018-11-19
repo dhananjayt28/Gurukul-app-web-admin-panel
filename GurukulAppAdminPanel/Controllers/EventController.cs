@@ -41,7 +41,7 @@ namespace GurukulAppAdminPanel.Controllers
             //View_Master_List("EVENT MASTER")
             MasterManagement _mmobj = new MasterManagement();
             DataTable dt = new DataTable();
-            dt = _mmobj.View_Master_List("EVENT MASTER");
+            dt = _mmobj.View_Master_List("EVENT_MASTER");
             string response = string.Empty;
             _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
 
@@ -75,7 +75,7 @@ namespace GurukulAppAdminPanel.Controllers
             // _response = _eventObj.GetEventData();
             //View_Master_List("EVENT MASTER")
 
-            dt = _mmobj.View_Master_List("MASTER STATE");
+            dt = _mmobj.View_Master_List("MASTER_STATE");
           
             _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
             if (_response != string.Empty)
@@ -157,7 +157,7 @@ namespace GurukulAppAdminPanel.Controllers
                 //View_Master_List("EVENT MASTER")
                 MasterManagement _mmobj = new MasterManagement();
                 DataTable dt = new DataTable();
-                dt = _mmobj.View_Master_List("EVENT MASTER");
+                dt = _mmobj.View_Master_List("EVENT_MASTER");
                 string response = string.Empty;
                 _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
 
@@ -188,7 +188,7 @@ namespace GurukulAppAdminPanel.Controllers
                 }
 
                 // State Dropdown Data
-                dt = _mmobj.View_Master_List("MASTER STATE");
+                dt = _mmobj.View_Master_List("MASTER_STATE");
 
                 _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
                 //_response = _eventObj.GetEventData();
@@ -245,7 +245,7 @@ namespace GurukulAppAdminPanel.Controllers
             //View_Master_List("EVENT MASTER")
             MasterManagement _mmobj = new MasterManagement();
             DataTable dt = new DataTable();
-            dt= _mmobj.View_Master_List("EVENT MASTER");
+            dt= _mmobj.View_Master_List("EVENT_MASTER");
             string response = string.Empty;
             _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
             //response = _emObj.GetEventMasterType();
@@ -742,7 +742,7 @@ namespace GurukulAppAdminPanel.Controllers
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.View_Master_List("MASTER REASON");
+            _dtable = _MM.View_Master_List("MASTER_REASON");
 
 
             if (_dtable.Rows.Count > 0)
@@ -801,6 +801,24 @@ namespace GurukulAppAdminPanel.Controllers
           dt =  _mmObj.GetContent(event_id_);
            string response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
             return response;
+        }
+        public string GetUserCount()
+        {
+            MasterManagement _mmObj = new MasterManagement();
+            DataTable dt = new DataTable();
+            dt = _mmObj.GetUserCount();
+            string response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            return response;
+            
+        }
+        public string GetEventCount()
+        {
+            MasterManagement _mmObj = new MasterManagement();
+            DataTable dt = new DataTable();
+            dt = _mmObj.GetEventCount();
+            string response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            return response;
+
         }
 
 

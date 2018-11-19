@@ -235,7 +235,7 @@ namespace GurukulAppAdminPanel.Controllers
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.View_Master_List("MASTER STATUS");
+            _dtable = _MM.View_Master_List("MASTER_STATUS");
 
 
             if (_dtable.Rows.Count > 0)

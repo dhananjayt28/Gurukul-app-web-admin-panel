@@ -24,6 +24,7 @@ namespace GurukulAppAdminPanel.Controllers
                 new SelectListItem() { Text = "New", Value = ""}
                };
            ob.subjectlist = item;
+            ViewBag.Title = "IAS Coaching" + Constant.PROJECT_NAME;
             return View("IAScoaching", ob);
         }
         public string GetSubject()
@@ -32,7 +33,7 @@ namespace GurukulAppAdminPanel.Controllers
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.View_Master_List("MASTER SUBJECT");
+            _dtable = _MM.View_Master_List("MASTER_SUBJECT");
 
 
             if (_dtable.Rows.Count > 0)
@@ -53,7 +54,7 @@ namespace GurukulAppAdminPanel.Controllers
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.View_Master_List("BUSINESS ROLE");
+            _dtable = _MM.View_Master_List("BUSINESS_ROLE");
 
 
             if (_dtable.Rows.Count > 0)
@@ -217,7 +218,7 @@ namespace GurukulAppAdminPanel.Controllers
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.View_Master_List("MASTER TOPIC");
+            _dtable = _MM.View_Master_List("MASTER_TOPIC");
 
 
             if (_dtable.Rows.Count > 0)

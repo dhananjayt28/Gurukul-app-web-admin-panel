@@ -31,7 +31,7 @@ namespace GurukulAppAdminPanel.Controllers
         [HttpGet]
         public ActionResult ViewMaster()
         {
-           
+            ViewBag.Title = "Master" + Constant.PROJECT_NAME;
             return View();
         }
         /***************************************
