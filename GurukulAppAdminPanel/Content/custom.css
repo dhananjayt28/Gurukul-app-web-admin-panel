@@ -1,6 +1,22 @@
 html , body{height:100%; }
 .full-width{width:100%;}
-.full-height{ height:100%; }
+.full-height{ height:100%;}
+/**********Dashboard Css*******************/
+ .nav_menu {
+    background: #00bcd4;
+    color: #fff;
+}
+
+.toggle a i {
+    font-size: 26px;
+    color: #dde5e6 !important;
+}
+
+.table-bordered tr th {
+    background: #2980b9 !important;
+    color:#fff !important;
+}
+/**********End Dashboard Css*******************/
 .daterangepicker .ranges li {color: #73879C}
 .daterangepicker .ranges li.active, .daterangepicker .ranges li:hover{background: #536A7F;border: 1px solid #536A7F;color: #fff}
 .daterangepicker .input-mini {background-color: #eee;border: 1px solid #ccc;box-shadow: none !important}
@@ -70,7 +86,7 @@ html , body{height:100%; }
 .nav-sm .menu_section {margin: 0}
 .nav-sm span.fa,.nav-sm .menu_section h3 {display: none}
 .nav-sm li li span.fa {display: inline-block}
-.nav_menu {float: left;background: #EDEDED;border-bottom: 1px solid #D9DEE4;margin-bottom: 10px;width: 100%;position: relative}
+.nav_menu {float: left;border-bottom: 1px solid #D9DEE4;margin-bottom: 10px;width: 100%;position: relative}
 @media (min-width: 480px) {.nav_menu {position: static}}
 .nav-md .container.body .col-md-3.left_col {min-height: 100%;width: 230px;padding: 0;position: absolute;display: -ms-flexbox;display: flex;z-index: 1}
 .nav-md .container.body .col-md-3.left_col.menu_fixed {height: 100%;position: fixed}
@@ -173,7 +189,7 @@ a:hover,a:focus {text-decoration: none}
 .navbar-brand,.navbar-nav>li>a {font-weight: 500;color: #ECF0F1 !important;margin-left: 0 !important;line-height: 32px}
 .site_title {text-overflow: ellipsis;overflow: hidden;font-weight: 400;font-size: 22px;width: 100%;color: #ECF0F1 !important;margin-left: 0 !important;line-height: 59px;display: block;height: 55px;margin: 0;padding-left: 10px}
 .site_title:hover,.site_title:focus {text-decoration: none}
-.nav.navbar-nav>li>a {color: #515356 !important}
+.nav.navbar-nav>li>a {color: #fff !important}
 .nav.top_menu>li>a {position: relative;display: block;padding: 10px 15px;color: #34495E !important}
 .nav>li>a:hover,.nav>li>a:focus {background-color: transparent}
 .top_search {padding: 0}
