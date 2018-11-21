@@ -368,6 +368,20 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        public DataTable user_registration(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON=[{"EVENT_REG_ID":"","STATUS_ID":"","HOD_COMMENT":""}]''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 4) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _param);
+
+            return dt;
+        }
         /*************************************
          * Title :: User Approved by Admin
          * Description :: Fetch Data method using Procedure name by Opeation Id
