@@ -38,7 +38,7 @@
 
             if (_dtable.Rows.Count > 0)
             {
-                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
                // response = this.Request.CreateResponse(HttpStatusCode.OK);
             }
             else
