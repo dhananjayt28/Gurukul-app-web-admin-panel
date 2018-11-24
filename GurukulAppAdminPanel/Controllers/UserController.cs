@@ -42,11 +42,15 @@ namespace GurukulAppAdminPanel.Controllers
                 UserManagement _umObj = new UserManagement();
                 MasterManagement _mmObj = new MasterManagement();
                 string response = string.Empty;
-                if (ustatus == "")
+                if (ustatus == ""|| ustatus == "Select")
                 {
                     //response = _umObj.CollectUserData();
                     response = _umObj.CollectUserDataOnLoad(null, "Waiting For Approval", null);
                 }
+                //else if (ustatus == "Select")
+                //{
+                //    return View();
+                //}
                 else
                 {
                     response = _umObj.CollectUserDataOnLoad(null, ustatus, null);
@@ -236,6 +240,27 @@ namespace GurukulAppAdminPanel.Controllers
             _MM = new MasterManagement();
             _dtable = new DataTable();
             _dtable = _MM.View_Master_List("USER_ACCOUNT_STATUS");
+
+
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                _jsonString = Data.DatatableEmpty();
+                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            return _jsonString;
+        }
+        public string GetEventStatus()
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _dtable = _MM.View_Master_List("MASTER_STATUS");
 
 
             if (_dtable.Rows.Count > 0)

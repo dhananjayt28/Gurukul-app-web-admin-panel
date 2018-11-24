@@ -614,9 +614,10 @@
 
     }
     if (action_name === "volunteer-event-reg-list") {
+      
         //dd_status
         $.ajax({
-            url: _BaseURL + "/user/get-status",
+            url: _BaseURL + "/event/get-event-status",
             type: "POST",
             async: false,
             dataType: "json",

@@ -7,7 +7,12 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//GetEventCount
+        {//GetEventStatus
+            routes.MapRoute(
+            name: "GetEventStatus",
+            url: "event/get-event-status",
+            defaults: new { controller = "User", action = "GetEventStatus" }
+       );
             routes.MapRoute(
              name: "GetEventCount",
              url: "event/get-event-count",
