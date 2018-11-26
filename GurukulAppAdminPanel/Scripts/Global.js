@@ -787,6 +787,8 @@
                                     value: '<button type="button" id="update_btn" class="update_btn btn btn-info" data-toggle="modal" data-target="#myModal3"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button><button type="button" id="delete_btn" class="update_btn btn btn-info" data-toggle="modal" data-target="#myModal6"><i class="fa fa-trash" aria-hidden="true"></i></button>'
                                 }
                                 ],
+                                id: "",
+
 
                             });
                         }
