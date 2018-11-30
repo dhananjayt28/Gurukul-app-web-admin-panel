@@ -189,7 +189,7 @@
             async: false,            
             //crossDomain: true,
             dataType: "json",
-            success: function (data) {
+            success: function (data) {                
                 $("#MasterGridview").Gridview(data.response, {
                     autocolumn: false,
                     column: [
@@ -208,13 +208,22 @@
                                      name: "Add Sub Category",
                                      value: '<button id="add_sub_category" class="btn btn-info" data-toggle="modal" data-target="#AddSubMasterCategoryModal"><i class="fa fa-plus-square" aria-hidden="true"></i> </button>',
                                      data: {
-                                         catid: "SL_ID"
+                                         "catid": "SL_ID",
+                                         allow: "DATA_ALLOW"
+                                     },
 
-                                     }
                                  }
                     ],
-                    //class: "",
-                    //id: "view_Table"
+                    onrowbound: function (elem) {
+                        var row = $(elem);
+                        var divBlock = row.find("button#add_sub_category");
+                        var catid = divBlock.data("catid");
+                        var allow = divBlock.data("allow");                       
+                        if(allow==="N"){
+                            divBlock.removeAttr("data-target");
+                            divBlock.hide();
+                        }
+                    }
                 });
             },
             error: function (errorResponse) {
@@ -318,7 +327,7 @@
                                             },
                                              {
                                                  name: "Add Sub Category",
-                                                 value: '<button id="add_sub_category" class="btn btn-info" data-toggle="modal" data-target="#AddSubMasterCategoryModal"><i class="fa fa-plus-square" aria-hidden="true"></i> </button>',
+                                                 value: '<button id="add_sub_category" class="btn btn-info Action_droupicon" data-toggle="modal" data-target="#AddSubMasterCategoryModal"><i class="fa fa-plus-square" aria-hidden="true"></i> </button>',
                                                  data: {
                                                      catid: "SL_ID"
 
@@ -327,6 +336,17 @@
                                 ],
                                 //class: "",
                                 //id: "view_Table"
+                                onrowbound: function (elem)
+                                {
+                                    var row = $(elem);
+                                    var divBlock = row.find("button#add_sub_category");
+                                    var catid = divBlock.data("catid");
+                                    if (parseInt(cat_id) === 6)
+                                    {
+                                        divBlock.removeAttr("data-target");
+                                        divBlock.hide();;
+                                    }
+                                }
                             });
                         },
                         error: function (errorResponse) {
@@ -344,8 +364,11 @@
             });
         });
         $(document).on("click", "#add_sub_category", function () {
+            var $this = $(this);
             var cat_id = $(this).data("catid");
+            
             $("#category_id").val(cat_id);
+            
             //alert($("#category_id").val());
         });
         // Add sub category
