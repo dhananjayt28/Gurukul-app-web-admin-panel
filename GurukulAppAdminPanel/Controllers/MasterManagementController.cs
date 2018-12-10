@@ -170,13 +170,11 @@ namespace GurukulAppAdminPanel.Controllers
 
             if (_dtable.Rows.Count > 0)
             {
-                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
-               // response = this.Request.CreateResponse(HttpStatusCode.OK);
+                _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);               
             }
             else
             {
-                _jsonString = Data.DatatableEmpty();
-                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+                _jsonString = Data.DatatableEmpty();                
             }
 
             return _jsonString;
@@ -194,13 +192,11 @@ namespace GurukulAppAdminPanel.Controllers
 
             if (_dtable.Rows.Count > 0)
             {
-                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
-                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+                _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);               
             }
             else
             {
-                _jsonString = Data.DatatableEmpty();
-                //response = this.Request.CreateResponse(HttpStatusCode.OK);
+                _jsonString = Data.DatatableEmpty();               
             }
 
 

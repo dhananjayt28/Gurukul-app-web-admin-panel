@@ -716,6 +716,9 @@ namespace GurukulAppAdminPanel.Controllers
             _postArrData.Add("TOPIC_ID", topic_id);
             _postArrData.Add("USER_ID", UserId);
             _postArrData.Add("CONTENT_SOURCE", content);
+            _postArrData.Add("STATUS",29);
+            _postArrData.Add("MESSAGE", 84);
+            //16,USP_EVENT_MANAGEMENT,245
             postdata.Add(_postArrData);
             var _postContent = System.Web.Helpers.Json.Encode(postdata);
 
@@ -723,7 +726,7 @@ namespace GurukulAppAdminPanel.Controllers
             _dtable = _mm.TopicContent(_postContent);
             if (_dtable.Rows.Count > 0)
             {
-                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
                 //response = this.Request.CreateResponse(HttpStatusCode.OK);
             }
             else

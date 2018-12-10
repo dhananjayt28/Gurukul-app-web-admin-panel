@@ -207,7 +207,7 @@ namespace GurukulAppAdminPanel.Models
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
-            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=7,@JSON=''
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=7,@USER_ID=''
                 new SqlParameter("@OPERATIONID",7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@USER_ID", user_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
 
@@ -498,7 +498,7 @@ namespace GurukulAppAdminPanel.Models
             DataTable dt;
             //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON='[{"TOPIC_ID":"","STATUS_ID":"","EVENT_REG_ID":"","HOD_COMMENT":""}]'
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 27) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATIONID", 27) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
