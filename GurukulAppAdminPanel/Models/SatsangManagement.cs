@@ -10,7 +10,10 @@
     {
         public string chaptername { get; set; }
         public string chaperdescription { get; set; }
+        public string stateid { get; set; }
+        public string state { get; set; }
         public string countryid { get; set; }
+        public string country { get; set; }
 
         public ArrayList ChapterList = new ArrayList();
         public List<SelectListItem> CountryList = new List<SelectListItem>();

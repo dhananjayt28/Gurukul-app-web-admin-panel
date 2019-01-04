@@ -14,154 +14,157 @@
                 <h4 class="panel-title"><i class="fa fa-table"></i> @ViewBag.breadcrumbAction </h4>
             </div>
             <div class="panel-body">
-                @using (Html.BeginForm())
-                {
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
-                                        @Html.DropDownListFor(model => model.EventId, Model.List, new { @class = "form-control bod_rad_0", @id = "_event_drpdown", @required = true })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            &nbsp;
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                        @Html.EditorFor(model => Model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @class = "form-control bod_rad_0 common-date-picker", @placeholder = "Start Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
-                                        @*@Html.EditorFor(model => model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @placeholder = "Event Start Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off",@data_date_format = "dd-mm-yyyy" } })*@
-                                    </div>
-                                    <div class="text-danger">@Html.ValidationMessageFor(model => model.EventStartDate)</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                        @Html.EditorFor(model => Model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "End Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
-                                        @*@Html.EditorFor(model => model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @placeholder = "Event End Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
-                                    </div>
-                                    <div class="text-danger">@Html.ValidationMessageFor(model => model.EventEndDate)</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                        @Html.EditorFor(model => Model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Expire Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
-                                        @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
-                                    </div>
-                                    <div class="text-danger">@Html.ValidationMessageFor(model => model.EventExpireDate)</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon bg_pink"><i class="fa fa-user"></i></span>
-                                                @Html.EditorFor(model => model.EventMaleNo, new { htmlAttributes = new { @type = "number", @placeholder = "Male Volunteers", @class = "form-control bod_rad_0", @required = true } })
-                                            </div>
-                                            <div class="text-danger">@Html.ValidationMessageFor(model => model.EventMaleNo)</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <span class="input-group-addon bg_pink"><i class="fa fa-user"></i></span>
-                                                @Html.EditorFor(model => model.EventFemaleNo, new { htmlAttributes = new { @type = "number", @placeholder = "Female Volunteers", @class = "form-control bod_rad_0", @required = true } })
-                                            </div>
-                                            <div class="text-danger">@Html.ValidationMessageFor(model => model.EventFemaleNo)</div>
+                <form id="Event_Form">
+                    @*@using (Html.BeginForm(),new={ @id = "Event_Form"})
+                {*@
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
+                                            @Html.DropDownListFor(model => model.EventId, Model.List, new { @class = "form-control bod_rad_0", @id = "_event_drpdown", @required = true })
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row" id="GitaAndWorkshop" style="display:none">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
-                                        @Html.DropDownListFor(model => model.EventStateId, Model.StateList, new { @class = "form-control bod_rad_0" })
-                                    </div>
-                                    <div class="text-danger">@Html.ValidationMessageFor(model => model.EventStateId)</div>
-                                </div>
+                            <div class="col-sm-6">
+                                &nbsp;
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group" id="GitaDistribute" style="display:none">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
-                                        @Html.DropDownListFor(model => model.EventLocationId, Model.LocationList, new { @class = "form-control bod_rad_0" })
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
+                                            @Html.EditorFor(model => Model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @class = "form-control bod_rad_0 common-date-picker", @placeholder = "Event Start Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                            @*@Html.EditorFor(model => model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @placeholder = "Event Start Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off",@data_date_format = "dd-mm-yyyy" } })*@
+                                        </div>
+                                        <div class="text-danger">@Html.ValidationMessageFor(model => model.EventStartDate)</div>
                                     </div>
-                                    <div class="text-danger">@Html.ValidationMessageFor(model => model.EventLocationId)</div>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon bg_pink"><i class="fa fa-user"></i></span>
-                                    @Html.EditorFor(model => model.Message_to_user, new { htmlAttributes = new { @type = "text", @placeholder = "Message to Volunteer", @class = "form-control" } })
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="only_workshop" class="row col-md-12" style="display:none">
-                        <div class="input-group col-md-6">
-                            <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                            @Html.EditorFor(model => Model.HolidayStartDate, new { htmlAttributes = new { @id = "hoidayDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Holiday Start Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
-                            @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
-                        </div>
-                        <div class="input-group col-md-6">
-                            <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                            @Html.EditorFor(model => Model.HolidayEndDate, new { htmlAttributes = new { @id = "hoidayEndDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Holiday End Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
-                            @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <div class="input-group">
-                                        @*@Html.CheckBoxFor(model => model.IsActive, new { @placeholder = "Required Female", @class = "bod_rad_0" })
-                                        Is This Project Show Volunteer Profile right now?*@
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
+                                            @Html.EditorFor(model => Model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Event End Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                            @*@Html.EditorFor(model => model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @placeholder = "Event End Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
+                                        </div>
+                                        <div class="text-danger">@Html.ValidationMessageFor(model => model.EventEndDate)</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            &nbsp;
-                        </div>
-                    </div>
-                    <div class="clearfix">
-                        <div class="col-sm-12 text-right">
-                            <div class="btn-group">
-                                <input type="submit" id="submit_event" class="btn btn-success" value="Submit" />
-                                <input type="reset" class="btn btn-primary" value="Reset" />
-                                <button id="btnClose" type="button" onclick="window.location.href = 'event-list'" class="btn btn-warning">Close</button>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
+                                            @Html.EditorFor(model => Model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Event Expiry Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                            @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
+                                        </div>
+                                        <div class="text-danger">@Html.ValidationMessageFor(model => model.EventExpireDate)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon bg_pink"><i class="fa fa-user"></i></span>
+                                                    @Html.EditorFor(model => model.EventMaleNo, new { htmlAttributes = new { @type = "number", @placeholder = "Male Volunteers", @class = "form-control bod_rad_0", @required = true, @min = "1" } })
+                                                </div>
+                                                <div class="text-danger">@Html.ValidationMessageFor(model => model.EventMaleNo)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon bg_pink"><i class="fa fa-user"></i></span>
+                                                    @Html.EditorFor(model => model.EventFemaleNo, new { htmlAttributes = new { @type = "number", @placeholder = "Female Volunteers", @class = "form-control bod_rad_0", @required = true, @min = "1" } })
+                                                </div>
+                                                <div class="text-danger">@Html.ValidationMessageFor(model => model.EventFemaleNo)</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                        <div class="row" id="GitaAndWorkshop" style="display:none">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
+                                            @Html.DropDownListFor(model => model.EventStateId, Model.StateList, new { @class = "form-control bod_rad_0" })
+                                        </div>
+                                        <div class="text-danger">@Html.ValidationMessageFor(model => model.EventStateId)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group" id="GitaDistribute" style="display:none">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
+                                            @Html.DropDownListFor(model => model.EventLocationId, Model.LocationList, new { @class = "form-control bod_rad_0" })
+                                        </div>
+                                        <div class="text-danger">@Html.ValidationMessageFor(model => model.EventLocationId)</div>
+                                    </div>
+                                    <div class="input-group">
+                                        <span class="input-group-addon bg_pink"><i class="fa fa-user"></i></span>
+                                        @Html.EditorFor(model => model.Message_to_user, new { htmlAttributes = new { @type = "text", @placeholder = "Message to Volunteer", @class = "form-control" } })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="only_workshop" class="row col-md-12" style="display:none">
+                            <div class="input-group col-md-6">
+                                <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
+                                @Html.EditorFor(model => Model.HolidayStartDate, new { htmlAttributes = new { @id = "hoidayDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Holiday Start Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
+                            </div>
+                            <div class="input-group col-md-6">
+                                <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
+                                @Html.EditorFor(model => Model.HolidayEndDate, new { htmlAttributes = new { @id = "hoidayEndDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Holiday End Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            @*@Html.CheckBoxFor(model => model.IsActive, new { @placeholder = "Required Female", @class = "bod_rad_0" })
+                                    Is This Project Show Volunteer Profile right now?*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div class="col-sm-12 text-right">
+                                <div class="btn-group">
+                                    @*<input type="submit" id="submit_event" class="btn btn-success" value="Submit" />*@
+                                    <button type="button" id="submit_event" class="btn btn-success" value="Submit">Submit</button>
+                                    <input type="reset" class="btn btn-primary" value="Reset" />
+                                    <button id="btnClose" type="button" onclick="window.location.href = 'event-list'" class="btn btn-warning">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    @*}*@
+                </form>
             </div>
         </div>
     </div>

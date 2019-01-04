@@ -2,6 +2,11 @@
     "use strict"
     var _BaseURL = window.location.origin;
     var url = "";
+    var jsondata = "";
+    var jdata = "";
+    var statejsondata = "";
+    var statejdata = "";
+    var country_id = "";
     
     var action_name = !$.isNull($.getactionname()) ? $.getactionname().toLowerCase() : "";
     
@@ -115,7 +120,7 @@
                 if (data.response !== null) {
                     //user_profile_div
                     var responseData = data.response[0];
-                    var _content = '<table class="table table-responsive"><tbody><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Date Of Birth</td><th>' + responseData.DOB + '</th></tr><tr><td>Gender</td><th>' + responseData.GENDER + '</th></tr><tr><td>Mobile No</td><th>' + responseData.MOBILE_NO + '</th></tr><tr><td>E-Mail ID</td><th>' + responseData.EMAIL_ID + '</th></tr><tr><td>Satsang Country</td><th>' + responseData.COUNTRY + '</th></tr><tr><td>Satsang Chapter</td><th>' + responseData.SATSANG_CHAPTER + '</th></tr><tr><td>Education</td><th>' + responseData.EDUCATION + '</th></tr><tr><td>City</td><th>' + responseData.CITY + '</th></tr></tbody></table>';
+                    var _content = '<table class="table table-responsive"><tbody><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Date Of Birth</td><th>' + responseData.DOB + '</th></tr><tr><td>Gender</td><th>' + responseData.GENDER + '</th></tr><tr><td>Mobile No</td><th>' + responseData.MOBILE_NO + '</th></tr><tr><td>E-Mail ID</td><th>' + responseData.EMAIL_ID + '</th></tr><tr><td>Satsang Country</td><th>' + responseData.COUNTRY + '</th></tr><tr><td>Satsang City</td><th>' + responseData.CITY + '</th></tr><tr><td>Satsang Chapter</td><th>' + responseData.SATSANG_CHAPTER + '</th></tr><tr><td>Education</td><th>' + responseData.EDUCATION + '</th></tr></tbody></table>';
                     //var modalbody = modalBlock.children("div.modal-dialog").children("div.modal-content").children("div.modal-body");
                     //modalbody.html(_content);
                     //modalBlock.modal("show");
@@ -433,6 +438,7 @@
     }
     //submit_event
     $(document).on("click", "#submit_event", function () {
+        
         //EventMaleNo
         //EventFemaleNo
        var male_no= $("#EventMaleNo").val();
@@ -440,10 +446,127 @@
        var start_date = $("#startDate").val();
        var end_date = $("#endDate").val();
        var expiry_date = $("#expireDate").val();
-       if (male_no <= 0 || female_no <= 0 || start_date === "" || end_date === "" || expiry_date === "") {
-           alert("Plesae enter male and female req no more than 0 and also please put start date,end date and expiry date ");
-           $.redirect(_BaseURL + "/event/event-add");
+       var EventState = $("#EventStateId option:selected").val();
+       var EventLocation = $("#EventLocationId option:selected").val();
+       var hoidayDate = $("#hoidayDate").val();
+       var hoidayEndDate = $("#hoidayEndDate").val();
+       var Message_to_user = $("#Message_to_user").val();
+        //console.log(start_date);
+       var event_type = $("#_event_drpdown").val();
+      
+       if (event_type === "" || event_type === "0")
+       {
+           alert("Please select Event type");
+           //$.redirect(_BaseURL + "/event/event-add");
+           return false;
        }
+       var base = "";
+       if (event_type === "1")
+       {
+           
+           if (male_no === "" || female_no===""||parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || start_date === "" || end_date === "" || expiry_date === "")
+           {
+               if (parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || male_no === "" || female_no==="")
+               {
+                base = "Plesae enter male and female req no more than 0";
+                      
+               }
+               if (start_date === "")
+               {
+                   base = base + "\nPlease Enter Start Date";
+               }
+               if (end_date === "") {
+                   base = base + "\nPlease Enter End Date";
+               }
+               if (expiry_date === "") {
+                   base = base + "\nPlease Enter Expiry Date";
+               }
+               alert(base);
+              // $.redirect(_BaseURL + "/event/event-add");
+               return false;
+           }
+       }
+       if (event_type === "2")
+       {
+           if (male_no === "" || female_no===""||parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || start_date === "" || end_date === "" || expiry_date === "" || EventState === "0" || hoidayDate===""||hoidayEndDate==="") {
+
+               if (parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || male_no === "" || female_no === "")
+               {
+                   base = "Plesae enter male and female req no more than 0";
+                      
+               }
+               if (start_date === "")
+               {
+                   base = base + "\nPlease Enter Start Date";
+               }
+               if (end_date === "") {
+                   base = base + "\nPlease Enter End Date";
+               }
+               if (expiry_date === "") {
+                   base = base + "\nPlease Enter Expiry Date";
+               }
+               if (EventState === "0") {
+                   base = base + "\nPlease Choose State";
+               }               
+               if (hoidayDate === "" ) {
+                   base = base + "\nPlease Enter Holiday Start Date";
+               }
+               if (hoidayEndDate === "")
+               {
+                   base = base + "\nPlease Enter Holiday End Date";
+               }
+               alert(base);
+              // $.redirect(_BaseURL + "/event/event-add");
+               return false;
+           }               
+       }       
+       if (event_type === "3")
+       {
+           if (male_no === "" || female_no===""||parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || start_date === "" || end_date === "" || expiry_date === "" || EventState === "0" || EventLocation==="0"||Message_to_user==="") {
+               if (parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || male_no === "" || female_no === "")
+               {
+                   base = "Plesae enter male and female req no more than 0";
+                      
+               }
+               if (start_date === "")
+               {
+                   base = base + "\nPlease Enter Start Date";
+               }
+               if (end_date === "") {
+                   base = base + "\nPlease Enter End Date";
+               }
+               if (expiry_date === "") {
+                   base = base + "\nPlease Enter Expiry Date";
+               }
+               if (EventState === "0") {
+                   base = base + "\nPlease Choose State";
+               }               
+               
+               if (EventLocation === "0" ) {
+                   base = base + "\nPlease Select Event Location";
+               }
+               if (Message_to_user === "") {
+                   base = base + "\nPlease Enter Message to User";
+               }
+               alert(base);
+              // $.redirect(_BaseURL + "/event/event-add");
+               return false;
+                       
+           }
+       }
+       var formdata = $.formdata("#Event_Form");
+       $.ajax({
+           url: _BaseURL + "/event/event-add",
+           type: "POST",
+           async: false,
+           dataType: "json",
+           data: formdata,
+           processData: false,
+           contentType: false,
+           success: function (data) {
+               alert(data.response);
+           }
+       });
 
     });
 
@@ -657,12 +780,32 @@
                 }
             }
         });
+        //event/get-event-type
+        $.ajax({
+            url: _BaseURL + "/event/get-event-type",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                $("#dd_type").Dropdown(data.response, {
+                    value: {
+                        text: "LOV_NAME",
+                        value: "LOV_ID"
+                    }
+                });
+                var etype = getUrlParameter('etype');
+                if (!$.isNull(etype)) {
+                    $("#dd_type option:selected").text(etype);
+                }
+            }
+        });
         $(document).on("change", "#dd_statuses", function () {
             var volunteer_status = $("#dd_statuses option:selected").text();
+            var event_type = $("#dd_type option:selected").text();
             //alert(volunteer_status);
             //var formArray = {};
             //formArray["user_status"] = user_status;
-            $.redirect(_BaseURL + "/event/volunteer-event-reg-list?vstatus=" + volunteer_status);
+            $.redirect(_BaseURL + "/event/volunteer-event-reg-list?vstatus=" + volunteer_status + "&etype=" + event_type);
             
         });
     }
@@ -960,4 +1103,180 @@
             }
         });
     }
+    //******************************************************
+    /**********************Country AutoComplete***********************/
+    $.ajax({
+        url: _BaseURL + "/event/get-country-list",
+        type: "POST",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            jsondata = data;
+            console.log(jsondata);
+        }
+    });
+    var $suggestionList = $("#countryItemList");
+    if (jsondata.status) {
+        $suggestionList.html("");
+        $.each(jsondata.response, function (key, val) {
+            var option = $("<option></option>").attr("data-value", val.LOV_ID).text(val.LOV_NAME);
+            $suggestionList.append(option);
+        });
+
+    }
+    $(document).on("input", "#txt_country", function (e) {
+        var $this = $(this);
+        var itemval = $this.val().trim();
+        console.log(itemval)
+        var itemid = -1;
+        //var $DeliverableJson = $("#deliverableItemJson").html();
+        //var $unitBox = $("#deliverableUnit");
+        //var $unitTxtBox = $("input[name=unitid]");
+
+        var $datalist = $("datalist#countryItemList option");
+        $($datalist).each(function () {
+            var _this = $(this);
+            var _thisval = _this.val();
+            if (_thisval === itemval) {
+                itemid = _this.attr("data-value").trim();
+            }
+        });
+        console.log(itemid)
+        $.ajax({
+            url: _BaseURL + "/event/get-country-list",
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                jdata = data;
+                console.log(jdata);
+            }
+        });
+
+
+
+        // $DeliverableJson = JSON.parse($DeliverableJson);
+        $.each(jdata.response, function (key, val) {
+            var id = val.LOV_ID;
+            if (parseInt(id) === parseInt(itemid)) {
+                var name = val.LOV_NAME;
+                var unit = val.LOV_ID;
+                $this.val(name);
+                //$unitBox.val(unit);
+                //$unitTxtBox.val(id);
+            }
+        });
+
+    });
+    /* Clean Value  */
+    $(document).on("focusout", "#txt_country", function (e) {
+        var $this = $(this);
+        //var $unitBox = $("#deliverableUnit");
+        //var $unitTxtBox = $("input[name=unitid]");
+        var itemval = $this.val();
+        var itemid = 0;
+        var $datalist = $("datalist#countryItemList option");
+        $($datalist).each(function () {
+            var _this = $(this);
+            var _thisval = _this.val();
+            //console.log(itemval);
+            //console.log(_thisval);
+            if (_thisval.trim().toLowerCase() === itemval.trim().toLowerCase()) {
+                itemid = _this.attr("data-value").trim();
+                country_id = itemid;
+            }
+        });
+        $("#country_id_hide").val(itemid);
+        //if (parseInt(itemid) <= 0) {
+        //    //$this.val("");
+        //    //$unitBox.val("");
+        //    //$unitTxtBox.val(-1);
+        //    $("#hide_outcome_id").val(itemid);
+        //    console.log(itemid);
+        //}
+        //************************************City autocomplete**********************************
+        $.ajax({
+            url: _BaseURL + "/event/get-city-list",           
+            type: "POST",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                statejsondata = data;
+            }
+        });
+        var $suggestionList = $("#stateItemList");
+        if (statejsondata.status) {
+            $suggestionList.html("");
+            $.each(statejsondata.response, function (key, val) {               
+                var option = $("<option></option>").attr("data-value", val.LOV_ID).text(val.LOV_NAME);
+                $suggestionList.append(option);
+            });
+
+        }
+        $(document).on("input", "#txt_state", function (e) {
+            var $this = $(this);
+
+            var itemval = $this.val().trim();
+            // alert(itemval);
+            console.log(itemval)
+            var itemid = -1;
+            //var $DeliverableJson = $("#deliverableItemJson").html();
+            //var $unitBox = $("#deliverableUnit");
+            //var $unitTxtBox = $("input[name=unitid]");
+
+            var $datalist = $("datalist#stateItemList option");
+            $($datalist).each(function () {
+                var _this = $(this);
+                var _thisval = _this.val();
+                if (_thisval === itemval) {
+                    itemid = _this.attr("data-value").trim();
+                   
+
+                }
+            });
+            console.log(itemid)
+            $.ajax({
+                url: _BaseURL + "/event/get-city-list",
+                type: "POST",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    statejdata = data;
+                    console.log(statejdata);
+                }
+            });
+            // $DeliverableJson = JSON.parse($DeliverableJson);
+            $.each(statejdata.response, function (key, val) {
+                var id = val.LOV_ID;
+                if (parseInt(id) === parseInt(itemid)) {
+                    var name = val.LOV_NAME;
+                    var unit = val.LOV_ID;
+                    $this.val(name);
+                    //$unitBox.val(unit);
+                    //$unitTxtBox.val(id);
+                }
+            });
+
+        });
+        $(document).on("focusout", "#txt_state", function (e) {
+            var $this = $(this);
+            //var $unitBox = $("#deliverableUnit");
+            //var $unitTxtBox = $("input[name=unitid]");
+            var itemval = $this.val();
+            var itemid = 0;
+            var $datalist = $("datalist#stateItemList option");
+            $($datalist).each(function () {
+                var _this = $(this);
+                var _thisval = _this.val();
+                //console.log(itemval);
+                //console.log(_thisval);
+                if (_thisval.trim().toLowerCase() === itemval.trim().toLowerCase()) {
+                    itemid = _this.attr("data-value").trim();
+                    
+                }
+            });
+           
+            $("#state_id_hide").val(itemid);
+        });
+    });
 });

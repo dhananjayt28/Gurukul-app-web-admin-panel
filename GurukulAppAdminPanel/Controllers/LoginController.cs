@@ -70,6 +70,11 @@ namespace GurukulAppAdminPanel.Controllers
                             }
                         }                        
                     }
+                    else
+                    {
+                        TempData["MSG_LOGIN"] = "Wrong UserName or Password";
+                        return View("Index", new AuthenticateManagement());
+                    }
                 }
             }
             ViewBag.Title = "Admin Login " + Constant.PROJECT_NAME;

@@ -7,7 +7,22 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//GetEventStatus
+        {//GetStateList
+            routes.MapRoute(
+             name: "GetCityList",
+             url: "event/get-city-list/{category_name}",
+             defaults: new { controller = "Event", action = "GetCityList", category_name = UrlParameter.Optional }
+        );
+            routes.MapRoute(
+             name: "GetCountryList",
+             url: "event/get-country-list/{category_name}",
+             defaults: new { controller = "Event", action = "GetCountryList" ,category_name=UrlParameter.Optional}
+        );
+            routes.MapRoute(
+             name: "GetEventType",
+             url: "event/get-event-type",
+             defaults: new { controller = "Event", action = "GetEventType" }
+        );
             routes.MapRoute(
             name: "GetEventStatus",
             url: "event/get-event-status",

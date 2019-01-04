@@ -4,8 +4,8 @@
     {
         // Public Constant
         internal static string PROJECT_NAME                                 = " :: JIVANMUKTAS";
-  internal static string BASEURL                                      = "http://gurukulweb.tangenttechsolutions.com/";
-    // internal static string BASEURL                                      = "http://localhost:58949/";        
+  //internal static string BASEURL                                      = "http://gurukulweb.tangenttechsolutions.com/";
+     internal static string BASEURL                                      = "http://localhost:58949/";        
         internal static string LOG_DIR_PATH                                 = "~/LogReport";
         internal static string LOG_FILE_PATH                                = "~/LogReport/_Log.txt";
         internal static string SERVER_PATH_PREFIX                           = "~/";
@@ -17,6 +17,7 @@
         internal static string ALREADY_EXISTS_MSG = "Data already exists.";
         internal static string EMPTY_DATA_MSG = "Data not available.";
         internal static string UNAUTH_ACCESS = "Unauthorised Access";
+        internal static string API_BASEURL = "http://gurukulweb.tangenttechsolutions.com/";
 
 
 

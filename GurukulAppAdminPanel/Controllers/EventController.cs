@@ -118,7 +118,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Event Add View part.
          **************************************/
         [HttpPost]
-        public ActionResult Index(EventManagement _eventObj)
+        public dynamic Index(EventManagement _eventObj)
         {
             if (ModelState.IsValid)
             {
@@ -132,20 +132,24 @@ namespace GurukulAppAdminPanel.Controllers
                     if (status)
                     {
                         string _url = Constant.BASEURL + "event/event-list";
-                        TempData["MSG"] = "Event Added Successfully";
-                        return Redirect(_url);
+                        TempData["MSG"] = "";
+                        //return Redirect(_url);
+                        return _response;
                     }
                     else
                     {
                         string _url = Constant.BASEURL + "event/event-list";
                         TempData["MSG"] = "";
-                        return Redirect(_url);
+                        //return Redirect(_url);
+                        return _response;
                     }
                 }
                 else
                 {
                     string _url = Constant.BASEURL + "event/event-add";
-                    return Redirect(_url);
+                    // return Redirect(_url);
+                    //return RedirectToAction("EventList");
+                    return _response;
                 }
                 
             }
@@ -320,7 +324,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Event list View part.
          **************************************/
         [HttpGet]
-        public ActionResult VolunteerEventList(string vstatus = "")
+        public ActionResult VolunteerEventList(string vstatus = "",string etype ="")
         {
             EventManagement _emObj = new EventManagement();
             string _jsonString = string.Empty;
@@ -330,12 +334,12 @@ namespace GurukulAppAdminPanel.Controllers
             _dtable = new DataTable();
             if (vstatus == "")
             {
-                _dtable = _MM.Get_Event_Volunteer_Reg_Data("Waiting For Approval");
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data("Waiting For Approval","");
 
             }
             else
             {
-                _dtable = _MM.Get_Event_Volunteer_Reg_Data(vstatus);
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data(vstatus,etype);
             }
 
             if (_dtable.Rows.Count > 0)
@@ -621,7 +625,8 @@ namespace GurukulAppAdminPanel.Controllers
             string response = string.Empty;
 
             RestClient.RestClient _client = new RestClient.RestClient();
-            _client.URL = "http://gurukulweb.tangenttechsolutions.com/api/get-event-calendar-breakup-data?event_id="+ event_id;
+           
+            _client.URL = Constant.API_BASEURL+"api/get-event-calendar-breakup-data?event_id="+ event_id;
             _client.Method = HttpMethod.GET;
             _client.Type = ContentType.JSON;
             _client.Execute();
@@ -638,7 +643,7 @@ namespace GurukulAppAdminPanel.Controllers
             string response = string.Empty;
 
             RestClient.RestClient _client = new RestClient.RestClient();
-            _client.URL = "http://gurukulweb.tangenttechsolutions.com/api/get-event-calendar-breakup-data?event_id="+ global_event_id;
+            _client.URL = Constant.API_BASEURL + "api/get-event-calendar-breakup-data?event_id=" + global_event_id;
             _client.Method = HttpMethod.GET;
             _client.Type = ContentType.JSON;
             _client.Execute();
@@ -823,7 +828,62 @@ namespace GurukulAppAdminPanel.Controllers
             return response;
 
         }
+        /***********************
+         * Name - GetEventType
+         * param- null
+         * return- Event type list in json string
+         * ************/
+         public string GetEventType()
+        {
+            MasterManagement _mmobj = new MasterManagement();
+            DataTable dt = new DataTable();
+            dt = _mmobj.View_Master_List("EVENT_MASTER");
+            string response = string.Empty;
+            string _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            return _response;
+        }
+        /**********************
+         * Name-GetCountryList
+         * param-null
+         * return- json
+         * Author- Sayan Chatterjee
+         * *****************/
+         public string GetCountryList()
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _dtable = _MM.View_Master_List("MASTER_COUNTRY");
 
+
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);                
+            }
+            return _jsonString;
+        }
+        /**********************
+         * Name-GetCityList
+         * param-null
+         * return- json
+         * Author- Sayan Chatterjee
+         * *****************/
+        public string GetCityList()
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _dtable = _MM.View_Master_List("MASTER_CITY");
+
+
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+            }
+            return _jsonString;
+        }
 
 
     }
