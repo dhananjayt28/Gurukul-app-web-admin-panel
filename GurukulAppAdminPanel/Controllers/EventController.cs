@@ -337,6 +337,11 @@ namespace GurukulAppAdminPanel.Controllers
                 _dtable = _MM.Get_Event_Volunteer_Reg_Data("Waiting For Approval","");
 
             }
+            else if (etype == "Select")
+            {
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data(vstatus, "");
+
+            }
             else
             {
                 _dtable = _MM.Get_Event_Volunteer_Reg_Data(vstatus,etype);

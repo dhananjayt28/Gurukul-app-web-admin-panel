@@ -1,9 +1,10 @@
 ﻿@model GurukulAppAdminPanel.Models.AuthenticateManagement
 <img src="~/Images/bg-header.jpg" class="img-responsive" width="100%" style="max-height: 100%;position: fixed;top: 0;bottom: 0;" />
 <div class="abs_outer clearfix">
+    <span class="text-danger thumbnail">@TempData["MSG_LOGIN"]</span>
     <div class="inner_abs clearfix">
     @using (@Html.BeginForm()) { 
-        <span class="text-danger">@TempData["MSG_LOGIN"]</span>
+       
         <div class="row">
             <div class="col-sm-6">
                 <label class="form-input">
