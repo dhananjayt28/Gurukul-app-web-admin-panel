@@ -292,17 +292,20 @@ namespace GurukulAppAdminPanel.Controllers
                 bool status = Convert.ToBoolean(data["status"]);
                 if (status)
                 {
-                    if (_eventid == 1)
+                    if (data.ContainsKey("response"))
                     {
-                        _emObj.EventNivrittilist = (ArrayList)data["response"];
-                    }
-                    else if (_eventid == 2)
-                    {
-                        _emObj.EventWorkshoplist = (ArrayList)data["response"];
-                    }
-                    else if (_eventid == 3)
-                    {
-                        _emObj.EventGitalist = (ArrayList)data["response"];
+                        if (_eventid == 1)
+                        {
+                            _emObj.EventNivrittilist = (ArrayList)data["response"];
+                        }
+                        else if (_eventid == 2)
+                        {
+                            _emObj.EventWorkshoplist = (ArrayList)data["response"];
+                        }
+                        else if (_eventid == 3)
+                        {
+                            _emObj.EventGitalist = (ArrayList)data["response"];
+                        }
                     }
 
                 }
@@ -572,7 +575,25 @@ namespace GurukulAppAdminPanel.Controllers
 
                 _postArrData.Add("CHAPTER_NAME", _smObj.chaptername);
                 _postArrData.Add("CHAPTER_DESC", _smObj.chaperdescription);
-                _postArrData.Add("COUNTRY_ID", _smObj.countryid);
+                if (_smObj.countryid == "0")
+                {
+                    _postArrData.Add("COUNTRY_NAME", _smObj.country);
+                    _postArrData.Add("COUNTRY_ID", _smObj.countryid);
+                }
+                else
+                {
+                    _postArrData.Add("COUNTRY_ID", _smObj.countryid);
+                }
+                if (_smObj.stateid == "0")
+                {
+                    _postArrData.Add("CITY_NAME", _smObj.state);
+                    _postArrData.Add("CITY_ID", _smObj.stateid);
+                }
+                else
+                {
+                    _postArrData.Add("CITY_ID", _smObj.stateid);
+                }
+               
                 postdata.Add(_postArrData);
                 var _postContent = System.Web.Helpers.Json.Encode(postdata);
                 MasterManagement _mmobj = new MasterManagement();
@@ -859,7 +880,8 @@ namespace GurukulAppAdminPanel.Controllers
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.View_Master_List("MASTER_COUNTRY");
+            //_dtable = _MM.View_Master_List("MASTER_COUNTRY");
+            _dtable = _MM.GetCountry();
 
 
             if (_dtable.Rows.Count > 0)
@@ -874,13 +896,14 @@ namespace GurukulAppAdminPanel.Controllers
          * return- json
          * Author- Sayan Chatterjee
          * *****************/
-        public string GetCityList()
+        public string GetCityList(string Country_id)
         {
             string _jsonString = string.Empty;
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
-            _dtable = _MM.View_Master_List("MASTER_CITY");
+            //_dtable = _MM.View_Master_List("MASTER_CITY");
+            _dtable = _MM.GetCityByCountry(Country_id);
 
 
             if (_dtable.Rows.Count > 0)

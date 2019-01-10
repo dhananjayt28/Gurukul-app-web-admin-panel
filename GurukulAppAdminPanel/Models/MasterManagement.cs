@@ -594,7 +594,38 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
-        
+        //Get City List in respect of Country
+        public DataTable GetCityByCountry(string Country_id)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 4) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_COUNTRY_ID", Country_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+
+
+            };
+
+            dt = _dbObj.Select("USP_GET_ALL_MASTER_DATA", _param);
+
+            return dt;
+        }
+        //Get Country List in respect of Country
+        public DataTable GetCountry()
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 3) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }               
+
+
+            };
+
+            dt = _dbObj.Select("USP_GET_ALL_MASTER_DATA", _param);
+
+            return dt;
+        }
+
 
 
 

@@ -828,8 +828,11 @@
                 //************************************
                 if (data.status==="true") {
                     if (data.response != null) {
+                        console.log(data.response);
                         var responseData = data.response[0];
-                        var _content = '<table class="table table-responsive"><tbody><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr></tbody></table>';
+                        var event_type = responseData.EVENT_TYPE;
+                        console.log(event_type);
+                        var _content = '<table class="table table-responsive"><tbody><tr><td>Event Name(Start Date-End Date)</td><th>' + responseData.EVENT_NAME +'('+ responseData.EVENT_START_DATE+'-'+responseData.EVENT_END_DATE+')'+'</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr></tbody></table>';
                         // var modalbody = modalBlock.children("div.modal-dialog").children("div.modal-content").children("div.modal-body");
                         //modalbody.html(_content);
                         //content_div
@@ -1196,7 +1199,7 @@
         //}
         //************************************City autocomplete**********************************
         $.ajax({
-            url: _BaseURL + "/event/get-city-list",           
+            url: _BaseURL + "/event/get-city-list/" + country_id,
             type: "POST",
             async: false,
             dataType: "json",
@@ -1236,7 +1239,7 @@
             });
             console.log(itemid)
             $.ajax({
-                url: _BaseURL + "/event/get-city-list",
+                url: _BaseURL + "/event/get-city-list/" + country_id,
                 type: "POST",
                 async: false,
                 dataType: "json",

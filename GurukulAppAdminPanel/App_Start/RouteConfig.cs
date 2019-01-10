@@ -10,8 +10,8 @@ namespace GurukulAppAdminPanel.App_Start
         {//GetStateList
             routes.MapRoute(
              name: "GetCityList",
-             url: "event/get-city-list/{category_name}",
-             defaults: new { controller = "Event", action = "GetCityList", category_name = UrlParameter.Optional }
+             url: "event/get-city-list/{Country_id}",
+             defaults: new { controller = "Event", action = "GetCityList", Country_id = UrlParameter.Optional }
         );
             routes.MapRoute(
              name: "GetCountryList",
