@@ -23,7 +23,7 @@
                                         
                                         <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
                                         @*@Html.DropDownListFor(model => model.countryid, Model.CountryList, new { @class = "form-control bod_rad_0", @required = true })*@
-                                        @Html.EditorFor(model=>model.country, new { htmlAttributes = new {@id="txt_country",@class= "form-control bod_rad_0", @required = true, @placeholder = "Enter Country", @list = "countryItemList" } })                                      
+                                        @Html.EditorFor(model=>model.country, new { htmlAttributes = new {@id="txt_country",@class= "form-control bod_rad_0", @required = true, @placeholder = "Enter Country", @list = "countryItemList", @autocomplete="off" } })                                      
                                         <datalist id="countryItemList"></datalist>
                                         @Html.HiddenFor(model=>model.countryid,new { @class = "form-control bod_rad_0", @id = "country_id_hide" })
                                     </div>
@@ -31,7 +31,7 @@
 
                                         <span class="input-group-addon bg_pink"><i class="fa fa-list"></i></span>
                                         @*@Html.DropDownListFor(model => model.countryid, Model.CountryList, new { @class = "form-control bod_rad_0", @required = true })*@
-                                        @Html.EditorFor(model => model.state, new { htmlAttributes = new { @id = "txt_state", @class = "form-control bod_rad_0", @required = true, @placeholder = "Enter City", @list = "stateItemList" } })
+                                        @Html.EditorFor(model => model.state, new { htmlAttributes = new { @id = "txt_state", @class = "form-control bod_rad_0", @required = true, @placeholder = "Enter City", @list = "stateItemList", @autocomplete = "off" } })
                                         <datalist id="stateItemList"></datalist>
                                         @Html.HiddenFor(model => model.stateid, new { @class = "form-control bod_rad_0", @id = "state_id_hide" })
                                     </div>

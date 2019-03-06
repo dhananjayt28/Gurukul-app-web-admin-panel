@@ -522,6 +522,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Row affected.
          **************************************/
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult AddSatsangChapter()
         {
             string _response;
@@ -624,6 +625,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Table.
          **************************************/
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult SatsangChapterList()
         {
 

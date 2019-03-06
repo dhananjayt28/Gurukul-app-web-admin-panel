@@ -1,11 +1,14 @@
-﻿namespace GurukulAppAdminPanel.App_Start
+﻿using System.Web.Configuration;
+
+namespace GurukulAppAdminPanel.App_Start
 {
     public class Constant
     {
         // Public Constant
         internal static string PROJECT_NAME                                 = " :: JIVANMUKTAS";
-  //internal static string BASEURL                                      = "http://gurukulweb.tangenttechsolutions.com/";
-     internal static string BASEURL                                      = "http://localhost:58949/";        
+ //internal static string BASEURL                                      = "http://gurukulweb.tangenttechsolutions.com/";
+        internal static string BASEURL = WebConfigurationManager.AppSettings["BASEURL"];
+        //internal static string BASEURL                                      = "http://localhost:58949/";        
         internal static string LOG_DIR_PATH                                 = "~/LogReport";
         internal static string LOG_FILE_PATH                                = "~/LogReport/_Log.txt";
         internal static string SERVER_PATH_PREFIX                           = "~/";

@@ -6,6 +6,10 @@
     using System.Collections.Generic;
     using System.Web.Helpers;
     using System.Web.Mvc;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System;
+
     public class SatsangManagement
     {
         public string chaptername { get; set; }
@@ -27,6 +31,11 @@
         public string GetSatsangChapterData()
         {
             string _response = string.Empty;
+            //MasterManagement mmobj = new MasterManagement();
+            //DataTable dt = new DataTable();
+            //dt= mmobj.GetSatsangChapterData();
+            //response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            //return response;          
 
             RestClient _client = new RestClient();
             _client.URL = Constant.GET_SATSANG_CHAPTER_DATA;

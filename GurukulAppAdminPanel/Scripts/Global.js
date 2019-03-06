@@ -761,6 +761,10 @@
     }
     if (action_name === "volunteer-event-reg-list") {
       
+        $(document).on("change", "#dd_type", function () {
+            $("#dd_statuses option:selected").text("Select Status");
+
+        });
         //dd_status
         $.ajax({
             url: _BaseURL + "/event/get-event-status",

@@ -625,6 +625,18 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        public DataTable GetSatsangChapterData(string country_id = "")
+        {
+            DataTable dt;
+            // EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=6,@COUNTRYID='2'
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@COUNTRYID", country_id) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+            };
+
+            dt = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return dt;
+        }
 
 
 
