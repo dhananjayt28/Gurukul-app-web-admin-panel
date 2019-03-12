@@ -29,7 +29,8 @@ namespace GurukulAppAdminPanel.App_Start
         // Service URL
         //http://jivanmuktasapi.ttssupport.info/api/
         //private static string _SERVICE_BASEURL = "http://gurukulweb.tangenttechsolutions.com/";
-        private static string _SERVICE_BASEURL                              = "http://jivanmuktas.tangenttechsolutions.com/gurukul_app_services.svc/";
+ //       private static string _SERVICE_BASEURL                              = "http://jivanmuktas.tangenttechsolutions.com/gurukul_app_services.svc/";
+        internal static string _SERVICE_BASEURL = WebConfigurationManager.AppSettings["SERVICE_BASEURL"];
         //private static string _SERVICE_BASEURL                              = "http://localhost:36787/Gurukul_App_Services.svc/";        
         internal static string LOGIN                                        = _SERVICE_BASEURL + "user-login";
         internal static string GET_VOLUNTEER_DATA                           = _SERVICE_BASEURL + "get-volunteer-data";
