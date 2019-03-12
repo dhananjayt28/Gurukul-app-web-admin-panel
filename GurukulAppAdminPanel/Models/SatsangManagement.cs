@@ -9,9 +9,11 @@
     using System.Data;
     using System.Data.SqlClient;
     using System;
+    using DatabaseManagementClient;
 
     public class SatsangManagement
     {
+        DatabaseManagement _dbObj;
         public string chaptername { get; set; }
         public string chaperdescription { get; set; }
         public string stateid { get; set; }
@@ -72,20 +74,42 @@
         public string AddChapterData(SatsangManagement _data)
         {
             string _response = string.Empty;
-            SortedList<string, object> _postdata = new SortedList<string, object>();
-            _postdata.Add("CHAPTER_NAME", _data.chaptername);
-            _postdata.Add("CHAPTER_DESCRIPTION", (_data.chaperdescription == null) ? "N/A" : _data.chaperdescription);
-            _postdata.Add("COUNTRY_ID", _data.countryid);
+            //SortedList<string, object> _postdata = new SortedList<string, object>();
+            //_postdata.Add("CHAPTER_NAME", _data.chaptername);
+            //_postdata.Add("CHAPTER_DESCRIPTION", (_data.chaperdescription == null) ? "N/A" : _data.chaperdescription);
+            //_postdata.Add("COUNTRY_ID", _data.countryid);
 
-            RestClient _client = new RestClient();
-            _client.URL = Constant.ADD_SATSANG_CHAPTER_DATA;
-            _client.Method = HttpMethod.POST;
-            _client.Content = Json.Encode(_postdata);
-            _client.Type = ContentType.URLENCODE;
-            _client.Execute();
-            _response = _client.Response();
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.ADD_SATSANG_CHAPTER_DATA;
+            //_client.Method = HttpMethod.POST;
+            //_client.Content = Json.Encode(_postdata);
+            //_client.Type = ContentType.URLENCODE;
+            //_client.Execute();
+            //_response = _client.Response();
+            AddChapterData(_data.chaptername, (_data.chaperdescription == null) ? "N/A" : _data.chaperdescription, _data.countryid);
 
             return _response;
+        }
+        public string AddChapterData(string chapterName, string chapterDesc, string countryid)
+        {
+            DataTable dt = new DataTable();
+            string response = string.Empty;
+           // _queryResponse = 0;
+                      
+                //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=8, @CHAPTER_NAME = 'Manama', @CHAPTER_DESC='', @COUNTRYID = '1'
+                SqlParameter[] _Param = new SqlParameter[] {
+                    new SqlParameter("@OPERATIONID", 8) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                    new SqlParameter("@CHAPTER_NAME", chapterName) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                    new SqlParameter("@CHAPTER_DESC", chapterDesc) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                    new SqlParameter("@COUNTRYID", countryid) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+                };
+                dt = _dbObj.Select("USP_MASTER_MANAGEMENT", _Param);
+           
+          if (dt.Rows.Count > 0)
+            {
+                response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            }
+            return response;
         }
     }
 }

@@ -651,34 +651,47 @@ namespace GurukulAppAdminPanel.Controllers
         {
            Session["event_id_"] = event_id;
             string response = string.Empty;
-
-            RestClient.RestClient _client = new RestClient.RestClient();
-           
-            _client.URL = Constant.API_BASEURL+"api/get-event-calendar-breakup-data?event_id="+ event_id;
-            _client.Method = HttpMethod.GET;
-            _client.Type = ContentType.JSON;
-            _client.Execute();
-             response = _client.Response();
-            if (response == string.Empty)
+            EventManagement _EM = new EventManagement();
+            _dtable = new DataTable();
+            _dtable = _EM.Get_event_date(event_id);
+            if (_dtable.Rows.Count > 0)
             {
-                response = _client.errordata();
+                response = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
             }
-            return response;
+                //RestClient.RestClient _client = new RestClient.RestClient();
+
+                //_client.URL = Constant.API_BASEURL+"api/get-event-calendar-breakup-data?event_id="+ event_id;
+                //_client.Method = HttpMethod.GET;
+                //_client.Type = ContentType.JSON;
+                //_client.Execute();
+                // response = _client.Response();
+                //if (response == string.Empty)
+                //{
+                //    response = _client.errordata();
+                //}
+                return response;
         }
         public FileResult GenExcel()
         {
            string  global_event_id = Session["event_id_"].ToString();
             string response = string.Empty;
 
-            RestClient.RestClient _client = new RestClient.RestClient();
-            _client.URL = Constant.API_BASEURL + "api/get-event-calendar-breakup-data?event_id=" + global_event_id;
-            _client.Method = HttpMethod.GET;
-            _client.Type = ContentType.JSON;
-            _client.Execute();
-            response = _client.Response();
-            if (response == string.Empty)
+            //RestClient.RestClient _client = new RestClient.RestClient();
+            //_client.URL = Constant.API_BASEURL + "api/get-event-calendar-breakup-data?event_id=" + global_event_id;
+            //_client.Method = HttpMethod.GET;
+            //_client.Type = ContentType.JSON;
+            //_client.Execute();
+            //response = _client.Response();
+            //if (response == string.Empty)
+            //{
+            //    response = _client.errordata();
+            //}
+            EventManagement _EM = new EventManagement();
+            _dtable = new DataTable();
+            _dtable = _EM.Get_event_date(global_event_id);
+            if (_dtable.Rows.Count > 0)
             {
-                response = _client.errordata();
+                response = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
             }
 
             try
