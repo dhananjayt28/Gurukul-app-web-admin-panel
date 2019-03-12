@@ -20,7 +20,8 @@ namespace GurukulAppAdminPanel.App_Start
         internal static string ALREADY_EXISTS_MSG = "Data already exists.";
         internal static string EMPTY_DATA_MSG = "Data not available.";
         internal static string UNAUTH_ACCESS = "Unauthorised Access";
-        internal static string API_BASEURL = "http://gurukulweb.tangenttechsolutions.com/";
+       // internal static string API_BASEURL = "http://gurukulweb.tangenttechsolutions.com/";
+        internal static string API_BASEURL = WebConfigurationManager.AppSettings["API_BASEURL"];
 
 
 
