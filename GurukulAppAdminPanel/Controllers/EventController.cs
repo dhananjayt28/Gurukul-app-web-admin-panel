@@ -612,10 +612,11 @@ namespace GurukulAppAdminPanel.Controllers
                 }
                 else
                 {
-                    TempData["CHP_MSG"] = "";
+                    TempData["CHP_MSG"] = "Oops! Something went wrong...";
                     return Redirect(Constant.BASEURL + "chapter/chapter-add");
                 }
             }
+            TempData["CHP_MSG"] = "Please Fill All the Fields";
             return Redirect(Constant.BASEURL + "chapter/chapter-add");
         }
         /***************************************
@@ -926,6 +927,36 @@ namespace GurukulAppAdminPanel.Controllers
                 _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
             }
             return _jsonString;
+        }
+        /*************************
+         * Name- DailyRequirementSummaryReport
+         * param- null
+         * Return - View
+         * Author- Sayan Chatterjee
+         * ***********************/
+         public ActionResult DailyRequirementSummaryReport()
+        {
+            return View();
+        }
+        /*************************
+         * Name- DailyRequirementDetailedReport
+         * param- null
+         * Return - View
+         * Author- Sayan Chatterjee
+         * ***********************/
+        public ActionResult DailyRequirementDetailedReport()
+        {
+            return View();
+        }
+        /*************************
+         * Name- ApprovedVolunteerArrivaldepartureReport
+         * param- null
+         * Return - View
+         * Author- Sayan Chatterjee
+         * ***********************/
+        public ActionResult ApprovedVolunteerArrivaldepartureReport()
+        {
+            return View();
         }
 
 

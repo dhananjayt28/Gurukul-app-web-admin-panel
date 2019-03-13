@@ -243,6 +243,9 @@
     <Content Include="Views\MasterManagement\ViewMaster.cshtml" />
     <Content Include="Views\MasterManagement\master.cshtml" />
     <Content Include="Views\IAScoaching\IAScoaching.cshtml" />
+    <Content Include="Views\Event\DailyRequirementSummaryReport.cshtml" />
+    <Content Include="Views\Event\DailyRequirementDetailedReport.cshtml" />
+    <Content Include="Views\Event\ApprovedVolunteerArrivaldepartureReport.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
