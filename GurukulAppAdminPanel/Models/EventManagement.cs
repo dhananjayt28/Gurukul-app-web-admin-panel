@@ -59,6 +59,9 @@
         public ArrayList EventGitalist = new ArrayList();
         public ArrayList VolunteerEventList = new ArrayList();
         public ArrayList ChapterList = new ArrayList();
+        public ArrayList SummaryList = new ArrayList();
+        public ArrayList DetailedList = new ArrayList();
+        public ArrayList ArrivalDepurtureList = new ArrayList();
         public List<SelectListItem> List = new List<SelectListItem>();
         public List<SelectListItem> StateList = new List<SelectListItem>();
         public List<SelectListItem> LocationList = new List<SelectListItem>();
@@ -316,6 +319,36 @@
 
             };
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _dtable;
+        }
+        public DataTable GetSummaryReport()
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",1) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_REPORT", _param);
+            return _dtable;
+        }
+        public DataTable GetDetailedReport()
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",2) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_REPORT", _param);
+            return _dtable;
+        }
+        public DataTable GetArrivalDepurtureReport()
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",2) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_REPORT", _param);
             return _dtable;
         }
 

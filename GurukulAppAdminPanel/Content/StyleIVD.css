@@ -23,3 +23,13 @@ i.material-icons:active{
 i.clickable.material-icons.hand {
     font-size: 28px;
 }
+.clickable:active {
+    color: #3598db;
+}
+i.material-icons:active{
+    color: #3598db;
+}
+.rotate-180{transform:rotate(90deg);}72
+i.clickable.material-icons.hand {
+    font-size: 28px;
+}

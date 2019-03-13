@@ -1,4 +1,5 @@
-﻿
+﻿@model GurukulAppAdminPanel.Models.EventManagement
+
 @{
     ViewBag.Title = "ApprovedVolunteerArrivaldepartureReport";
 }
@@ -10,6 +11,42 @@
             <li><a href="javascript:void();"><i class="fa fa-calendar-o mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbController </a></li>
             <li><a href="javascript:void();"><i class="fa fa-table mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbAction </a></li>
         </ul>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="panel panel-default widget1">
+
+            <div class="panel-body">
+                <table class="table table-responsive kullaniciTablosu" id="eventTabledata" style="border: 1px solid#eee;background: #ffffff">
+                    <thead>
+                        <tr>
+                            <th>Sl. No</th>
+                            <th>Country</th>
+                            <th>Chapter Name</th>
+                            <th>Description</th>
+                            @*<th></th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ArrivalDepurtureList.Count > 0)
+                        {
+                            int i = 0;
+                            foreach (Dictionary<string, object> _data in Model.ArrivalDepurtureList)
+                            {
+                                ++i;
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@_data["COUNTRY_NAME"]</td>
+                                    <td>@_data["CHAPTER_NAME"]</td>
+                                    <td>@_data["DESCRIPTION"]</td>
+                                    @*<td></td>*@
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

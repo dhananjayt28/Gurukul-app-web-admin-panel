@@ -610,6 +610,19 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        public DataTable GetAllCity()
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+              
+            };
+
+            dt = _dbObj.Select("USP_GET_ALL_MASTER_DATA", _param);
+
+            return dt;
+        }
         //Get Country List in respect of Country
         public DataTable GetCountry()
         {

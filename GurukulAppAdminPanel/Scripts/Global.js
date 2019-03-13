@@ -150,6 +150,8 @@
     ***************************************/
     //action_name === 'view-master'
     if (action_name === 'view-master') {
+      
+
     var jsondata1 =
 //{
 //    "status": "true"
@@ -1286,4 +1288,161 @@
             $("#state_id_hide").val(itemid);
         });
     });
+    /**********************************Report****************************************/
+    var view_detailed_report = function ($this) {
+        // var $this = $(this);
+        var date = $this.data("date");
+        $.ajax({
+            //url: API_BASEURL + 'api/get-activity-data?type=Sub Activity&parent_activity_id=' + var_activity_id,
+            url: BASEURL + "/event/get-detailed-report/" + date,
+            type: "GET",
+            async: false,
+            dataType: "json",
+            success: function (data) {
+                var _i_Obj = $this.children("i");
+                var _tr = $this.closest("tr");
+                var _sub_tr = $('<tr class="row1 addactivity-row collapse subActivityData in" aria-expanded="true" style=""></tr>');
+                _sub_tr.append('<td colspan="12"><div id="Gridview_of_Detailed_Report"></div></td>');
+                _sub_tr.children("td");
+                _tr.after(_sub_tr);
+                if (_i_Obj.hasClass("rotate-90")) {
+                    $("#Gridview_of_Detailed_Report").Gridview(data.response, {
+                        autocolumn: false,
+                        column: [
+
+                                    { name: "", dbcol: "" },
+                                    { name: "", dbcol: "" },
+                                    { name: "", dbcol: "" },
+                                    { name: "", dbcol: "" },
+                                    { name: "", dbcol: "" },
+                                    { name: "", dbcol: "" },
+                        
+                        ],
+                        class: "table",
+                        id: "view_Table"
+                    });
+                } else {
+                    $(".subActivityData").remove();
+
+                }
+
+
+            },
+            error: function (errorResponse) {
+
+                if (!errorResponse.response) {
+                    errorResponse.response = "error occurred";
+                }
+                $.msgbox(errorResponse.response, "error");
+            }
+        });
+    }
+    /***************************************
+        * Title - Load Gridview of Detailed Report 
+        * Parameter -null
+        * Return - gridview
+        * Syntax - null
+        ***************************************/
+    $(document).on("click", ".ViewDetailedReport", function () {
+        var $this = $(this);
+        view_detailed_report($this);
+    });
+    //view summary report
+    if (action_name === "daily-summary-report") {
+       
+        $.ajax({
+            url: _BaseURL+"/event/get-summary-report",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                $("#SummaryReportView").Gridview(data.response, {
+                    autocolumn: false,
+                    column: [
+                        {
+                            name: "",
+                            value: '<a href="javascript:void(0);" id="ViewDetailedReport" class="ViewDetailedReport" ><i class="fa fa-sort-asc clickable" aria-hidden="true"></i></a>',
+                            //value:'<button id="view_detailed_report" class="btn"><i class="fa fa-eye">View Detailed Report</i></button>'
+                        },
+                                { name: "Event Name", dbcol: "Event_Name" },
+                                { name: "Event Start Date", dbcol: "Event_Start_Date" },
+                                { name: "Event End Date", dbcol: "Event_End_Date" },
+                                { name: "Event Date", dbcol: "Event_Date" },
+                                { name: "Male Required", dbcol: "Male_Required" },
+                                { name: "Female Required", dbcol: "Female_Required" },
+                                { name: "Male Registered", dbcol: "Male_Registered" },
+                                { name: "Female Registered", dbcol: "Female_Registered" },
+                                
+
+                    ],
+                    class: "table kullaniciTablosu",
+                    id: "tableGrid"
+                });
+                $("#tableGrid").DataTable();
+            },
+            error: function (data) {
+                console.log(data);
+                alert("Oops! Something went wrong...");
+            }
+
+        });
+    }
+    if (action_name === "get-country") {
+
+        $.ajax({
+            url: _BaseURL + "/event/get-country-list",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                $("#CountryView").Gridview(data.response, {
+                    autocolumn: false,
+                    column: [
+
+                                { name: "Country Id", dbcol: "LOV_ID" },
+                                { name: "Country Name", dbcol: "LOV_NAME" },
+
+
+                    ],
+                    class: "table",
+                    id: "table_new"
+                });
+                $("#table_new").DataTable();
+            },
+            error: function (data) {
+                alert("Oops! Something went wrong")
+            }
+
+
+        });
+    }
+    if (action_name === "get-city") {
+        $.ajax({
+            url: _BaseURL + "/event/get-city-list",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                $("#CityView").Gridview(data.response, {
+                    autocolumn: false,
+                    column: [
+                               
+                                { name: "City Id", dbcol: "CITY_ID" },
+                                { name: "City Name", dbcol: "CITY_NAME" },
+                                 { name: "Country Name", dbcol: "COUNTRY_NAME" },
+
+
+                    ],
+                    class: "table",
+                    id: "table_city"
+                });
+                $("#table_city").DataTable();
+            },
+            error: function (data) {
+                alert("Oops! Something went wrong")
+            }
+
+
+        });
+    }
 });

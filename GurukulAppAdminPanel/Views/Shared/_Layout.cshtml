@@ -8,7 +8,8 @@
     <title>@ViewBag.Title</title>
     <link rel="shortcut icon" href="@Url.Content("~/Images/ico/fav_icon.png")">
     <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet">
-    <link href="@Url.Content("~/Content/font-awesome.css")" rel="stylesheet">
+    @*<link href="@Url.Content("~/Content/font-awesome.css")" rel="stylesheet">*@
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="@Url.Content("~/Content/custom.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/breadcrumb.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/jquery-ui.css")" rel="stylesheet">
@@ -117,6 +118,12 @@
                                         <li>
                                             <a href="@Url.Action("","chapter/chapter-list")"> Chapter List</a>
                                         </li>
+                                        <li>
+                                            <a href="@Url.Action("","event/get-country")"> Country List</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("","event/get-city")"> City List</a>
+                                        </li>
                                     </ul>
                                 </li> 
                                 <li>
@@ -124,7 +131,7 @@
                                     <ul class="nav child_menu">
                                         <li>
                                             <a href="@Url.Action("","event/daily-summary-report")">@*Daily Requirement*@ Summary Report</a>
-                                            <a href="@Url.Action("","event/daily-detailed-report")">@*Daily Requirement*@ Detailed Report</a>
+                                            
                                             <a href="@Url.Action("","event/volunteer-report")">@*ApprovedVolunteer*@Arrival Departure Report</a>
                                         </li>
                                     </ul>
@@ -196,6 +203,7 @@
     <script src="@Url.Content("~/Scripts/bootstrap-progressbar.min.js")"></script>
     <script src="@Url.Content("~/Scripts/custom.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Global.js")"></script>
+    <script src="@Url.Content("~/Scripts/dataTables.min.js")"></script>
     <script src="~/Scripts/Common.min.js"></script>
     <script src="~/Scripts/dropdown.min.js"></script>   
     <script src="~/Scripts/newAdd.js"></script>

@@ -906,3 +906,5 @@ right: 20px;
 top: 42px;
 font-size: 18px !important;
  }
+ .clickable{transform:rotate(90deg);}
+  .rotate-90{transform:rotate(90deg);}

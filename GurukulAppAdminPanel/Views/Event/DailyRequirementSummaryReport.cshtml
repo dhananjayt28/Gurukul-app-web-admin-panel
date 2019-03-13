@@ -1,4 +1,5 @@
-﻿
+﻿@model GurukulAppAdminPanel.Models.EventManagement
+
 @{
     ViewBag.Title = "DailyRequirementSummaryReport";
 }
@@ -11,5 +12,34 @@
             <li><a href="javascript:void();"><i class="fa fa-table mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbAction </a></li>
         </ul>
     </div>
+    <div class="row  margin-row-10" style="margin-top:20px">
+        <div class="col-md-3">
+            <input type="text" id="from_date" placeholder="From Date" readonly="readonly" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <input type="text" id="to_date" readonly="readonly" placeholder="To Date" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-normal" id="search_summary_report">Search</button>
+        </div>
+
+    </div>
+    <div class="row" style="margin-top:20px">
+               
+          <div id="SummaryReportView" class="container-fluid Ownershop_background view_activity_table"></div>
+            
+       
+    </div>
+
 </div>
+<script>
+    $(document).ready(function(){
+        $("#from_date").datepicker({
+        
+        });
+        $("#to_date").datepicker({
+
+        });
+    });
+</script>
 
