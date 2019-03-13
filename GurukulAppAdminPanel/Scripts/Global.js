@@ -1289,64 +1289,7 @@
         });
     });
     /**********************************Report****************************************/
-    var view_detailed_report = function ($this) {
-        // var $this = $(this);
-        var date = $this.data("date");
-        $.ajax({
-            //url: API_BASEURL + 'api/get-activity-data?type=Sub Activity&parent_activity_id=' + var_activity_id,
-            url: BASEURL + "/event/get-detailed-report/" + date,
-            type: "GET",
-            async: false,
-            dataType: "json",
-            success: function (data) {
-                var _i_Obj = $this.children("i");
-                var _tr = $this.closest("tr");
-                var _sub_tr = $('<tr class="row1 addactivity-row collapse subActivityData in" aria-expanded="true" style=""></tr>');
-                _sub_tr.append('<td colspan="12"><div id="Gridview_of_Detailed_Report"></div></td>');
-                _sub_tr.children("td");
-                _tr.after(_sub_tr);
-                if (_i_Obj.hasClass("rotate-90")) {
-                    $("#Gridview_of_Detailed_Report").Gridview(data.response, {
-                        autocolumn: false,
-                        column: [
 
-                                    { name: "", dbcol: "" },
-                                    { name: "", dbcol: "" },
-                                    { name: "", dbcol: "" },
-                                    { name: "", dbcol: "" },
-                                    { name: "", dbcol: "" },
-                                    { name: "", dbcol: "" },
-                        
-                        ],
-                        class: "table",
-                        id: "view_Table"
-                    });
-                } else {
-                    $(".subActivityData").remove();
-
-                }
-
-
-            },
-            error: function (errorResponse) {
-
-                if (!errorResponse.response) {
-                    errorResponse.response = "error occurred";
-                }
-                $.msgbox(errorResponse.response, "error");
-            }
-        });
-    }
-    /***************************************
-        * Title - Load Gridview of Detailed Report 
-        * Parameter -null
-        * Return - gridview
-        * Syntax - null
-        ***************************************/
-    $(document).on("click", ".ViewDetailedReport", function () {
-        var $this = $(this);
-        view_detailed_report($this);
-    });
     //view summary report
     if (action_name === "daily-summary-report") {
        
@@ -1362,6 +1305,10 @@
                         {
                             name: "",
                             value: '<a href="javascript:void(0);" id="ViewDetailedReport" class="ViewDetailedReport" ><i class="fa fa-sort-asc clickable" aria-hidden="true"></i></a>',
+                            data: {
+                                date: "Event_Date",
+                                event_name:"Event_Name"
+                            }
                             //value:'<button id="view_detailed_report" class="btn"><i class="fa fa-eye">View Detailed Report</i></button>'
                         },
                                 { name: "Event Name", dbcol: "Event_Name" },
@@ -1385,6 +1332,66 @@
                 alert("Oops! Something went wrong...");
             }
 
+        });
+        var view_detailed_report = function ($this) {
+          
+            // var $this = $(this);
+            var date = $this.data("date");
+            var event_name = $this.data("event_name");
+            $.ajax({
+                //url: API_BASEURL + 'api/get-activity-data?type=Sub Activity&parent_activity_id=' + var_activity_id,
+                url: _BaseURL + "/event/get-detailed-report/" + date+"/"+event_name,
+                type: "GET",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    var _i_Obj = $this.children("i");
+                    var _tr = $this.closest("tr");
+                    var _sub_tr = $('<tr class="row1 addactivity-row collapse subActivityData in" aria-expanded="true" style=""></tr>');
+                    _sub_tr.append('<td colspan="12"><div id="Gridview_of_Detailed_Report"></div></td>');
+                    _sub_tr.children("td");
+                    _tr.after(_sub_tr);
+                    if (_i_Obj.hasClass("rotate-90")) {
+                        $("#Gridview_of_Detailed_Report").Gridview(data.response, {
+                            autocolumn: false,
+                            column: [
+
+                                        { name: "", dbcol: "" },
+                                        { name: "", dbcol: "" },
+                                        { name: "", dbcol: "" },
+                                        { name: "", dbcol: "" },
+                                        { name: "", dbcol: "" },
+                                        { name: "", dbcol: "" },
+
+                            ],
+                            class: "table",
+                            id: "view_Table"
+                        });
+                    } else {
+                        $(".subActivityData").remove();
+
+                    }
+
+
+                },
+                error: function (errorResponse) {
+
+                    if (!errorResponse.response) {
+                        errorResponse.response = "error occurred";
+                    }
+                    $.msgbox(errorResponse.response, "error");
+                }
+            });
+        }
+        /***************************************
+            * Title - Load Gridview of Detailed Report 
+            * Parameter -null
+            * Return - gridview
+            * Syntax - null
+            ***************************************/
+        $(document).on("click", ".ViewDetailedReport", function () {         
+            var $this = $(this);
+            view_detailed_report($this);
         });
     }
     if (action_name === "get-country") {

@@ -25,7 +25,7 @@ defaults: new { controller = "Event", action = "City" }
  );
             routes.MapRoute(
        name: "GetDetailedReport",
-       url: "event/get-detailed-report/{date}",
+       url: "event/get-detailed-report/{date}/{event_name}",
        defaults: new { controller = "Event", action = "GetDetailedReport" }
   );
             routes.MapRoute(

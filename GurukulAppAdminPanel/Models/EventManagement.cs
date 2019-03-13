@@ -331,12 +331,14 @@
             _dtable = _dbObj.Select("USP_REPORT", _param);
             return _dtable;
         }
-        public DataTable GetDetailedReport()
+        public DataTable GetDetailedReport(string date,string event_name)
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
             {
-                new SqlParameter("@OPERATIONID",2) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input }
+                new SqlParameter("@OPERATIONID",2) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input },
+                new SqlParameter("@DATE",date) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input },
+                  new SqlParameter("@EVENT_NAME",event_name) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input }
             };
             _dtable = _dbObj.Select("USP_REPORT", _param);
             return _dtable;

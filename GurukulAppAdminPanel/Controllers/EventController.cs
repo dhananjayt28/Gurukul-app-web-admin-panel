@@ -957,35 +957,35 @@ namespace GurukulAppAdminPanel.Controllers
             return View(_evObj);
             
         }
-        /*************************
-         * Name- DailyRequirementDetailedReport
-         * param- null
-         * Return - View
-         * Author- Sayan Chatterjee
-         * ***********************/
-        public ActionResult DailyRequirementDetailedReport()
-        {
-            EventManagement _evObj = new EventManagement();
-            string _response = string.Empty;
-            DataTable dt = new DataTable();
-            dt = _evObj.GetDetailedReport();
-            _response = dt.Rows[0]["JSON_VALUE"].ToString();
-            if (_response != string.Empty)
-            {
-                JavaScriptSerializer jsObj = new JavaScriptSerializer();
-                var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
-                bool status = Convert.ToBoolean(data["status"]);
-                if (status)
-                {
-                    _evObj.DetailedList = (ArrayList)data["response"];
-                }
-            }
-            ViewBag.breadcrumbController = "Report";
-            ViewBag.breadcrumbAction = "Daily Requirement Detailed Report";
-            //ViewBag.Title = "Chapter List" + Constant.PROJECT_NAME;
-            return View(_evObj);
+        ///*************************
+        // * Name- DailyRequirementDetailedReport
+        // * param- null
+        // * Return - View
+        // * Author- Sayan Chatterjee
+        // * ***********************/
+        //public ActionResult DailyRequirementDetailedReport()
+        //{
+        //    EventManagement _evObj = new EventManagement();
+        //    string _response = string.Empty;
+        //    DataTable dt = new DataTable();
+        //    dt = _evObj.GetDetailedReport();
+        //    _response = dt.Rows[0]["JSON_VALUE"].ToString();
+        //    if (_response != string.Empty)
+        //    {
+        //        JavaScriptSerializer jsObj = new JavaScriptSerializer();
+        //        var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
+        //        bool status = Convert.ToBoolean(data["status"]);
+        //        if (status)
+        //        {
+        //            _evObj.DetailedList = (ArrayList)data["response"];
+        //        }
+        //    }
+        //    ViewBag.breadcrumbController = "Report";
+        //    ViewBag.breadcrumbAction = "Daily Requirement Detailed Report";
+        //    //ViewBag.Title = "Chapter List" + Constant.PROJECT_NAME;
+        //    return View(_evObj);
 
-        }
+        //}
         /*************************
          * Name- ApprovedVolunteerArrivaldepartureReport
          * param- null
@@ -1033,17 +1033,17 @@ namespace GurukulAppAdminPanel.Controllers
         }
         /**************************
         * Name - GetSummaryReport
-        * param- null
+        * param- date
         * Return json string
         * Author - Sayan chatterjee
         * **********************/
-        public string GetDetailedReport()
+        public string GetDetailedReport(string date,string event_name)
         {
             string response = string.Empty;
             EventManagement _evObj = new EventManagement();
             string _response = string.Empty;
             DataTable dt = new DataTable();
-            dt = _evObj.GetDetailedReport();
+            dt = _evObj.GetDetailedReport(date,event_name);
             response = dt.Rows[0]["JSON_VALUE"].ToString();
             return response;
         }
