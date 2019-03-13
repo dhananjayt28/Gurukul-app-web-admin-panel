@@ -33,17 +33,17 @@
         public string GetSatsangChapterData()
         {
             string _response = string.Empty;
-            //MasterManagement mmobj = new MasterManagement();
-            //DataTable dt = new DataTable();
-            //dt= mmobj.GetSatsangChapterData();
-            //response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
-            //return response;          
+            MasterManagement mmobj = new MasterManagement();
+            DataTable dt = new DataTable();
+            dt = mmobj.GetSatsangChapterData();
+            _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+           // return response;
 
-            RestClient _client = new RestClient();
-            _client.URL = Constant.GET_SATSANG_CHAPTER_DATA;
-            _client.Method = HttpMethod.GET;
-            _client.Execute();
-            _response = _client.Response();
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.GET_SATSANG_CHAPTER_DATA;
+            //_client.Method = HttpMethod.GET;
+            //_client.Execute();
+            //_response = _client.Response();
 
             return _response;
         }
@@ -110,6 +110,18 @@
                 response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
             }
             return response;
+        }
+        public DataTable GetSatsangChapterData(string country_id = "")
+        {
+          DataTable  dt = new DataTable();
+            // EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=6,@COUNTRYID='2'
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@COUNTRYID", country_id) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+            };
+
+            dt = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return dt;
         }
     }
 }
