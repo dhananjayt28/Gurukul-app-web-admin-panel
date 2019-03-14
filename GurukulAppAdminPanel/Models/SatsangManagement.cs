@@ -13,7 +13,7 @@
 
     public class SatsangManagement
     {
-        DatabaseManagement _dbObj;
+        private DatabaseManagement _dbObj = new DatabaseManagement("ConnectDB");
         public string chaptername { get; set; }
         public string chaperdescription { get; set; }
         public string stateid { get; set; }
