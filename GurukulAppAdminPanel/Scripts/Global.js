@@ -1374,6 +1374,7 @@
                 async: false,
                 dataType: "json",
                 success: function (data) {
+                   // alert(JSON.stringify(data));
                     var _i_Obj = $this.children("i");
                     var _tr = $this.closest("tr");
                     var _sub_tr = $('<tr class="row1 addactivity-row collapse subActivityData in" aria-expanded="true" style=""></tr>');
@@ -1385,12 +1386,13 @@
                             autocolumn: false,
                             column:  [
 
-                                        { name: "", dbcol: "" },
-                                        { name: "", dbcol: "" },
-                                        { name: "", dbcol: "" },
-                                        { name: "", dbcol: "" },
-                                        { name: "", dbcol: "" },
-                                        { name: "", dbcol: "" },
+                                        { name: "Date", dbcol: "DATE" },
+                                        { name: "Name", dbcol: "NAME" },
+                                        { name: "Gender", dbcol: "GENDER" },
+                                        { name: "Pending Application", dbcol: "PENDING_APPLICATION" },
+                                        { name: "Approved", dbcol: "APPROVED" },
+                                        { name: "Rejected", dbcol: "REJECTED" },
+                                         { name: "Cancelled", dbcol: "CANCELLED" },
 
                             ],
                             class: "table",
@@ -1408,7 +1410,7 @@
                     if (!errorResponse.response) {
                         errorResponse.response = "error occurred";
                     }
-                    $.msgbox(errorResponse.response, "error");
+                  alert("Oops! Something went wrong...")
                 }
             });
         }
@@ -1420,6 +1422,7 @@
             ***************************************/
         $(document).on("click", ".ViewDetailedReport", function () {         
             var $this = $(this);
+            $this.children("i").toggleClass("rotate-90");
             view_detailed_report($this);
         });
     }

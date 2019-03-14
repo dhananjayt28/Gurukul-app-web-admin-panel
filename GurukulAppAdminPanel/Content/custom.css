@@ -908,3 +908,9 @@ font-size: 18px !important;
  }
  .clickable{transform:rotate(90deg);}
   .rotate-90{transform:rotate(90deg);}
+   .clickable_Actions{font-size:28px !important;
+                     transition:0.5s;
+                     position:relative;
+  }
+  .actionRotate{transform:rotate(90deg);}
+  .remove-actionRotate{transform:rotate(0deg);}
