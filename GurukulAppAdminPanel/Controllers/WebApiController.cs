@@ -1235,7 +1235,106 @@ namespace GurukulAppAdminPanel.Controllers
             response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
             return response;
         }
+        [HttpGet]
+        //[Route[("api/get-satsang-chapter-data/{country_id}")]
+        public HttpResponseMessage get_satsang_chapter_data(string country_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetSatsangChapterData(country_id);
 
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpPost]
+        //[Route("api/user-profile-update")]
+        public HttpResponseMessage user_profile_update(HttpRequestMessage request)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                var data = request.Content.ReadAsStringAsync().Result;
+                string Jsondata = data.ToString();
+
+                _dtable = new DataTable();
+                _MM = new MasterManagement();
+                if (data != null)
+                {
+                    _dtable = _MM.user_update(Jsondata);
+                }
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+            }
+
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/get-education-data/{education_id}")]
+        public HttpResponseMessage get_education_data(string education_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetSubjectDatabyEducationId(education_id);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
 
     }
 }

@@ -383,6 +383,20 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        public DataTable user_update(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_USERS_MANAGEMENT @OPERATION_ID = 2,@JSON=
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_USERS_MANAGEMENT", _param);
+
+            return dt;
+        }
         /*************************************
          * Title :: User Approved by Admin
          * Description :: Fetch Data method using Procedure name by Opeation Id
@@ -644,13 +658,45 @@ namespace GurukulAppAdminPanel.Models
             // EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=6,@COUNTRYID='2'
             SqlParameter[] _param = new SqlParameter[] {
                 new SqlParameter("@OPERATIONID", 6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                //new SqlParameter("@COUNTRYID", country_id) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+                new SqlParameter("@COUNTRYID", country_id) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
             };
 
             dt = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
             return dt;
         }
 
+        public DataTable PasswordReset(int OperationId, string Userid)
+        {
+            //Int32 Status = 0;
+            DataTable dt = new DataTable();
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=5,@USER_ID='abc@gmail.com'
+            SqlParameter[] _Param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", OperationId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@USER_ID", Userid) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+            };
+
+            dt = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return dt;
+            //return Status;
+        }
+        /*************************************
+       * Title :: Get Subject Data by Education Id method
+       * Description :: Get Data from this method using Education ID
+       * Parameter :: OperationId, id
+       * Return :: Table data
+       * Author - Sayan Chatterjee
+       *************************************/
+        public DataTable GetSubjectDatabyEducationId(string education_id="")
+        {
+            //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID = 4, @EDUCATION_ID = 2
+           DataTable dt = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 4) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EDUCATION_ID", education_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            dt = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return dt;
+        }
 
 
 

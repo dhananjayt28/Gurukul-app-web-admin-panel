@@ -57,11 +57,12 @@
         {
             string _response = string.Empty;
 
-            RestClient _client = new RestClient();
-            _client.URL = Constant.GET_MASTER_COUNTRY_DATA;
-            _client.Method = HttpMethod.GET;
-            _client.Execute();
-            _response = _client.Response();
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.GET_MASTER_COUNTRY_DATA;
+            //_client.Method = HttpMethod.GET;
+            //_client.Execute();
+            //_response = _client.Response();
+            _response = GetCountryData().Rows[0]["JSON_VALUE"].ToString();
 
             return _response;
         }
@@ -122,6 +123,16 @@
 
             dt = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
             return dt;
+        }
+        public DataTable GetCountryData()
+        {
+            //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=7
+           DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return _datatable;
         }
     }
 }

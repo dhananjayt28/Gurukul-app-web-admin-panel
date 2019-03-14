@@ -1354,7 +1354,7 @@
                     if (_i_Obj.hasClass("rotate-90")) {
                         $("#Gridview_of_Detailed_Report").Gridview(data.response, {
                             autocolumn: false,
-                            column: [
+                            column:  [
 
                                         { name: "", dbcol: "" },
                                         { name: "", dbcol: "" },
