@@ -559,10 +559,6 @@ namespace GurukulAppAdminPanel.Controllers
                 _MM = new MasterManagement();
                 _dtable = new DataTable();
                 _dtable = _MM.View_User_Data(User_id, Status, Role);
-
-
-
-
                 if (_dtable.Rows.Count > 0)
                 {
                     _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
