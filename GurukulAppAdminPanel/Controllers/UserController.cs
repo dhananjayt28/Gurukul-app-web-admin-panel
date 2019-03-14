@@ -59,16 +59,17 @@ namespace GurukulAppAdminPanel.Controllers
                 {
                     JavaScriptSerializer jsObj = new JavaScriptSerializer();
                     var data = jsObj.Deserialize<Dictionary<string, object>>(response);
-                    bool status = Convert.ToBoolean(data["status"]);
-                    //if (status)
-                    //{
-                    //    _umObj.UserData = (ArrayList)data["response"];
-                    //}
                     dictionaryObj = new Dictionary<string, object>();
                     dictionaryObj = Data.Deserialize(response, typeof(Dictionary<string, object>));
-                    if (dictionaryObj.ContainsKey("response")) {
-                        _umObj.UserData = (ArrayList)data["response"];
-                    }
+                    bool status = Convert.ToBoolean(data["status"]);
+                    if (status)
+                    {
+                        if (dictionaryObj.ContainsKey("response"))
+                        {
+                            _umObj.UserData = (ArrayList)data["response"];
+                        }
+                    }                  
+                    
                     else
                     {
 
