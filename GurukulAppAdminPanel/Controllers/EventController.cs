@@ -14,7 +14,7 @@ using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using ClosedXML.Excel;
-
+using System.Security.AccessControl;
 
 namespace GurukulAppAdminPanel.Controllers
 {
@@ -813,8 +813,14 @@ namespace GurukulAppAdminPanel.Controllers
         {
             string file_name = ob.file.FileName;
             string response = string.Empty;
-          
 
+            if (!Directory.Exists(Server.MapPath("~/Uploaded_files")))
+            {
+                DirectorySecurity securityRules = new DirectorySecurity();
+                securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\YourAppAllowedGroup", FileSystemRights.FullControl, AccessControlType.Allow));
+                Directory.CreateDirectory(Server.MapPath("~/Uploaded_files"), securityRules);
+
+            }
             try
             {
                 string _FileName = Path.GetFileName(file_name);
