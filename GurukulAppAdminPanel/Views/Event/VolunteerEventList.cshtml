@@ -246,7 +246,7 @@
                                         @Html.HiddenFor(model => Model.hide_event_reg_id, new { @id = "hide_event_reg_id" })
                                         @*@Html.HiddenFor(model => Model.file_, new { @id = "file_" })*@
                                         @*<input type="hidden" id="hidden_mou_id" />*@
-                                        @Html.TextBox("file", "", new { type = "file" }) <br />
+                                        @Html.TextBox("file", "", new { type = "file",id="itinerary_file" }) <br />
 
                                         <button type="button" id="sv_file" class="btn btn-default" data-dismiss="modal">Save</button>
 

@@ -76,7 +76,36 @@
         minDate: 0,
         dateFormat: 'dd-mm-yy'
     });
-   
+    var isValidFileExtension = function (file, filetype) {
+        var _isValid = false;
+        if (typeof file === "object" && typeof filetype === "object") {
+            if (file.files && file.files[0]) {
+                var _fileData = file.files[0];
+                var _fileName = _fileData.name;
+                var _fileSplitArray = _fileName.split(".");
+                var _fileExtension = _fileSplitArray[_fileSplitArray.length - 1];
+                if ($.inArray(_fileExtension, filetype) != -1) {
+                    _isValid = true;
+                }
+                else {
+                    $(file).val("");
+                }
+            }
+        }
+        return _isValid;
+    }
+    $.isValidFile = function (File, Type) {
+        return isValidFileExtension(File, Type);
+    }
+    $(document).on("change", "#itinerary_file", function () {
+        
+        var bool = $.isValidFile(this, ["pdf"]);
+        if (bool !== true) {
+            alert("Incorrect File Format, please upload only pdf file");
+            $("#itinerary_file").val(null);
+        }
+
+    });
     // Using in Event Create Page
     $(document).on("change", "#_event_drpdown", function () {
         var _dropValue = $(this).val();
