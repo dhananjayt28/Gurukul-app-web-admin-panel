@@ -73,7 +73,7 @@
     $(".common-date-picker").datepicker({
         changeYear: true,
         changeMonth: true,
-        minDate: 0,
+       // minDate: 0,
         dateFormat: 'dd-mm-yy'
     });
     var isValidFileExtension = function (file, filetype) {
@@ -1484,4 +1484,42 @@
 
         });
     }
+    $(document).on("click", "#search_approved_report", function () {
+        var from_date = $("#from_date_").val();
+        var to_date = $("#to_date_").val();
+        if (from_date === "" || to_date === "") {
+            alert("Please put from date and to date");
+            return false;
+        }
+        $.ajax({
+            url: _BaseURL + "/event/get-arrival-depurture-report?from_date=" + from_date + "&to_date=" + to_date,
+            type: "GET",
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                $("#arrival_report_view").Gridview(data.response, {
+                    autocolumn: false,
+                    column: [
+                        
+                                { name: "Name", dbcol: "NAME" },
+                                { name: "Gender", dbcol: "GENDER" },
+                                { name: "Date of Birth", dbcol: "DOB" },
+                                { name: "Arrival Date", dbcol: "ARRIVAL_DATE" },
+                                { name: "Arrival Time", dbcol: "ARRIVAL_TIME" },
+                                { name: "Depurture Date", dbcol: "DEPARTURE_DATE" },
+                                { name: "Deputure Time", dbcol: "DEPARTURE_TIME" },
+                                //{ name: "Subjects Volunteers can teach", dbcol: "SUBJECTS_VOLUNTEER_CAN_TEACH" },
+
+
+                    ],
+                    class: "table kullaniciTablosu",
+                    id: "tableGrid"
+                });
+                $("#tableGrid").DataTable();
+            },
+            error: function (data) {
+                alert("Oops! Something went wrong...");
+            }
+        })
+    });
 });

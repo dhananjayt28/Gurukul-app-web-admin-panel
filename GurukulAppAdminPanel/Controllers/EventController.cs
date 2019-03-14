@@ -1012,13 +1012,14 @@ namespace GurukulAppAdminPanel.Controllers
                 bool status = Convert.ToBoolean(data["status"]);
                 if (status)
                 {
-                    _evObj.ArrivalDepurtureList = (ArrayList)data["response"];
+                    //_evObj.ArrivalDepurtureList = (ArrayList)data["response"];
                 }
             }
             ViewBag.breadcrumbController = "Report";
             ViewBag.breadcrumbAction = "Approved Volunteer Arrival/Departure Report";
             //ViewBag.Title = "Chapter List" + Constant.PROJECT_NAME;
-            return View(_evObj);
+            //_evObj
+            return View();
 
         }
         /**************************
@@ -1053,13 +1054,29 @@ namespace GurukulAppAdminPanel.Controllers
             response = dt.Rows[0]["JSON_VALUE"].ToString();
             return response;
         }
+        /**************************
+     * Name - GetArrivalDepurtureReport
+     * param- date
+     * Return json string
+     * Author - Sayan chatterjee
+     * **********************/
+        public string GetArrivalDepurtureReport(string from_date, string to_date)
+        {
+            string response = string.Empty;
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt = new DataTable();
+            dt = _evObj.GetArrivalDepurtureReport(from_date, to_date);
+            response = dt.Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
         /***********************
          * Name- Country
          * param- null
          * Return - View
          * Author- Sayan Chatterjee
          * *********************/
-         public ActionResult Country()
+        public ActionResult Country()
         {
             return View();
         }

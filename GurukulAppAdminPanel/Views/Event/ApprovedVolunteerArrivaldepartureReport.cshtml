@@ -12,42 +12,35 @@
             <li><a href="javascript:void();"><i class="fa fa-table mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbAction </a></li>
         </ul>
     </div>
-    <div class="row" style="margin-top:20px">
-        <div class="panel panel-default widget1">
-
-            <div class="panel-body">
-                <table class="table table-responsive kullaniciTablosu" id="eventTabledata" style="border: 1px solid#eee;background: #ffffff">
-                    <thead>
-                        <tr>
-                            <th>Sl. No</th>
-                            <th>Country</th>
-                            <th>Chapter Name</th>
-                            <th>Description</th>
-                            @*<th></th>*@
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.ArrivalDepurtureList.Count > 0)
-                        {
-                            int i = 0;
-                            foreach (Dictionary<string, object> _data in Model.ArrivalDepurtureList)
-                            {
-                                ++i;
-                                <tr>
-                                    <td>@i</td>
-                                    <td>@_data["COUNTRY_NAME"]</td>
-                                    <td>@_data["CHAPTER_NAME"]</td>
-                                    <td>@_data["DESCRIPTION"]</td>
-                                    @*<td></td>*@
-                                </tr>
-                            }
-                        }
-
-                    </tbody>
-                </table>
-            </div>
+    <div class="row  margin-row-10" style="margin-top:20px">
+        <div class="col-md-3">
+            <input type="text" id="from_date_" data-date-format="dd/mm/yyyy" placeholder="From Date" readonly="readonly" class="form-control  common-date-picker" />
         </div>
+        <div class="col-md-3">
+            <input type="text" id="to_date_" data-date-format="dd/mm/yyyy" readonly="readonly" placeholder="To Date" class="form-control  common-date-picker" />
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-normal" id="search_approved_report">Search</button>
+        </div>
+
     </div>
+    <div class="row" style="margin-top:20px">
+
+        <div id="arrival_report_view" class="container-fluid Ownershop_background view_activity_table"></div>
+
+
+    </div>
+
 </div>
+<script>
+    //$(document).ready(function(){
+    //    $("#from_date_").datepicker({
+    //        format: 'dd/mm/yyyy',
+    //    });
+    //    $("#to_date_").datepicker({
+    //        format: 'dd/mm/yyyy',
+    //    });
+    //});
+</script>
 
 
