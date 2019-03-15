@@ -7,7 +7,12 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//GetArrivalDepurtureReport
+        {//GetStateList
+            routes.MapRoute(
+name: "GetStateList",
+url: "event/get-state-list",
+defaults: new { controller = "Event", action = "GetStateList" }
+);
             routes.MapRoute(
 name: "GetArrivalDepurtureReport",
 url: "event/get-arrival-depurture-report/{from_date}/{to_date}",

@@ -1112,6 +1112,24 @@ namespace GurukulAppAdminPanel.Controllers
             }
             return _jsonString;
         }
+        /**********************
+         * Name- Get Sate List
+         * param- null
+         * return - json string
+         * Author- Sayan chatterjee
+         * **********************/
+        public string GetStateList()
+        {
+            string _response = string.Empty;
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.GET_MASTER_STATE_DATA;
+            //_client.Method = HttpMethod.GET;
+            //_client.Execute();
+            //_response = _client.Response();
+            EventManagement evObj = new EventManagement();
+            _response = evObj.GetStateData().Rows[0]["JSON_VALUE"].ToString();
+            return _response;
+        }
 
 
     }

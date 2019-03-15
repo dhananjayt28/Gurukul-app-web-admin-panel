@@ -1522,4 +1522,107 @@
             }
         })
     });
+    $.bind_Partner_list = function () {
+     
+        $.ajax({
+            type: 'POST',
+            url: _BaseURL + '/event/get-state-list',
+            dataType: "json",
+            success: function (result) {
+                if ($.parseBool(result.status)) {
+
+                    $("#State_list").html("");
+                    $.each(result.response, function (index, item) {
+                        //To remove select organization
+                        if (item.STATE_ID != 0) {
+                            var _partnerId = item.STATE_ID;
+                            var _orgId = item.STATE_NAME.replace(/ /g, "_");
+                            var _orgName = item.STATE_NAME;
+                            $("#State_list").append($("<li></li>").html('<label for="' + _orgId + '"><input type="checkbox" class="partnerchecklist" id="' + _orgId + '" value="' + _partnerId + '" data-partner="' + _orgName + '" /> ' + _orgName + '</label>'));
+
+                        }
+                    });
+                }
+                else {
+                    $('#State_list').val(null);
+                }
+            },
+            error: function (errorThrown) {
+                alert(errorThrown.responseJSON.response);
+                // $.msgbox(errorThrown.responseJSON.response, "error");
+            }
+        });
+
+    }
+    //dropdown & checkbox list bind
+    $(document).on("click", "#state_allocate_", function () {
+        $.bind_Partner_list();
+        $.ajax({
+            url: _BaseURL + '/event/get-state-list',
+            type: "POST",           
+            dataType: "json",
+            success: function (data) {
+                $("#ddl_origin,#ddl_end").Dropdown(data.response, {
+                    value: {
+                        text: "STATE_NAME",
+                        value: "STATE_ID"
+                    }
+                });
+            }
+        });
+    });
+    // save state allocation
+    $(document).on("click", "#btn_save_state_allocation", function () {
+        var state_origin = $("#ddl_origin").val();
+        var state_end = $("#ddl_end").val();
+        var trans_origin = $("#trans_origin_ddl").val();
+        var trans_end = $("#trans_end_ddl").val();
+        var obj = [];
+        var error = [];
+        var state_list = "{";
+        $('ul.checkboxList').find("input:checkbox:checked").each(function (key,val) {
+            var state_id = ($(this).val());
+            if (key !== 0) {
+                state_list = state_list + "," + state_id;
+            }
+            else {
+                state_list = state_list + state_id;
+            }
+        });
+        state_list = state_list+"}"
+        obj.push({
+            ORIGIN_STATE: state_origin,
+            END_STATE: state_end,
+            TRANSPORTATION_MODE_ORIGIN: trans_origin,
+            TRANSPORTATION_MODE_END: trans_end,
+            STATE_ID: state_list,
+        });
+        var state_allocation_list = JSON.stringify(obj);
+        if (state_origin === "0" || state_end === "0" || trans_origin === "0" || trans_end === "0" || state_list === "{}") {
+
+          
+            if (state_origin === "0") {
+                error.push("Please Select Origin State\n");
+            }
+            if (state_end === "0") {
+                error.push("Please Select End State\n");
+            }
+            if (trans_origin === "0") {
+                error.push("Please Select Transportation Mode of Origin\n");
+            }
+            if (trans_end === "0") {
+                error.push("Plaese Select Transporation Mode of End\n");
+            }
+            if (state_list === "{}")
+            {
+                error.push("Plaese Select Atleast One State\n");
+            }
+        }
+        if (error.length > 0) {
+            alert(error);
+            return false;
+        }
+        console.log(state_allocation_list);
+     });
+   
 });
