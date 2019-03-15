@@ -15,6 +15,36 @@ namespace GurukulAppAdminPanel.App_Start
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
             config.Routes.MapHttpRoute(
+        name: "UPDATE ITINERARY STATUS",
+        routeTemplate: "api/update-itinerary-status",
+        defaults: new
+        {
+            Controller = "WebApi",
+            Action = "update_itinerary_status"
+           
+        }
+    );
+            config.Routes.MapHttpRoute(
+        name: "GET ITINERARY INFORMATION",
+        routeTemplate: "api/get-itinerary-information/{event_reg_id}",
+        defaults: new
+        {
+            Controller = "WebApi",
+            Action = "get_itinerary_information",
+            event_reg_id = RouteParameter.Optional
+        }
+    );
+            config.Routes.MapHttpRoute(
+        name: "PASSWORD RESET",
+        routeTemplate: "api/password-reset/{user_id}",
+        defaults: new
+        {
+            Controller = "WebApi",
+            Action = "password_reset",
+            user_id = RouteParameter.Optional 
+        }
+    );
+            config.Routes.MapHttpRoute(
         name: "GET COUNTRY",
         routeTemplate: "api/get-country-data",
         defaults: new

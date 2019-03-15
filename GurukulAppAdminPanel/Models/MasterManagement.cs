@@ -397,6 +397,20 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        public DataTable UpdateItineraryStatus(string jsondata)
+        {
+            DataTable dt;
+            //--## EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=31,@JSON=[{"EVENT_REG_SYS_ID":"7","ITINERARY_STATUS":"95","ITINERARY_COMMENTS":"GOOD"}]
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 31) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
         /*************************************
          * Title :: User Approved by Admin
          * Description :: Fetch Data method using Procedure name by Opeation Id
@@ -665,17 +679,31 @@ namespace GurukulAppAdminPanel.Models
             return dt;
         }
 
-        public DataTable PasswordReset(int OperationId, string Userid)
+        public DataTable PasswordReset(string Userid)
         {
             //Int32 Status = 0;
             DataTable dt = new DataTable();
             //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=5,@USER_ID='abc@gmail.com'
             SqlParameter[] _Param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", OperationId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATION_ID", 5) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@USER_ID", Userid) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
             };
 
             dt = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return dt;
+            //return Status;
+        }
+        public DataTable GetItineraryInformation(string event_reg_id)
+        {
+            //Int32 Status = 0;
+            DataTable dt = new DataTable();
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=5,@USER_ID='abc@gmail.com'
+            SqlParameter[] _Param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 32) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EVENT_REG_SYS_ID", event_reg_id) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _Param);
             return dt;
             //return Status;
         }

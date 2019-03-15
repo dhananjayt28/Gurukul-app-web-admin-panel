@@ -1363,6 +1363,106 @@ namespace GurukulAppAdminPanel.Controllers
             response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
             return response;
         }
+        [HttpGet]
+        //[Route[("api/password-reset/{user_id}")]
+        public HttpResponseMessage password_reset(string user_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.PasswordReset(user_id);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/get-itinerary-information/{event_reg_id}")]
+        public HttpResponseMessage get_itinerary_information(string event_reg_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetItineraryInformation(event_reg_id);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpPost]
+        //[Route("api/update-itinerary-status")]
+        public HttpResponseMessage update_itinerary_status(HttpRequestMessage request)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                var data = request.Content.ReadAsStringAsync().Result;
+                string Jsondata = data.ToString();
+
+                _dtable = new DataTable();
+                _MM = new MasterManagement();
+                if (data != null)
+                {
+                    _dtable = _MM.UpdateItineraryStatus(Jsondata);
+                }
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+            }
+
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
 
     }
 }
