@@ -1538,7 +1538,7 @@
                             var _partnerId = item.STATE_ID;
                             var _orgId = item.STATE_NAME.replace(/ /g, "_");
                             var _orgName = item.STATE_NAME;
-                            $("#State_list").append($("<li></li>").html('<label for="' + _orgId + '"><input type="checkbox" class="partnerchecklist" id="' + _orgId + '" value="' + _partnerId + '" data-partner="' + _orgName + '" /> ' + _orgName + '</label>'));
+                            $("#State_list").append($("<li></li>").html('<label for="' + _orgId + '"><input type="checkbox" class="partnerchecklist" id="' + _orgId + '" value="' + _partnerId + '" data-state="' + _orgName + '" /> ' + _orgName + '</label>'));
 
                         }
                     });
@@ -1580,22 +1580,29 @@
         var obj = [];
         var error = [];
         var state_list = "{";
+        var state_name_list = "{";
         $('ul.checkboxList').find("input:checkbox:checked").each(function (key,val) {
             var state_id = ($(this).val());
+            var state_name = ($(this).data("state"));
+
             if (key !== 0) {
                 state_list = state_list + "," + state_id;
+                state_name_list = state_name_list + "," + state_name;
             }
             else {
                 state_list = state_list + state_id;
+                state_name_list = state_name_list  + state_name;
             }
         });
-        state_list = state_list+"}"
+        state_list = state_list + "}"
+        state_name_list = state_name_list + "}"
         obj.push({
             ORIGIN_STATE: state_origin,
             END_STATE: state_end,
             TRANSPORTATION_MODE_ORIGIN: trans_origin,
             TRANSPORTATION_MODE_END: trans_end,
             STATE_ID: state_list,
+            STATE_NAME: state_name_list
         });
         var state_allocation_list = JSON.stringify(obj);
         if (state_origin === "0" || state_end === "0" || trans_origin === "0" || trans_end === "0" || state_list === "{}") {
@@ -1623,6 +1630,20 @@
             return false;
         }
         console.log(state_allocation_list);
+        var state_allocation_list = escape(state_allocation_list);
+        $.ajax({
+            url: _BaseURL + "/event/post-state-allocation?jsondata="+state_allocation_list,
+            type: "POST",
+            dataType: "json",           
+           // contentType: 'application/json',
+            success: function (data) { 
+                alert(data.response);
+            },
+            error: function (data) { 
+                console.log(data.errorResponse);
+            }
+        });
+        
      });
    
 });

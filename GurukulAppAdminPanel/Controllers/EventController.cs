@@ -1130,6 +1130,21 @@ namespace GurukulAppAdminPanel.Controllers
             _response = evObj.GetStateData().Rows[0]["JSON_VALUE"].ToString();
             return _response;
         }
+        /*****************************
+         * Name - SaveStateAllocation
+         * param- null
+         * return - json string
+         * Author- Sayan Chatterjee
+         * ***************************/
+         
+         public string SaveStateAllocation(string jsondata)
+        {
+            jsondata=  System.Uri.UnescapeDataString(jsondata);
+            string response = string.Empty;
+            EventManagement evObj = new EventManagement();
+            response = evObj.SaveStateAllocatrion(jsondata).Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
 
 
     }

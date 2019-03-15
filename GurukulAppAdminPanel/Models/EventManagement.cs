@@ -436,6 +436,17 @@
             _datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
             return _datatable;
         }
+        //Need to put OPERATIONID & USP name
+        public DataTable SaveStateAllocatrion(string jsondata)
+        {            
+            DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 0) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("", _param);
+            return _datatable;
+        }
         /*************************************
         * Title :: Get Event Data by Event ID method
         * Description :: Get Data from this method using Event ID

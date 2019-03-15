@@ -7,7 +7,12 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//GetStateList
+        {//SaveStateAllocation
+            routes.MapRoute(
+name: "SaveStateAllocation",
+url: "event/post-state-allocation/{jsondata}",
+defaults: new { controller = "Event", action = "SaveStateAllocation",jsondata=UrlParameter.Optional }
+);
             routes.MapRoute(
 name: "GetStateList",
 url: "event/get-state-list",
