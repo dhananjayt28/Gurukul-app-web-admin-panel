@@ -15,6 +15,17 @@ namespace GurukulAppAdminPanel.App_Start
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
             config.Routes.MapHttpRoute(
+        name: "GET COUNTRY",
+        routeTemplate: "api/get-country-data",
+        defaults: new
+        {
+            Controller = "WebApi",
+            Action = "get_country_data",
+            
+
+        }
+    );
+            config.Routes.MapHttpRoute(
           name: "GET SUBJECT BY EDUCATION ID",
           routeTemplate: "api/get-education-data/{education_id}",
           defaults: new
