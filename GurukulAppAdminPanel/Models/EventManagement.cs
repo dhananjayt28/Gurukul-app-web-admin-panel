@@ -444,7 +444,7 @@
                 new SqlParameter("@OPERATIONID", 33) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                  new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
             };
-            _datatable = _dbObj.Select("USP_EVENT_MANAGEMNET", _param);
+            _datatable = _dbObj.Select("USP_EVENT_MANAGEMENET", _param);
             return _datatable;
         }
         public DataTable DeleteCountry(string jsondata)
