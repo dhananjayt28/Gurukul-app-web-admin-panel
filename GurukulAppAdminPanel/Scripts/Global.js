@@ -237,7 +237,8 @@
                                     dbcol: "TYPE",
                                     value: '<a href="javascript:void(0);" class="BtnViewParentMaster" ><i class="fa fa-eye" aria-hidden="true" data-toggle="modal" data-target="#myModal1" id="i_of_master"></i></a>',
                                     data: {
-                                        listname: "TYPE"
+                                        listname: "TYPE",
+                                        sl_id:"SL_ID"
                                     }
                                 },
                                  {
@@ -269,19 +270,10 @@
                 $.msgbox(errorResponse.response, "error");
             }
         });
-
-        /***************************************
-           * Title - Load Gridview of ParentMaster
-           * Parameter -null
-           * Return - gridview
-           * Syntax - null
-           ***************************************/
-        $(document).on("click", ".BtnViewParentMaster", function () {
-            var category_name = $(this).data("listname");
-            var $this = $(this);
+        var view_category_list = function () {
+            var hidden_category_name = $("#category_name_hidden").val();
             var formArray = {};
-            formArray["category_name"] = category_name;
-            //alert(category_name);
+            formArray["category_name"] = hidden_category_name;
             $.ajax({
                 url: _BaseURL + "/master/get-list",
                 //url: API_BASEURL + 'api/get-master-data-list?category_name=' + value_of_master,//undone
@@ -300,15 +292,23 @@
                     //if (_i_Obj.hasClass("rotate-180")) {
 
 
-                        $("#ViewParentGridview").Gridview(data.response, {
-                            autocolumn: true,
-                            //column: [
-                            //            { name: "CATEGORY LIST ID", dbcol: "LOV_ID" },
-                            //            { name: "CATEGORY LIST", dbcol: "LOV_NAME" }
-                            //],
-                            //class: "container-fluid Ownershop_background view_activity_table",
-                            //id: "view_Table"
-                        });
+                    $("#ViewParentGridview").Gridview(data.response, {
+                        autocolumn: false,
+                        column: [
+                                    { name: "CATEGORY LIST ID", dbcol: "LOV_ID" },
+                                    { name: "CATEGORY LIST", dbcol: "LOV_NAME" },
+                        {
+                            name: "Delete",
+                            value: '<button id="delete_sub_category" class="" data-toggle="modal" data-target="#DeleteSubMasterCategoryModal"><i class="fa fa-trash" aria-hidden="true"></i> </button>',
+                            data: {
+                                "LOV_ID": "LOV_ID",
+                            },
+
+                        }
+                        ],
+                        class: "table table-responsive table-bordered",
+                        id: "tableGrid"
+                    });
                     //}
                     //else {
                     //    $(".subActivityData").remove();
@@ -319,6 +319,20 @@
 
                 }
             });
+        }
+        /***************************************
+           * Title - Load Gridview of ParentMaster
+           * Parameter -null
+           * Return - gridview
+           * Syntax - null
+           ***************************************/
+        $(document).on("click", ".BtnViewParentMaster", function () {
+            var category_id = $(this).data("sl_id");           
+            $("#category_id_hidden").val(category_id);
+            var category_name = $(this).data("listname");
+            $("#category_name_hidden").val(category_name);
+            var $this = $(this);
+            view_category_list();
         });
 
 
@@ -358,7 +372,8 @@
                                                 dbcol: "TYPE",
                                                 value: '<a href="javascript:void(0);" class="BtnViewParentMaster" ><i class="fa fa-eye clickable material-icons hand" aria-hidden="true" data-toggle="modal" data-target="#myModal1" id="i_of_master"></i></a>',
                                                 data: {
-                                                    listname: "TYPE"
+                                                    listname: "TYPE",
+                                                    sl_id:"SL_ID"
                                                 }
                                             },
                                              {
@@ -1645,5 +1660,33 @@
         });
         
      });
-   
+    //delete sub category data set
+    $(document).on("click", "#delete_sub_category", function () {
+        var $this = $(this);
+        var lov_id = $(this).data("lov_id");
+        $("#delete_sub_category_id").val(lov_id);
+        $("#delete_category_id").val($("#category_id_hidden").val());
+        //delete sub category action
+   $(document).on("click", "#yes_delete_sub_category", function () {
+       var formdata = $.formdata("#Delete_Sub_Category_Form");
+       //alert(_BaseURL + "/master/delete-sub-category");
+            $.ajax({              
+                url: _BaseURL + "/master/delete-sub-category",
+                type: 'POST',
+                dataType: "json",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (result) {
+                    alert(result.response);
+                    $("#DeleteSubMasterCategoryModal").modal('hide');
+                    view_category_list();
+                },
+                error: function (errorThrown) {
+                    console.log(errorThrown);
+                   alert("Oops! Something went wrong...")
+                }
+            });
+        });
+    });
 });

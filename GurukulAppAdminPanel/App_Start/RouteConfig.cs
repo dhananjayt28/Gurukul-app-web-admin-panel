@@ -9,10 +9,15 @@ namespace GurukulAppAdminPanel.App_Start
         public static void Configure(RouteCollection routes)
         {//SaveStateAllocation
             routes.MapRoute(
-name: "SaveStateAllocation",
-url: "event/post-state-allocation/{jsondata}",
-defaults: new { controller = "Event", action = "SaveStateAllocation",jsondata=UrlParameter.Optional }
-);
+              name: "DeleteSubCategory",
+              url: "master/delete-sub-category",
+              defaults: new { controller = "MasterManagement", action = "DeleteSubCategory" }
+            );
+            routes.MapRoute(
+            name: "SaveStateAllocation",
+            url: "event/post-state-allocation/{jsondata}",
+            defaults: new { controller = "Event", action = "SaveStateAllocation",jsondata=UrlParameter.Optional }
+            );
             routes.MapRoute(
 name: "GetStateList",
 url: "event/get-state-list",

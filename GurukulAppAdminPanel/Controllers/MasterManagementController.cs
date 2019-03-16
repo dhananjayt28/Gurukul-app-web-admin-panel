@@ -229,6 +229,25 @@ namespace GurukulAppAdminPanel.Controllers
             }
             return modelErrors;
         }
+        /****************************
+       * Name- DeleteSubCategory
+       * param- MasterManagementModel object
+       * return- string json
+       * Author-Sayan Chatterjee
+       * *************************/
+        public string DeleteSubCategory(MasterManagement mmobj)
+        {
+            string response = string.Empty;
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+            _postArrData.Add("CATEGORY_LIST_SYS_ID", mmobj.DELETESUBCATEGORYID);
+            _postArrData.Add("CATEGORY_SYS_ID", mmobj.CATEGORYID);
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            //string token = Session["TOKEN"].ToString();
+            response = mmobj.Delete_sub_category(_postContent).Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
 
     }
 }

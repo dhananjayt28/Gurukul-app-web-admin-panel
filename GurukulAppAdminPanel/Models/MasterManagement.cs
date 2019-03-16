@@ -14,6 +14,7 @@ namespace GurukulAppAdminPanel.Models
         private DataTable _dtable;
         private SqlParameter[] _param;
         public string CATEGORYID { get; set; }
+        public string DELETESUBCATEGORYID { get; set; }
         public string ADDCATEGORY { get; set; }
         public string ADDSUBCATEGORY { get; set; }
 
@@ -36,6 +37,18 @@ namespace GurukulAppAdminPanel.Models
             _param = new SqlParameter[]
             {
                 new SqlParameter("@OPERATIONID",1) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_POST_ALL_MASTER_DATA", _param);
+            return _dtable;
+        }
+        public DataTable Delete_sub_category(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",5) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
