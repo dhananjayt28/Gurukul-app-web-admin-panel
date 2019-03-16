@@ -706,14 +706,15 @@ namespace GurukulAppAdminPanel.Models
             return dt;
             //return Status;
         }
-        public DataTable GetItineraryInformation(string event_reg_id)
+        public DataTable GetItineraryInformation(string event_reg_id,string user_id)
         {
             //Int32 Status = 0;
             DataTable dt = new DataTable();
             //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=5,@USER_ID='abc@gmail.com'
             SqlParameter[] _Param = new SqlParameter[] {
                 new SqlParameter("@OPERATIONID", 32) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                new SqlParameter("@EVENT_REG_SYS_ID", event_reg_id) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_EVENT_REG_SYS_ID", event_reg_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_USER_ID", user_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
             };
 
             dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _Param);

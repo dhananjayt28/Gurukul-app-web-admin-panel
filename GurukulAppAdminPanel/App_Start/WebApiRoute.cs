@@ -26,12 +26,13 @@ namespace GurukulAppAdminPanel.App_Start
     );
             config.Routes.MapHttpRoute(
         name: "GET ITINERARY INFORMATION",
-        routeTemplate: "api/get-itinerary-information/{event_reg_id}",
+        routeTemplate: "api/get-itinerary-information/{event_reg_id}/{user_id}",
         defaults: new
         {
             Controller = "WebApi",
             Action = "get_itinerary_information",
-            event_reg_id = RouteParameter.Optional
+            event_reg_id = RouteParameter.Optional,
+            user_id =RouteParameter.Optional
         }
     );
             config.Routes.MapHttpRoute(

@@ -1396,15 +1396,15 @@ namespace GurukulAppAdminPanel.Controllers
             return response;
         }
         [HttpGet]
-        //[Route[("api/get-itinerary-information/{event_reg_id}")]
-        public HttpResponseMessage get_itinerary_information(string event_reg_id)
+        //[Route[("api/get-itinerary-information/{event_reg_id}/{user_id}")]
+        public HttpResponseMessage get_itinerary_information(string event_reg_id,string user_id)
         {
             try
             {
                 MasterManagement _MM = new MasterManagement();
                 _MM = new MasterManagement();
                 _dtable = new DataTable();
-                _dtable = _MM.GetItineraryInformation(event_reg_id);
+                _dtable = _MM.GetItineraryInformation(event_reg_id,user_id);
 
 
                 if (_dtable.Rows.Count > 0)

@@ -1591,6 +1591,9 @@
     }
     //dropdown & checkbox list bind
     $(document).on("click", "#state_allocate_", function () {
+        var $this = $(this);
+        var event_reg_sys_id = $this.data("id");
+        $("#event_reg_sys_id_hidden").val(event_reg_sys_id);
         $.bind_Partner_list();
         $.ajax({
             url: _BaseURL + '/event/get-state-list',
@@ -1612,6 +1615,7 @@
         var state_end = $("#ddl_end").val();
         var trans_origin = $("#trans_origin_ddl").val();
         var trans_end = $("#trans_end_ddl").val();
+        var event_reg_sys_id = $("#event_reg_sys_id_hidden").val();
         var obj = [];
         var error = [];
         var state_list = "{";
@@ -1632,8 +1636,9 @@
         state_list = state_list + "}"
         state_name_list = state_name_list + "}"
         obj.push({
-            ORIGIN_STATE: state_origin,
-            END_STATE: state_end,
+            EVENT_REG_SYS_ID: event_reg_sys_id,
+            ORIGIN_LOCATION: state_origin,
+            END_LOCATION: state_end,
             TRANSPORTATION_MODE_ORIGIN: trans_origin,
             TRANSPORTATION_MODE_END: trans_end,
             STATE_ID: state_list,
