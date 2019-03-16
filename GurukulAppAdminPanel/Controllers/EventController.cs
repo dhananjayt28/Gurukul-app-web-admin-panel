@@ -1145,6 +1145,42 @@ namespace GurukulAppAdminPanel.Controllers
             response = evObj.SaveStateAllocatrion(jsondata).Rows[0]["JSON_VALUE"].ToString();
             return response;
         }
+        /***********************
+         * Name - Delete Country
+         * param- country id 
+         * Return - json string
+         * Author - Sayan Chatterjee
+         * **********************/ 
+         public string DeleteCountry(string country_id)
+        {
+            string response = string.Empty;
+            EventManagement evObj = new EventManagement();
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+            _postArrData.Add("COUNTRY_SYS_ID", country_id);  
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            response = evObj.DeleteCountry(_postContent).Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
+        /***********************
+        * Name - Delete City
+        * param- city id 
+        * Return - json string
+        * Author - Sayan Chatterjee
+        * **********************/
+        public string DeleteCity(string city_id)
+        {
+            string response = string.Empty;
+            EventManagement evObj = new EventManagement();
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+            _postArrData.Add("CITY_SYS_ID", city_id);           
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            response = evObj.DeleteCity(_postContent).Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
 
 
     }

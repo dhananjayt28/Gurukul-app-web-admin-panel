@@ -441,10 +441,30 @@
         {            
             DataTable _datatable = new DataTable();
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATIONID", 0) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+                new SqlParameter("@OPERATIONID", 33) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
             };
-            _datatable = _dbObj.Select("", _param);
+            _datatable = _dbObj.Select("USP_EVENT_MANAGEMNET", _param);
+            return _datatable;
+        }
+        public DataTable DeleteCountry(string jsondata)
+        {//EXEC USP_POST_ALL_MASTER_DATA @OPERATIONID=6,@JSON='[{"COUNTRY_SYS_ID":"8"}]'
+            DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_POST_ALL_MASTER_DATA", _param);
+            return _datatable;
+        }
+        public DataTable DeleteCity(string jsondata)
+        {// EXEC USP_POST_ALL_MASTER_DATA @OPERATIONID=7,@JSON='[{"CITY_SYS_ID":"48"}]
+            DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_POST_ALL_MASTER_DATA", _param);
             return _datatable;
         }
         /*************************************

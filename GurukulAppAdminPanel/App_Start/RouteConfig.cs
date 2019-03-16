@@ -7,7 +7,17 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//SaveStateAllocation
+        {//DeleteCity
+            routes.MapRoute(
+             name: "DeleteCity",
+             url: "event/delete-city/{city_id}",
+             defaults: new { controller = "Event", action = "DeleteCity", city_id = UrlParameter.Optional }
+           );
+            routes.MapRoute(
+              name: "DeleteCountry",
+              url: "event/delete-country/{country_id}",
+              defaults: new { controller = "Event", action = "DeleteCountry",country_id=UrlParameter.Optional }
+            );
             routes.MapRoute(
               name: "DeleteSubCategory",
               url: "master/delete-sub-category",

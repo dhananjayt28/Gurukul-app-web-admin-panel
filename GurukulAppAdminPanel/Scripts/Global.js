@@ -1441,8 +1441,7 @@
             view_detailed_report($this);
         });
     }
-    if (action_name === "get-country") {
-
+    var view_country = function () {
         $.ajax({
             url: _BaseURL + "/event/get-country-list",
             type: "GET",
@@ -1455,6 +1454,14 @@
 
                                 { name: "Country Id", dbcol: "LOV_ID" },
                                 { name: "Country Name", dbcol: "LOV_NAME" },
+                                {
+                                    name: "Delete",
+                                    value: '<button type="button" id="delete_country" data-toggle="modal" data-target="#delete_country_popup"><i class="fa fa-trash"></i></button>',
+                                    data:
+                                        {
+                                            country_id: "LOV_ID"
+                                        }
+                                },
 
 
                     ],
@@ -1470,7 +1477,10 @@
 
         });
     }
-    if (action_name === "get-city") {
+    if (action_name === "get-country") {
+        view_country();        
+    }
+    var view_city = function () {
         $.ajax({
             url: _BaseURL + "/event/get-city-list",
             type: "GET",
@@ -1480,10 +1490,17 @@
                 $("#CityView").Gridview(data.response, {
                     autocolumn: false,
                     column: [
-                               
+
                                 { name: "City Id", dbcol: "CITY_ID" },
                                 { name: "City Name", dbcol: "CITY_NAME" },
                                  { name: "Country Name", dbcol: "COUNTRY_NAME" },
+                                  {
+                                      name: "Delete City",
+                                      value: '<button type="button" id="delete_city" data-toggle="modal" data-target="#delete_city_popup"><i class="fa fa-trash"></i></button>',
+                                      data:{
+                                          city_id:"CITY_ID"
+                                      }
+                                  },
 
 
                     ],
@@ -1498,6 +1515,9 @@
 
 
         });
+    }
+    if (action_name === "get-city") {
+        view_city();
     }
     $(document).on("click", "#search_approved_report", function () {
         var from_date = $("#from_date_").val();
@@ -1665,28 +1685,79 @@
         var $this = $(this);
         var lov_id = $(this).data("lov_id");
         $("#delete_sub_category_id").val(lov_id);
-        $("#delete_category_id").val($("#category_id_hidden").val());
-        //delete sub category action
-   $(document).on("click", "#yes_delete_sub_category", function () {
-       var formdata = $.formdata("#Delete_Sub_Category_Form");
-       //alert(_BaseURL + "/master/delete-sub-category");
-            $.ajax({              
-                url: _BaseURL + "/master/delete-sub-category",
-                type: 'POST',
-                dataType: "json",
-                data: formdata,
-                processData: false,
-                contentType: false,
-                success: function (result) {
-                    alert(result.response);
-                    $("#DeleteSubMasterCategoryModal").modal('hide');
-                    view_category_list();
-                },
-                error: function (errorThrown) {
-                    console.log(errorThrown);
-                   alert("Oops! Something went wrong...")
-                }
-            });
+        $("#delete_category_id").val($("#category_id_hidden").val());      
+    });
+    //delete sub category action
+    $(document).on("click", "#yes_delete_sub_category", function () {
+        var formdata = $.formdata("#Delete_Sub_Category_Form");
+        //alert(_BaseURL + "/master/delete-sub-category");
+        $.ajax({
+            url: _BaseURL + "/master/delete-sub-category",
+            type: 'POST',
+            dataType: "json",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                alert(result.response);
+                $("#DeleteSubMasterCategoryModal").modal('hide');
+                view_category_list();
+            },
+            error: function (errorThrown) {
+                console.log(errorThrown);
+                alert("Oops! Something went wrong...")
+            }
         });
     });
+    //delete country data set
+    $(document).on("click", "#delete_country", function () {
+        var $this = $(this);
+        var country_id = $this.data("country_id");      
+        $("#country_id_hidden").val(country_id);
+    });
+    //delete country action
+    $(document).on("click", "#btn_delete_country", function () {
+        var country_id = $("#country_id_hidden").val();
+        $.ajax({
+            url: _BaseURL + "/event/delete-country?country_id=" + country_id,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                alert(data.response);
+                if ($.parseBool(data.status)) {
+                    view_country();
+                    $("#delete_country_popup").modal('hide');
+                }
+            },
+            error: function (data) {
+                alert("Oops! Something went wrong");
+            }
+        })
+    });
+    //delete city data set
+    $(document).on("click", "#delete_city", function () {
+        var $this = $(this);
+        var city_id = $this.data("city_id");
+        $("#city_id_hidden").val(city_id);
+    });
+    //delete country action
+    $(document).on("click", "#btn_delete_city", function () {
+        var city_id = $("#city_id_hidden").val();
+        $.ajax({
+            url: _BaseURL + "/event/delete-city?city_id=" + city_id,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                alert(data.response);
+                if ($.parseBool(data.status)) {
+                    view_city();
+                    $("#delete_city_popup").modal('hide');
+                }
+            },
+            error: function (data) {
+                alert("Oops! Something went wrong");
+            }
+        })
+    });
+
 });
