@@ -1678,7 +1678,7 @@
            // contentType: 'application/json',
             success: function (data) { 
                 alert(data.response);
-                if ($.parseBool(data, status)) {
+                if ($.parseBool(data.status)) {
                     $("#state_allocate_popup").modal('hide');
                 }
             },
