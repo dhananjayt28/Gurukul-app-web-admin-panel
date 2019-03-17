@@ -7,7 +7,12 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//DeleteCity
+        {//UserReset
+            routes.MapRoute(
+             name: "UserReset",
+             url: "user/reset/{userid}",
+             defaults: new { controller = "User", action = "UserReset", userid = UrlParameter.Optional }
+           );
             routes.MapRoute(
              name: "DeleteCity",
              url: "event/delete-city/{city_id}",

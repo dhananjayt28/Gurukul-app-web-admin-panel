@@ -721,6 +721,19 @@ namespace GurukulAppAdminPanel.Models
             return dt;
             //return Status;
         }
+        public Int32 EventRegistrationCancel(int UserId, int EventId)
+        {
+            int _response = 0;
+            // EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=12,@USER_ID=1,@EVENT_ID=8
+            SqlParameter[] _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID", 12) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@USER_ID", UserId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EVENT_ID", EventId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _response = _dbObj.Update("USP_EVENT_MANAGEMENT", _param);
+            return _response;
+        }
         /*************************************
        * Title :: Get Subject Data by Education Id method
        * Description :: Get Data from this method using Education ID

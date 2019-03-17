@@ -22,6 +22,7 @@ namespace GurukulAppAdminPanel.App_Start
         internal static string UNAUTH_ACCESS = "Unauthorised Access";
        // internal static string API_BASEURL = "http://gurukulweb.tangenttechsolutions.com/";
         internal static string API_BASEURL = WebConfigurationManager.AppSettings["API_BASEURL"];
+        internal static string QR_CODE = "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=";
 
 
 
@@ -29,7 +30,7 @@ namespace GurukulAppAdminPanel.App_Start
         // Service URL
         //http://jivanmuktasapi.ttssupport.info/api/
         //private static string _SERVICE_BASEURL = "http://gurukulweb.tangenttechsolutions.com/";
- //       private static string _SERVICE_BASEURL                              = "http://jivanmuktas.tangenttechsolutions.com/gurukul_app_services.svc/";
+        //       private static string _SERVICE_BASEURL                              = "http://jivanmuktas.tangenttechsolutions.com/gurukul_app_services.svc/";
         internal static string _SERVICE_BASEURL = WebConfigurationManager.AppSettings["SERVICE_BASEURL"];
         //private static string _SERVICE_BASEURL                              = "http://localhost:36787/Gurukul_App_Services.svc/";        
         //internal static string LOGIN                                        = _SERVICE_BASEURL + "user-login";

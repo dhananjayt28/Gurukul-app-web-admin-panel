@@ -90,11 +90,13 @@ else
                                                     {
                                                         @*<a href="javascript:void(0)" title="Approved" class="btn btn-success btn-xs">Approved</a>*@
                                                     string RejectActionURL = "user/update-status/" + user["USER_ID"]+ "/" + 19;
+                                                    string QrUrl = "user/reset/" + user["USER_ID"].ToString();
                                                         <a href="@Url.Action("",RejectActionURL)" title="Reject" class="btn btn-warning btn-xs"> <i class="fa fa-ban"></i> </a>
+                                                        <a href="@Url.Action("",QrUrl)" title="Download Qr Code to reset password" class="btn btn-warning btn-xs"> <i class="fa fa-unlock"></i> </a>
                                                     }
                                                     else
                                                     {
-                                                        string ApproveActionURL = "user/update-status/" + user["USER_ID"]+ "/"+18;
+                                                        string ApproveActionURL = "user/update-status/" + user["USER_ID"] + "/" + 18;
                                                         <a href="@Url.Action("",ApproveActionURL)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
                                                         @*<a href="javascript:void(0)" title="Rejected" class="btn btn-warning btn-xs">Rejected </a>*@
                                                     }
