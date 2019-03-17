@@ -112,26 +112,32 @@
         var _workshop = $("#GitaAndWorkshop");
         var _gita = $("#GitaDistribute");
         var only_workshop = $("#only_workshop");
+        var nivritti = $("#only_nivritti");
         switch (_dropValue) {
             case "1": {
                 _workshop.hide();
                 _gita.hide();
                 only_workshop.hide();
+                nivritti.hide();
+
             } break;
             case "2": {
                 _workshop.show();
                 _gita.hide();
                 only_workshop.show();
+                nivritti.show();
             } break;
             case "3": {
                 _workshop.show();
                 _gita.show();
                 only_workshop.hide();
+                nivritti.show();
             } break;
             default: {
                 _workshop.hide();
                 _gita.hide();
                 only_workshop.hide();
+                nivritti.hide();
             } break;
         }
 
@@ -510,7 +516,7 @@
        if (event_type === "1")
        {
            
-           if (male_no === "" || female_no===""||parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || start_date === "" || end_date === "" || expiry_date === "")
+           if (male_no === "" || female_no===""||parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || start_date === "" || end_date === "" )
            {
                if (parseInt(male_no) <= 0 || parseInt(female_no) <= 0 || male_no === "" || female_no==="")
                {
@@ -524,9 +530,7 @@
                if (end_date === "") {
                    base = base + "\nPlease Enter End Date";
                }
-               if (expiry_date === "") {
-                   base = base + "\nPlease Enter Expiry Date";
-               }
+             
                alert(base);
               // $.redirect(_BaseURL + "/event/event-add");
                return false;

@@ -62,13 +62,15 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <div class="input-group">
-                                            <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                            @Html.EditorFor(model => Model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Event Expiry Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
-                                            @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
-                                        </div>
-                                        <div class="text-danger">@Html.ValidationMessageFor(model => model.EventExpireDate)</div>
-                                    </div>
+                                        <div id="only_nivritti" class="row col-md-12" style="display:none">
+                                            <div class="input-group">
+                                                <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
+                                                @Html.EditorFor(model => Model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Event Expiry Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                                @*@Html.EditorFor(model => model.EventExpireDate, new { htmlAttributes = new { @id = "expireDate", @placeholder = "Event Expire Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
+                                            </div>
+                                            <div class="text-danger">@Html.ValidationMessageFor(model => model.EventExpireDate)</div>
+                                       </div>
+                                         </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">

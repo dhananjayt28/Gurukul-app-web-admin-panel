@@ -226,8 +226,8 @@ namespace GurukulAppAdminPanel.Controllers
                     string qrstring = Constant.QR_CODE;
                     qrstring = qrstring + email_id + userid;
                     TempData["QRCODE"] = qrstring;
-                    return File(qrstring, "application/unknown", "QrCode.png");
-                    //return Redirect(qrstring);
+                    //return File(qrstring, "application/unknown", "QrCode.png");
+                    return Redirect(qrstring);
                 }
                 else
                 {
