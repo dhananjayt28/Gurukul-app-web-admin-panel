@@ -224,14 +224,15 @@
         //    $("#add_category_OpenBtn").show();
         //});
 
+    var view_master = function () {
         $.ajax({
             url: _BaseURL + "/master/get-master",
             //url: API_BASEURL + 'api/get-master-data-list',
             type: "POST",
-            async: false,            
+            async: false,
             //crossDomain: true,
             dataType: "json",
-            success: function (data) {                
+            success: function (data) {
                 $("#MasterGridview").Gridview(data.response, {
                     autocolumn: false,
                     column: [
@@ -244,7 +245,7 @@
                                     value: '<a href="javascript:void(0);" class="BtnViewParentMaster" ><i class="fa fa-eye" aria-hidden="true" data-toggle="modal" data-target="#myModal1" id="i_of_master"></i></a>',
                                     data: {
                                         listname: "TYPE",
-                                        sl_id:"SL_ID"
+                                        sl_id: "SL_ID"
                                     }
                                 },
                                  {
@@ -259,12 +260,17 @@
                     ],
                     onrowbound: function (elem) {
                         var row = $(elem);
+                        var view_divBlock = row.find("a.BtnViewParentMaster");
                         var divBlock = row.find("button#add_sub_category");
                         var catid = divBlock.data("catid");
-                        var allow = divBlock.data("allow");                       
-                        if(allow==="N"){
+                        var allow = divBlock.data("allow");
+                        if (allow === "N") {
                             divBlock.removeAttr("data-target");
                             divBlock.hide();
+                            view_divBlock.attr("data-access", "N");
+                        }
+                        else {
+                            view_divBlock.attr("data-access", "Y");
                         }
                     }
                 });
@@ -276,8 +282,11 @@
                 $.msgbox(errorResponse.response, "error");
             }
         });
+    }
+    view_master();
         var view_category_list = function () {
             var hidden_category_name = $("#category_name_hidden").val();
+            var data_access =  $("#data_access_hidden").val();
             var formArray = {};
             formArray["category_name"] = hidden_category_name;
             $.ajax({
@@ -312,6 +321,19 @@
 
                         }
                         ],
+                        onrowbound: function (elem)
+                        {                            
+                            var row = $(elem);
+                            var deletedivBlock = row.find("button#delete_sub_category");
+                         
+                            if (data_access === "N")
+                            {                             
+                               
+                                deletedivBlock.hide();
+                                deletedivBlock.removeAttr("data-target");
+                                
+                            }
+                        },
                         class: "table table-responsive table-bordered",
                         id: "tableGrid"
                     });
@@ -333,8 +355,10 @@
            * Syntax - null
            ***************************************/
         $(document).on("click", ".BtnViewParentMaster", function () {
-            var category_id = $(this).data("sl_id");           
+            var category_id = $(this).data("sl_id");
+            var data_access = $(this).data("access");          
             $("#category_id_hidden").val(category_id);
+            $("#data_access_hidden").val(data_access);
             var category_name = $(this).data("listname");
             $("#category_name_hidden").val(category_name);
             var $this = $(this);
@@ -359,60 +383,7 @@
                     alert(result.response);
                        // $.msgbox(result.response, "success");
                        // $.redirect($.baseurl("master/view-master"));
-                    $.ajax({
-                        url: _BaseURL + "/master/get-master",
-                        //url: API_BASEURL + 'api/get-master-data-list',
-                        type: "POST",
-                        async: false,
-                        //crossDomain: true,
-                        dataType: "json",
-                        success: function (data) {
-                            $("#MasterGridview").Gridview(data.response, {
-                                autocolumn: false,
-                                column: [
-
-                                            { name: "CATEGORY MASTER ID", dbcol: "SL_ID" },
-                                            { name: "CATEGORY MASTER", dbcol: "TYPE" },
-                                            {
-                                                name: "Action",
-                                                dbcol: "TYPE",
-                                                value: '<a href="javascript:void(0);" class="BtnViewParentMaster" ><i class="fa fa-eye clickable material-icons hand" aria-hidden="true" data-toggle="modal" data-target="#myModal1" id="i_of_master"></i></a>',
-                                                data: {
-                                                    listname: "TYPE",
-                                                    sl_id:"SL_ID"
-                                                }
-                                            },
-                                             {
-                                                 name: "Add Sub Category",
-                                                 value: '<button id="add_sub_category" class="btn btn-info Action_droupicon" data-toggle="modal" data-target="#AddSubMasterCategoryModal"><i class="fa fa-plus-square" aria-hidden="true"></i> </button>',
-                                                 data: {
-                                                     catid: "SL_ID"
-
-                                                 }
-                                             }
-                                ],
-                                //class: "",
-                                //id: "view_Table"
-                                onrowbound: function (elem)
-                                {
-                                    var row = $(elem);
-                                    var divBlock = row.find("button#add_sub_category");
-                                    var catid = divBlock.data("catid");
-                                    if (parseInt(cat_id) === 6)
-                                    {
-                                        divBlock.removeAttr("data-target");
-                                        divBlock.hide();;
-                                    }
-                                }
-                            });
-                        },
-                        error: function (errorResponse) {
-                            if (!errorResponse.response) {
-                                errorResponse.response = "network error occurred";
-                            }
-                            $.msgbox(errorResponse.response, "error");
-                        }
-                    });
+                    view_master();
                     
                 },
                 error: function (errorThrown) {
