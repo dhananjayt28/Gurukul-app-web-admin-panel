@@ -38,8 +38,8 @@
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                            @Html.EditorFor(model => Model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @class = "form-control bod_rad_0 common-date-picker", @placeholder = "Event Start Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
-                                            @*@Html.EditorFor(model => model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @placeholder = "Event Start Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off",@data_date_format = "dd-mm-yyyy" } })*@
+                                            @Html.EditorFor(model => Model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @class = "form-control bod_rad_0 ", @placeholder = "Event Start Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                            @*@Html.EditorFor(model => model.EventStartDate, new { htmlAttributes = new { @id = "startDate", @placeholder = "Event Start Date", @class = "form-control common-date-picker bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off",@data_date_format = "dd-mm-yyyy" } })*@
                                         </div>
                                         <div class="text-danger">@Html.ValidationMessageFor(model => model.EventStartDate)</div>
                                     </div>
@@ -50,8 +50,8 @@
                                     <div class="col-md-12">
                                         <div class="input-group">
                                             <span class="input-group-addon bg_pink"><i class="fa fa-calendar"></i></span>
-                                            @Html.EditorFor(model => Model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @class = "form-control bod_rad_0 common-date-picker", @required = true, @placeholder = "Event End Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
-                                            @*@Html.EditorFor(model => model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @placeholder = "Event End Date", @class = "form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
+                                            @Html.EditorFor(model => Model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @class = "form-control bod_rad_0 ", @required = true, @placeholder = "Event End Date", @readonly = true, @data_date_format = "dd-mm-yyyy" } })
+                                            @*@Html.EditorFor(model => model.EventEndDate, new { htmlAttributes = new { @id = "endDate", @placeholder = "Event End Date", @class = "common-date-picker form-control bod_rad_0 common-date-picker ", @required = true, @autocomplete = "off" } })*@
                                         </div>
                                         <div class="text-danger">@Html.ValidationMessageFor(model => model.EventEndDate)</div>
                                     </div>

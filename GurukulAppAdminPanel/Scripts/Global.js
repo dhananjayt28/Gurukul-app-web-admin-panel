@@ -9,6 +9,14 @@
     var country_id = "";
     
     var action_name = !$.isNull($.getactionname()) ? $.getactionname().toLowerCase() : "";
+    var changeDateFormat = function (date) {
+        //var date = "24/09/1977";
+        var datearray = date.split("-");
+        //console.log(datearray)
+
+        var newdate = datearray[1] + '-' + datearray[0] + '-' + datearray[2];
+        return newdate;
+    }
     
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -26,32 +34,25 @@
     };
     
     // Using in Event Create Page
-    //$("#startDate").datepicker({
-    //    changeYear: true,
-    //    changeMonth: true,
-    //    minDate: 0,
-    //    dateFormat: 'dd-mm-yy',
-    //    onSelect: function (selected) {
-    //        var dt = new Date(selected);
-    //        dt.setDate(dt.getDate() + 1);
-    //        $("#endDate").datepicker({
-    //            changeYear: true,
-    //            changeMonth: true,
-    //            minDate: dt,               
-    //            dateFormat: 'dd-mm-yy',
-    //            onSelect: function (selected) {
-    //                var dt = new Date(selected);
-    //                dt.setDate(dt.getDate());
-    //                $("#expireDate").datepicker({
-    //                    changeYear: true,
-    //                    changeMonth: true,
-    //                     minDate: dt,                       
-    //                    dateFormat: 'dd-mm-yy'
-    //                });
-    //            }
-    //        });
-    //    }
-    //});
+    $("#startDate").datepicker({
+        changeYear: true,
+        changeMonth: true,
+        //minDate: 0,
+        dateFormat: 'dd-mm-yy',
+        onSelect: function (selected) {
+            selected = changeDateFormat(selected);
+            var dt = new Date(selected);
+            console.log(dt);
+            dt.setDate(dt.getDate());
+            console.log(dt);
+            $("#endDate").datepicker({
+                changeYear: true,
+                changeMonth: true,
+                minDate: dt,               
+                dateFormat: 'dd-mm-yy',               
+            });
+        }
+    });
     //$("#startDate").datepicker({
     //    changeYear: true,
     //    changeMonth: true,
