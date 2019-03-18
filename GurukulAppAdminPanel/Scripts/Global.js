@@ -1110,9 +1110,19 @@
             dataType: "json",
             success: function (data) {
                 $("#user_count_div").Gridview(data.response, {
-                    autocolumn: true,
-                    
-                    //class: "",
+                    autocolumn: false,
+                    column: [
+                       {
+                           name: "Item Description",
+                           dbcol:"DETAILS"
+                       },
+                       {
+                           name: "Count",
+                           dbcol: "COUNT"
+                       },
+
+                    ],
+                    class: "table table-responsive table-bordered",
                     //id: "view_Table"
                 });
             }
@@ -1124,8 +1134,18 @@
             dataType: "json",
             success: function (data) {
                 $("#event_count_div").Gridview(data.response, {
-                    autocolumn: true,
+                    autocolumn: false,
+                    column: [
+                       {
+                           name: "Item Description",
+                           dbcol: "DETAILS"
+                       },
+                       {
+                           name: "Count",
+                           dbcol: "COUNT"
+                       },
 
+                    ],
                     //class: "",
                     //id: "view_Table"
                 });

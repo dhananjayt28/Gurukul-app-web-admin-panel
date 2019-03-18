@@ -29,7 +29,7 @@
                 <table class="table table-hover kullaniciTablosu table-responsive" id="userTabledata" style="border: 1px solid#eee;background: #ffffff">                    
                     <thead>
                         <tr>
-                            <th>USER ID</th>
+                            @*<th>USER ID</th>*@
                             <th>NAME</th>
                             <th>GENDER</th>
                             @*<th>DOB</th>*@
@@ -37,11 +37,13 @@
                             <th>EMAIL ID</th>
                             <th>COUNTRY</th>
                             <th>CITY</th>
+                            <th>CHAPTER</th>
                             <th>STATUS</th>
-                            <th>BUSINESS PROFILE</th>
+                            <th>BUSINESS ROLE</th>
                             @*<th>EDUCATION</th>*@
-                            <th>Update Profile</th>
-                            <th style="width:120px">Action</th>
+                            <th>UPDATE ROLE</th>
+                            <th style="width:120px">ACTION</th>
+                            <th>REMARKS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,19 +54,19 @@
                             { 
                                 ++i;
                                 <tr>
-                                    <td>@user["USER_ID"] </td>
+                                    @*<td>@user["USER_ID"] </td>*@
                                     <td>
                                         <a href="javascript:void(0);" id="showVolunteerProfile" data-id="@user["USER_ID"]" class="text-danger" title="Show Profile" data-toggle="modal" data-target="#myModal5">@user["NAME"]</a>                                        
                                     </td>
-                                    <td>
-@if (Convert.ToString(user["GENDER"]) == "0")
+                                    <td>@user["GENDER"]
+@*@if (Convert.ToString(user["GENDER"]) == "0")
 {
     <label >Male</label>
 }
 else
 {
     <label >Female</label>
-}
+}*@
 
 
                                     </td>                                   
@@ -72,6 +74,7 @@ else
                                     <td>@user["EMAIL_ID"]</td>
                                     <td>@user["COUNTRY"]</td>
                                     <td>@user["CITY"]</td>
+                                    <td>@user["SATSANG_CHAPTER"]</td>
                                     <td>@user["STATUS"]</td>
                                     <td>@user["ROLE"]</td>
                                     
@@ -104,6 +107,7 @@ else
                                                 </div>
                                             }
                                     </td>
+                                    <td>@user["HELP_IN_OTHER_ACTIVITY"]</td>
                                 </tr>
                             }
                         }
@@ -119,13 +123,13 @@ else
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Update Business Profile</h4>
+                        <h4 class="modal-title">Update Business Role</h4>
                     </div>
                     <div class="modal-body">
                         <form id="update_bp_frm">
                             <div>
                                 <input type="hidden" id="hide_user_id" />
-                                Business Profile: <select id="bp_dd"><option value="0">New</option></select>
+                                Business Role: <select id="bp_dd"><option value="0">New</option></select>
                             </div>
                             <div>
                                 <button type="button" id="btn_save_bp">Save</button>
