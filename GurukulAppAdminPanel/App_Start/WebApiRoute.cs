@@ -15,6 +15,29 @@ namespace GurukulAppAdminPanel.App_Start
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
             config.Routes.MapHttpRoute(
+      name: "GET CHAPTER",
+      routeTemplate: "api/get-chapter-data/{country_id}/{city_id}",
+      defaults: new
+      {
+          Controller = "WebApi",
+          Action = "get_chapter_data",
+          country_id = RouteParameter.Optional,
+          city_id = RouteParameter.Optional
+
+      }
+  );
+            config.Routes.MapHttpRoute(
+       name: "GET CITY",
+       routeTemplate: "api/get-city-data/{country_id}",
+       defaults: new
+       {
+           Controller = "WebApi",
+           Action = "get_city_data",
+           country_id = RouteParameter.Optional
+
+       }
+   );
+            config.Routes.MapHttpRoute(
         name: "UPDATE ITINERARY STATUS",
         routeTemplate: "api/update-itinerary-status",
         defaults: new
