@@ -224,7 +224,16 @@ namespace GurukulAppAdminPanel.Controllers
                     Dictionary<string, object> user = (Dictionary<string, object>)UserData[0];
                     string email_id = Convert.ToString(user["EMAIL_ID"]);
                     string qrstring = Constant.QR_CODE;
-                    qrstring = qrstring + email_id + userid;
+                  
+                   
+                    List<object> postdata = new List<object>();
+                    SortedList<string, object> _postArrData = new SortedList<string, object>();
+
+                    _postArrData.Add("USER_ID", userid);
+                    _postArrData.Add("EMAIL_ID", email_id);
+                    postdata.Add(_postArrData);
+                    var _postContent = System.Web.Helpers.Json.Encode(postdata);
+                    qrstring = qrstring + _postContent;
                     TempData["QRCODE"] = qrstring;
                     //return File(qrstring, "application/unknown", "QrCode.png");
                     return Redirect(qrstring);

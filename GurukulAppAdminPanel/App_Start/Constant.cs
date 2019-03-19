@@ -22,7 +22,8 @@ namespace GurukulAppAdminPanel.App_Start
         internal static string UNAUTH_ACCESS = "Unauthorised Access";
        // internal static string API_BASEURL = "http://gurukulweb.tangenttechsolutions.com/";
         internal static string API_BASEURL = WebConfigurationManager.AppSettings["API_BASEURL"];
-        internal static string QR_CODE = "http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=";
+        internal static string QR_CODE = WebConfigurationManager.AppSettings["QR_API_URL"];
+        //"http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=";
 
 
 
