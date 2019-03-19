@@ -169,11 +169,13 @@
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\StyleIVD.css" />
     <Content Include="Images\bg-header.jpg" />
+    <Content Include="Images\chart.txt" />
     <Content Include="Images\ico\fav_icon.png" />
     <Content Include="Images\img.jpg" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\logo_1.png" />
     <Content Include="Images\logo_2.png" />
+    <Content Include="Images\Marg_Image.png" />
     <Content Include="Images\sort_asc.png" />
     <Content Include="Images\sort_both.png" />
     <Content Include="Images\sort_desc.png" />
