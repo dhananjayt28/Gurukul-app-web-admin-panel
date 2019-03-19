@@ -233,9 +233,10 @@ namespace GurukulAppAdminPanel.Controllers
                     _postArrData.Add("EMAIL_ID", email_id);
                     postdata.Add(_postArrData);
                     var _postContent = System.Web.Helpers.Json.Encode(postdata);
-                    _postContent = _postContent.Replace("", "[");
-                    _postContent = _postContent.Replace("", "]");
-                    qrstring = qrstring + _postContent;
+                    string json = _postContent.ToString();
+                    json = json.Replace("", "[");
+                    json = json.Replace("", "]");
+                    qrstring = qrstring + json;
                     TempData["QRCODE"] = qrstring;
                     //return File(qrstring, "application/unknown", "QrCode.png");
                     return Redirect(qrstring);
