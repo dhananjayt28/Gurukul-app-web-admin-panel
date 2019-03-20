@@ -62,7 +62,7 @@ namespace GurukulAppAdminPanel.Controllers
                     ArrayList _EventType = (ArrayList)data["response"];
                     //SelectListItem[] item = new SelectListItem[_EventType.Count + 1];
                     item = new List<SelectListItem>();
-                    item.Add(new SelectListItem() { Value = "", Text = "Choose Project Name" });
+                    //item.Add(new SelectListItem() { Value = "", Text = "Choose Project Name" });
                     foreach (Dictionary<string, object> _data in _EventType)
                     {
                         //string _val = _data["EVENT_ID"].ToString();
@@ -267,7 +267,7 @@ namespace GurukulAppAdminPanel.Controllers
                     ArrayList _EventType = (ArrayList)data["response"];
                     //SelectListItem[] item = new SelectListItem[_EventType.Count + 1];
                     List<SelectListItem> item = new List<SelectListItem>();
-                    item.Add(new SelectListItem() { Value = "0", Text = "Choose Event" });
+                    //item.Add(new SelectListItem() { Value = "0", Text = "Choose Event" });
                     foreach (Dictionary<string,object> _data in _EventType)
                     {
                         //string _val = _data["EVENT_ID"].ToString();
