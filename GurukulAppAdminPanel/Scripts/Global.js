@@ -1612,6 +1612,9 @@
         var trans_origin = $("#trans_origin_ddl").val();
         var trans_end = $("#trans_end_ddl").val();
         var event_reg_sys_id = $("#event_reg_sys_id_hidden").val();
+        var origin_place = $("#origin_place_name").val();
+        var destination_place = $("#destination_place_name").val();
+      
         var obj = [];
         var error = [];
         var state_list = "{";
@@ -1638,10 +1641,12 @@
             TRANSPORTATION_MODE_ORIGIN: trans_origin,
             TRANSPORTATION_MODE_END: trans_end,
             STATE_ID: state_list,
-            STATE_NAME: state_name_list
+            STATE_NAME: state_name_list,
+            ORIGIN_PLACE: origin_place,
+            DESTINATION_PLACE: destination_place
         });
         var state_allocation_list = JSON.stringify(obj);
-        if (state_origin === "0" || state_end === "0" || trans_origin === "0" || trans_end === "0" || state_list === "{}") {
+        if (state_origin === "0" || state_end === "0" || trans_origin === "0" || trans_end === "0" || state_list === "{}" || parseInt(origin_place.length) === 0 || parseInt(destination_place.length) === 0) {
 
           
             if (state_origin === "0") {
@@ -1660,15 +1665,27 @@
             {
                 error.push("Plaese Select Atleast One State\n");
             }
+            console.log(parseInt(origin_place.length));
+            if (parseInt(origin_place.length) === 0) {
+                error.push("Plaese put origin place\n");
+            }
+            if (parseInt(origin_place.length) === 0) {
+                error.push("Plaese put destination place\n");
+            }
+
         }
+      
         if (error.length > 0) {
             alert(error);
             return false;
         }
         console.log(state_allocation_list);
         var state_allocation_list = escape(state_allocation_list);
+        var formArray = {};
+        formArray["jsondata"]=state_allocation_list;
         $.ajax({
-            url: _BaseURL + "/event/post-state-allocation?jsondata="+state_allocation_list,
+            url: _BaseURL + "/event/post-state-allocation",
+            data:formArray,
             type: "POST",
             dataType: "json",           
            // contentType: 'application/json',
@@ -1763,5 +1780,5 @@
             }
         })
     });
-
+    
 });
