@@ -7,7 +7,12 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//UserReset
+        {//update_event_status
+            routes.MapRoute(
+           name: "update_event_status",
+           url: "api/update-event-status",
+           defaults: new { controller = "User", action = "update_event_status" }
+         );
             routes.MapRoute(
              name: "UserReset",
              url: "user/reset/{userid}",
