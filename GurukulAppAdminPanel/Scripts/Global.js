@@ -936,8 +936,11 @@
         var URL = _BaseURL + "/user/user-profile-data/" + user_id
         $.getJSON(URL, function (data) {
             var responseData = data.response[0];
+            console.log(responseData);
             var bp = responseData.ROLE;
-            $("#bp_dd option:selected").text(bp);
+            var bp_id = responseData.ROLE_ID;
+            $("#bp_dd").val(bp_id);
+            //$("#bp_dd option:selected").text(bp);
             //alert(bp);
 
 
