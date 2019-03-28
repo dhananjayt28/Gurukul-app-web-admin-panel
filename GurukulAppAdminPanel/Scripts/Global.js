@@ -752,19 +752,24 @@
                         value: "LOV_ID"
                     }
                 });
-                var ustatus = getUrlParameter('ustatus');
-                if (!$.isNull(ustatus))
-                {
-                    $("#dd_status option:selected").text(ustatus);
+                //var ustatus = getUrlParameter('ustatus');
+                //if (!$.isNull(ustatus))
+                //{
+                //    $("#dd_status option:selected").text(ustatus);
+                //}
+                var ustatus = getUrlParameter('ustatusv');
+                if (!$.isNull(ustatus)) {
+                    $("#dd_status").val(ustatus);
                 }
             }
         });
 
         $(document).on("change", "#dd_status", function () {
             var user_status = $("#dd_status option:selected").text();
+            var user_status_val = $("#dd_status").val();
             //var formArray = {};
             //formArray["user_status"] = user_status;
-            $.redirect(_BaseURL + "/user/user-list?ustatus=" + user_status);
+            $.redirect(_BaseURL + "/user/user-list?ustatus=" + user_status+"&ustatusv="+user_status_val);
             //$.ajax({
             //    url: _BaseURL + "/user/user-list",
             //    type: "POST",
@@ -1610,8 +1615,10 @@
     });
     // save state allocation
     $(document).on("click", "#btn_save_state_allocation", function () {
-        var state_origin = $("#ddl_origin").val();
-        var state_end = $("#ddl_end").val();
+       // var state_origin = $("#ddl_origin").val();
+        var state_origin = $("#ddl_origin option:selected").text();
+      //  var state_end = $("#ddl_end").val();
+        var state_end = $("#ddl_end option:selected").text();
         var trans_origin = $("#trans_origin_ddl").val();
         var trans_end = $("#trans_end_ddl").val();
         var event_reg_sys_id = $("#event_reg_sys_id_hidden").val();
