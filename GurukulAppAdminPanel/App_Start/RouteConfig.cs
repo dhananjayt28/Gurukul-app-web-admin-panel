@@ -7,7 +7,17 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//update_event_status
+        {//ExcelExportOfArrivalDepurtureReport
+            routes.MapRoute(
+          name: "ExcelExportOfArrivalDepurtureReport",
+          url: "api/excel-export-arrival-depurture-report/{from_date}/{to_date}",
+          defaults: new { controller = "Event", action = "ExcelExportOfArrivalDepurtureReport", from_date = UrlParameter.Optional, to_date = UrlParameter.Optional }
+        );
+            routes.MapRoute(
+          name: "ExcelExportOfSummaryReport",
+          url: "api/excel-export-summary-report/{from_date}/{to_date}",
+          defaults: new { controller = "Event", action = "ExcelExportOfSummaryReport",from_date=UrlParameter.Optional,to_date=UrlParameter.Optional }
+        );
             routes.MapRoute(
            name: "update_event_status",
            url: "api/update-event-status",
@@ -70,8 +80,8 @@ defaults: new { controller = "Event", action = "City" }
   );
             routes.MapRoute(
        name: "GetSummaryReport",
-       url: "event/get-summary-report",
-       defaults: new { controller = "Event", action = "GetSummaryReport" }
+       url: "event/get-summary-report/{from_date}/{to_date}",
+       defaults: new { controller = "Event", action = "GetSummaryReport",from_date=UrlParameter.Optional,to_date=UrlParameter.Optional}
   );
             routes.MapRoute(
         name: "ApprovedVolunteerArrivaldepartureReport",

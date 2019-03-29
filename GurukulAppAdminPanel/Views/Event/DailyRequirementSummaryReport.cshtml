@@ -16,13 +16,16 @@
     </div>
     <div class="row  margin-row-10" style="margin-top:20px">
         <div class="col-md-3">
-            <input type="text" id="from_date" placeholder="From Date" readonly="readonly" class="form-control" />
+            <input type="text" id="from_date" placeholder="From Date" data-date-format="dd/mm/yyyy" readonly="readonly" class="form-control  common-date-picker" />
         </div>
         <div class="col-md-3">
-            <input type="text" id="to_date" readonly="readonly" placeholder="To Date" class="form-control" />
+            <input type="text" id="to_date" readonly="readonly" data-date-format="dd/mm/yyyy" placeholder="To Date" class="form-control  common-date-picker" />
         </div>
         <div class="col-md-3">
             <button type="button" class="btn btn-normal" id="search_summary_report">Search</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-normal" id="export_summary_report"><i class="fa fa-file-excel-o">Export to Excel</i></button>
         </div>
 
     </div>
@@ -34,14 +37,5 @@
     </div>
 
 </div>
-<script>
-    $(document).ready(function(){
-        $("#from_date").datepicker({
-        
-        });
-        $("#to_date").datepicker({
 
-        });
-    });
-</script>
 

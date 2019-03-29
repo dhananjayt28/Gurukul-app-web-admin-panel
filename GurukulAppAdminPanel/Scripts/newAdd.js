@@ -147,7 +147,7 @@ $(document).on("click", "#New_Active_AddBtn", function () {
 
 /*******date Piker js**************/
 $(document).ready(function () {
-    $('#start-date,#end-date,#subActivity-start-date,#subActivity-end-date,#viewActivity_startDate,#viewActivity_endDate,#actual-end-date,#from_date,#to_date,#from_date_,#to_date_').datepicker();
+    $('#start-date,#end-date,#subActivity-start-date,#subActivity-end-date,#viewActivity_startDate,#viewActivity_endDate,#actual-end-date').datepicker();
 })
 
 /*******End date Piker js**************/

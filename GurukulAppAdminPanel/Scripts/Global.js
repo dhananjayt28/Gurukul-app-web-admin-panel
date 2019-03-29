@@ -1340,46 +1340,65 @@
 
     //view summary report
     if (action_name === "daily-summary-report") {
-       
-        $.ajax({
-            url: _BaseURL+"/event/get-summary-report",
-            type: "GET",
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                $("#SummaryReportView").Gridview(data.response, {
-                    autocolumn: false,
-                    column: [
-                        {
-                            name: "",
-                            value: '<a href="javascript:void(0);" id="ViewDetailedReport" class="ViewDetailedReport" ><i class="fa fa-sort-asc clickable" aria-hidden="true"></i></a>',
-                            data: {
-                                date: "Event_Date",
-                                event_name:"Event_Name"
-                            }
-                            //value:'<button id="view_detailed_report" class="btn"><i class="fa fa-eye">View Detailed Report</i></button>'
-                        },
-                                { name: "Event Name", dbcol: "Event_Name" },
-                                { name: "Event Start Date", dbcol: "Event_Start_Date" },
-                                { name: "Event End Date", dbcol: "Event_End_Date" },
-                                { name: "Event Date", dbcol: "Event_Date" },
-                                { name: "Male Required", dbcol: "Male_Required" },
-                                { name: "Female Required", dbcol: "Female_Required" },
-                                { name: "Male Registered", dbcol: "Male_Registered" },
-                                { name: "Female Registered", dbcol: "Female_Registered" },
-                                
-
-                    ],
-                    class: "table kullaniciTablosu",
-                    id: "tableGrid"
-                });
-                $("#tableGrid").DataTable();
-            },
-            error: function (data) {
-                console.log(data);
-                alert("Oops! Something went wrong...");
+        $(document).on("click", "#search_summary_report", function () {
+            var from_date = $("#from_date").val();
+            var to_date = $("#to_date").val();
+            if (from_date === "" || to_date === "") {
+                alert("Please put from date and to date");
+                return false;
             }
+            $.ajax({
+                url: _BaseURL + "/event/get-summary-report?from_date="+from_date+"&to_date="+to_date,
+                type: "GET",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#SummaryReportView").Gridview(data.response, {
+                        autocolumn: false,
+                        column: [
+                            {
+                                name: "",
+                                value: '<a href="javascript:void(0);" id="ViewDetailedReport" class="ViewDetailedReport" ><i class="fa fa-sort-asc clickable" aria-hidden="true"></i></a>',
+                                data: {
+                                    date: "Event_Date",
+                                    event_name: "Event_Name"
+                                }
+                                //value:'<button id="view_detailed_report" class="btn"><i class="fa fa-eye">View Detailed Report</i></button>'
+                            },
+                                    { name: "Event Name", dbcol: "Event_Name" },
+                                    { name: "Event Start Date", dbcol: "Event_Start_Date" },
+                                    { name: "Event End Date", dbcol: "Event_End_Date" },
+                                    { name: "Event Date", dbcol: "Event_Date" },
+                                    { name: "Male Required", dbcol: "Male_Required" },
+                                    { name: "Female Required", dbcol: "Female_Required" },
+                                    { name: "Male Registered", dbcol: "Male_Registered" },
+                                    { name: "Female Registered", dbcol: "Female_Registered" },
 
+
+                        ],
+                        class: "table kullaniciTablosu",
+                        id: "tableGrid"
+                    });
+                    $("#tableGrid").DataTable();
+                },
+                error: function (data) {
+                    console.log(data);
+                    alert("Oops! Something went wrong...");
+                }
+
+            });
+        });
+        //export_summary_report
+        $(document).on("click", "#export_summary_report", function () {
+            var from_date = $("#from_date").val();
+            var to_date = $("#to_date").val();
+            if (from_date === "" || to_date === "") {
+                alert("Please put from date and to date");
+                return false;
+            }
+            
+            $.redirect(_BaseURL + "/api/excel-export-summary-report?from_date=" + from_date + "&to_date=" + to_date);
+               
         });
         var view_detailed_report = function ($this) {
           
@@ -1560,6 +1579,16 @@
                 alert("Oops! Something went wrong...");
             }
         })
+    });
+    $(document).on("click", "#export_approved_report", function () {
+        var from_date = $("#from_date_").val();
+        var to_date = $("#to_date_").val();
+        if (from_date === "" || to_date === "") {
+            alert("Please put from date and to date");
+            return false;
+        }
+        $.redirect(_BaseURL + "/api/excel-export-arrival-depurture-report?from_date=" + from_date + "&to_date=" + to_date);
+        
     });
     $.bind_Partner_list = function () {
      

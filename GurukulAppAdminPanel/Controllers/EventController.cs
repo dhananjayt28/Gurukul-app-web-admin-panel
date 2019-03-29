@@ -944,28 +944,28 @@ namespace GurukulAppAdminPanel.Controllers
          * Return - View
          * Author- Sayan Chatterjee
          * ***********************/
-         public ActionResult DailyRequirementSummaryReport()
+        public ActionResult DailyRequirementSummaryReport()
         {
-            EventManagement _evObj = new EventManagement();
-            string _response = string.Empty;
-            DataTable dt = new DataTable();
-            dt = _evObj.GetSummaryReport();
-            _response = dt.Rows[0]["JSON_VALUE"].ToString();
-            if (_response != string.Empty)
-            {
-                JavaScriptSerializer jsObj = new JavaScriptSerializer();
-                var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
-                bool status = Convert.ToBoolean(data["status"]);
-                if (status)
-                {
-                    _evObj.SummaryList = (ArrayList)data["response"];
-                }
-            }
+            //EventManagement _evObj = new EventManagement();
+            //string _response = string.Empty;
+            //DataTable dt = new DataTable();
+            //dt = _evObj.GetSummaryReport("","");
+            //_response = dt.Rows[0]["JSON_VALUE"].ToString();
+            //if (_response != string.Empty)
+            //{
+            //    JavaScriptSerializer jsObj = new JavaScriptSerializer();
+            //    var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
+            //    bool status = Convert.ToBoolean(data["status"]);
+            //    if (status)
+            //    {
+            //        _evObj.SummaryList = (ArrayList)data["response"];
+            //    }
+            //}
             ViewBag.breadcrumbController = "Report";
             ViewBag.breadcrumbAction = "Daily Requirement Summary Report";
             //ViewBag.Title = "Chapter List" + Constant.PROJECT_NAME;
-            return View(_evObj);
-            
+            return View();
+
         }
         ///*************************
         // * Name- DailyRequirementDetailedReport
@@ -1032,13 +1032,13 @@ namespace GurukulAppAdminPanel.Controllers
          * Return json string
          * Author - Sayan chatterjee
          * **********************/
-         public string GetSummaryReport()
+         public string GetSummaryReport(string from_date,string to_date)
         {
             string response = string.Empty;
             EventManagement _evObj = new EventManagement();
             string _response = string.Empty;
             DataTable dt = new DataTable();
-            dt = _evObj.GetSummaryReport();
+            dt = _evObj.GetSummaryReport(from_date,to_date);
             response = dt.Rows[0]["JSON_VALUE"].ToString();
             return response;
         }
@@ -1201,7 +1201,79 @@ namespace GurukulAppAdminPanel.Controllers
 
         //    return View();
         //}
-       
+        /********************
+         * Name - ExcelExportOfSummaryReport
+         * param- null
+         * Return Excel file
+         * Author - Sayan Chatterjee
+         * *********************/
+        public FileResult ExcelExportOfSummaryReport(string from_date,string to_date)
+        {
+           
+            string response = string.Empty;
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt1 = new DataTable();
+            dt1 = _evObj.GetSummaryReport(from_date,to_date);
+            response = dt1.Rows[0]["JSON_VALUE"].ToString();         
+
+            try
+            {
+                DataTable dt = new DataTable();
+                MemoryStream stream = new MemoryStream();
+                dt = Data.JsonToDatatable(response, "dataSheet");
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+
+                    wb.Worksheets.Add(dt);
+                    wb.SaveAs(stream);
+                    wb.Dispose();
+                }
+
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Summary_Report.xlsx");
+            }
+            catch (Exception ex)
+            {
+                return File(new MemoryStream(Encoding.UTF8.GetBytes(ex.Message.ToString())).ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+            }
+        }
+        /********************
+       * Name - ExcelExportOfSummaryReport
+       * param- null
+       * Return Excel file
+       * Author - Sayan Chatterjee
+       * *********************/
+        public FileResult ExcelExportOfArrivalDepurtureReport(string from_date,string to_date)
+        {
+
+            string response = string.Empty;
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt1 = new DataTable();
+            dt1 = _evObj.GetArrivalDepurtureReport(from_date, to_date);
+            response = dt1.Rows[0]["JSON_VALUE"].ToString();
+
+            try
+            {
+                DataTable dt = new DataTable();
+                MemoryStream stream = new MemoryStream();
+                dt = Data.JsonToDatatable(response, "dataSheet");
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+
+                    wb.Worksheets.Add(dt);
+                    wb.SaveAs(stream);
+                    wb.Dispose();
+                }
+
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Approved_Volunteer_Arrival_Depurture_Report.xlsx");
+            }
+            catch (Exception ex)
+            {
+                return File(new MemoryStream(Encoding.UTF8.GetBytes(ex.Message.ToString())).ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+            }
+        }
+
 
 
     }
