@@ -92,7 +92,7 @@ html , body{height:100%; }
 .nav-md .container.body .col-md-3.left_col.menu_fixed {height: 100%;position: fixed}
 body .container.body .right_col {background: #F7F7F7}
 .nav-md .container.body .right_col {padding: 10px 20px 0;margin-left: 230px}
-.nav_title {width: 230px;float: left;background: #2A3F54;border-radius: 0;height: 57px}
+.nav_title {width: 230px;float: left;background: #fff;border-radius: 0;height: 57px}
 @media (max-width: 991px) {
 .nav-md .container.body .right_col,.nav-md .container.body .top_nav {width: 100%;margin: 0}
 .nav-md .container.body .col-md-3.left_col {display: none}
