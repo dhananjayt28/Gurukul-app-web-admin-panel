@@ -191,8 +191,20 @@
                                             }
                                             //
                                             else if (_statusVal == 30)
-                                            {                                               
+                                            {
                                                 //No action is allowed as volunteering is complete.
+                                            }
+                                            else if (_statusVal == 114)
+                                            {
+                                                //No action is allowed as itinerary is confirmed.
+                                            }
+                                            else if (_statusVal == 115)
+                                            {
+                                                //No action is allowed as workshop is complete.
+                                            }
+                                            else
+                                            {
+                                                //No action is allowed as status  is invalid.
                                             }
 
                                         </div>
@@ -250,7 +262,26 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 row" style="margin-top:20px">
-                                    <div class="row" style="margin-left:5px"><h5><b> Select Origin State & End State:</b></h5></div>
+                                    <div class="row" style="margin-left:5px"><h5><b> Mode of Tansportation:</b></h5></div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            Origin:<select class="form-control" id="trans_origin_ddl">
+                                                <option value="0">Select Mode of Transportaion</option>
+                                                <option value="1">Railway</option>
+                                                <option value="2">Flight</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            End: <select class="form-control" id="trans_end_ddl">
+                                                <option value="0">Select Mode of Transporation</option>
+                                                <option value="1">Railway</option>
+                                                <option value="2">Flight</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-left:5px">
+                                        <h5><b> Select Origin State & End State:</b></h5>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             Origin:<select class="form-control" id="ddl_origin"></select>
@@ -259,23 +290,20 @@
                                             End:<select class="form-control" id="ddl_end"></select>
                                         </div>
                                     </div>
-                                    <div class="row"  style="margin-left:5px"><h5><b> Mode of Tansportation:</b></h5></div>                                  
-                                    <div class="row">
-                                           <div class="col-md-6">
-                                              Origin:<select class="form-control" id="trans_origin_ddl">
-                                                         <option value="0">Select Mode of Transportaion</option>
-                                                         <option value="1">Railway</option>
-                                                         <option value="2">Flight</option>
-                                               </select>
+                                    
+                                        <div class="row" style="margin-left:5px">
+                                            <h5><b> Put Railway Station Name or Airport Name for origin place and end place:</b></h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6" >
+                                               Origin Place: <input type="text" id="origin_place_name" class="form-control" />
                                             </div>
                                             <div class="col-md-6">
-                                                End: <select class="form-control" id="trans_end_ddl">
-                                                         <option value="0">Select Mode of Transporation</option>
-                                                         <option value="1">Railway</option>
-                                                         <option value="2">Flight</option>
-                                                </select>
+                                              Destination Place: <input type="text" id="destination_place_name" class="form-control" />
                                             </div>
-                                    </div>
+                                        </div>
+                                  
+                                  
                                 </div>
                             </div>
                            

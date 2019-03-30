@@ -372,12 +372,14 @@
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
             return _dtable;
         }
-        public DataTable GetSummaryReport()
+        public DataTable GetSummaryReport(string from_date,string to_date)
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
             {
-                new SqlParameter("@OPERATIONID",1) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input }
+                new SqlParameter("@OPERATIONID",1) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input },
+                new SqlParameter("@START_DATE",from_date) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input },
+                  new SqlParameter("@END_DATE",to_date) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input }
             };
             _dtable = _dbObj.Select("USP_REPORT", _param);
             return _dtable;

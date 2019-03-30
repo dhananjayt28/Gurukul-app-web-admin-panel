@@ -752,19 +752,24 @@
                         value: "LOV_ID"
                     }
                 });
-                var ustatus = getUrlParameter('ustatus');
-                if (!$.isNull(ustatus))
-                {
-                    $("#dd_status option:selected").text(ustatus);
+                //var ustatus = getUrlParameter('ustatus');
+                //if (!$.isNull(ustatus))
+                //{
+                //    $("#dd_status option:selected").text(ustatus);
+                //}
+                var ustatus = getUrlParameter('ustatusv');
+                if (!$.isNull(ustatus)) {
+                    $("#dd_status").val(ustatus);
                 }
             }
         });
 
         $(document).on("change", "#dd_status", function () {
             var user_status = $("#dd_status option:selected").text();
+            var user_status_val = $("#dd_status").val();
             //var formArray = {};
             //formArray["user_status"] = user_status;
-            $.redirect(_BaseURL + "/user/user-list?ustatus=" + user_status);
+            $.redirect(_BaseURL + "/user/user-list?ustatus=" + user_status+"&ustatusv="+user_status_val);
             //$.ajax({
             //    url: _BaseURL + "/user/user-list",
             //    type: "POST",
@@ -936,8 +941,11 @@
         var URL = _BaseURL + "/user/user-profile-data/" + user_id
         $.getJSON(URL, function (data) {
             var responseData = data.response[0];
+            console.log(responseData);
             var bp = responseData.ROLE;
-            $("#bp_dd option:selected").text(bp);
+            var bp_id = responseData.ROLE_ID;
+            $("#bp_dd").val(bp_id);
+            //$("#bp_dd option:selected").text(bp);
             //alert(bp);
 
 
@@ -1332,46 +1340,65 @@
 
     //view summary report
     if (action_name === "daily-summary-report") {
-       
-        $.ajax({
-            url: _BaseURL+"/event/get-summary-report",
-            type: "GET",
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                $("#SummaryReportView").Gridview(data.response, {
-                    autocolumn: false,
-                    column: [
-                        {
-                            name: "",
-                            value: '<a href="javascript:void(0);" id="ViewDetailedReport" class="ViewDetailedReport" ><i class="fa fa-sort-asc clickable" aria-hidden="true"></i></a>',
-                            data: {
-                                date: "Event_Date",
-                                event_name:"Event_Name"
-                            }
-                            //value:'<button id="view_detailed_report" class="btn"><i class="fa fa-eye">View Detailed Report</i></button>'
-                        },
-                                { name: "Event Name", dbcol: "Event_Name" },
-                                { name: "Event Start Date", dbcol: "Event_Start_Date" },
-                                { name: "Event End Date", dbcol: "Event_End_Date" },
-                                { name: "Event Date", dbcol: "Event_Date" },
-                                { name: "Male Required", dbcol: "Male_Required" },
-                                { name: "Female Required", dbcol: "Female_Required" },
-                                { name: "Male Registered", dbcol: "Male_Registered" },
-                                { name: "Female Registered", dbcol: "Female_Registered" },
-                                
-
-                    ],
-                    class: "table kullaniciTablosu",
-                    id: "tableGrid"
-                });
-                $("#tableGrid").DataTable();
-            },
-            error: function (data) {
-                console.log(data);
-                alert("Oops! Something went wrong...");
+        $(document).on("click", "#search_summary_report", function () {
+            var from_date = $("#from_date").val();
+            var to_date = $("#to_date").val();
+            if (from_date === "" || to_date === "") {
+                alert("Please put from date and to date");
+                return false;
             }
+            $.ajax({
+                url: _BaseURL + "/event/get-summary-report?from_date="+from_date+"&to_date="+to_date,
+                type: "GET",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    $("#SummaryReportView").Gridview(data.response, {
+                        autocolumn: false,
+                        column: [
+                            {
+                                name: "",
+                                value: '<a href="javascript:void(0);" id="ViewDetailedReport" class="ViewDetailedReport" ><i class="fa fa-sort-asc clickable" aria-hidden="true"></i></a>',
+                                data: {
+                                    date: "Event_Date",
+                                    event_name: "Event_Name"
+                                }
+                                //value:'<button id="view_detailed_report" class="btn"><i class="fa fa-eye">View Detailed Report</i></button>'
+                            },
+                                    { name: "Event Name", dbcol: "Event_Name" },
+                                    { name: "Event Start Date", dbcol: "Event_Start_Date" },
+                                    { name: "Event End Date", dbcol: "Event_End_Date" },
+                                    { name: "Event Date", dbcol: "Event_Date" },
+                                    { name: "Male Required", dbcol: "Male_Required" },
+                                    { name: "Female Required", dbcol: "Female_Required" },
+                                    { name: "Male Registered", dbcol: "Male_Registered" },
+                                    { name: "Female Registered", dbcol: "Female_Registered" },
 
+
+                        ],
+                        class: "table kullaniciTablosu",
+                        id: "tableGrid"
+                    });
+                    $("#tableGrid").DataTable();
+                },
+                error: function (data) {
+                    console.log(data);
+                    alert("Oops! Something went wrong...");
+                }
+
+            });
+        });
+        //export_summary_report
+        $(document).on("click", "#export_summary_report", function () {
+            var from_date = $("#from_date").val();
+            var to_date = $("#to_date").val();
+            if (from_date === "" || to_date === "") {
+                alert("Please put from date and to date");
+                return false;
+            }
+            
+            $.redirect(_BaseURL + "/api/excel-export-summary-report?from_date=" + from_date + "&to_date=" + to_date);
+               
         });
         var view_detailed_report = function ($this) {
           
@@ -1553,6 +1580,16 @@
             }
         })
     });
+    $(document).on("click", "#export_approved_report", function () {
+        var from_date = $("#from_date_").val();
+        var to_date = $("#to_date_").val();
+        if (from_date === "" || to_date === "") {
+            alert("Please put from date and to date");
+            return false;
+        }
+        $.redirect(_BaseURL + "/api/excel-export-arrival-depurture-report?from_date=" + from_date + "&to_date=" + to_date);
+        
+    });
     $.bind_Partner_list = function () {
      
         $.ajax({
@@ -1607,11 +1644,16 @@
     });
     // save state allocation
     $(document).on("click", "#btn_save_state_allocation", function () {
-        var state_origin = $("#ddl_origin").val();
-        var state_end = $("#ddl_end").val();
+       // var state_origin = $("#ddl_origin").val();
+        var state_origin = $("#ddl_origin option:selected").text();
+      //  var state_end = $("#ddl_end").val();
+        var state_end = $("#ddl_end option:selected").text();
         var trans_origin = $("#trans_origin_ddl").val();
         var trans_end = $("#trans_end_ddl").val();
         var event_reg_sys_id = $("#event_reg_sys_id_hidden").val();
+        var origin_place = $("#origin_place_name").val();
+        var destination_place = $("#destination_place_name").val();
+      
         var obj = [];
         var error = [];
         var state_list = "{";
@@ -1638,10 +1680,12 @@
             TRANSPORTATION_MODE_ORIGIN: trans_origin,
             TRANSPORTATION_MODE_END: trans_end,
             STATE_ID: state_list,
-            STATE_NAME: state_name_list
+            STATE_NAME: state_name_list,
+            ORIGIN_PLACE: origin_place,
+            DESTINATION_PLACE: destination_place
         });
         var state_allocation_list = JSON.stringify(obj);
-        if (state_origin === "0" || state_end === "0" || trans_origin === "0" || trans_end === "0" || state_list === "{}") {
+        if (state_origin === "0" || state_end === "0" || trans_origin === "0" || trans_end === "0" || state_list === "{}" || parseInt(origin_place.length) === 0 || parseInt(destination_place.length) === 0) {
 
           
             if (state_origin === "0") {
@@ -1660,15 +1704,27 @@
             {
                 error.push("Plaese Select Atleast One State\n");
             }
+            console.log(parseInt(origin_place.length));
+            if (parseInt(origin_place.length) === 0) {
+                error.push("Plaese put origin place\n");
+            }
+            if (parseInt(origin_place.length) === 0) {
+                error.push("Plaese put destination place\n");
+            }
+
         }
+      
         if (error.length > 0) {
             alert(error);
             return false;
         }
         console.log(state_allocation_list);
         var state_allocation_list = escape(state_allocation_list);
+        var formArray = {};
+        formArray["jsondata"]=state_allocation_list;
         $.ajax({
-            url: _BaseURL + "/event/post-state-allocation?jsondata="+state_allocation_list,
+            url: _BaseURL + "/event/post-state-allocation",
+            data:formArray,
             type: "POST",
             dataType: "json",           
            // contentType: 'application/json',
@@ -1763,5 +1819,5 @@
             }
         })
     });
-
+    
 });

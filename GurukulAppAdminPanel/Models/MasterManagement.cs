@@ -424,6 +424,21 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        public DataTable UpdateEventStatus(string jsondata)
+        {
+            // EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=34,@JSON='[{"EVENT_REG_SYS_ID":"7","STATUS":"38","MESSAGE":"40"}]'
+            DataTable dt;
+            //--## EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=31,@JSON=[{"EVENT_REG_SYS_ID":"7","ITINERARY_STATUS":"95","ITINERARY_COMMENTS":"GOOD"}]
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 34) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
         /*************************************
          * Title :: User Approved by Admin
          * Description :: Fetch Data method using Procedure name by Opeation Id
