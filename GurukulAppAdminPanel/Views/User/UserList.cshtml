@@ -95,7 +95,7 @@ else
                                                     string RejectActionURL = "user/update-status/" + user["USER_ID"]+ "/" + 19;
                                                     string QrUrl = "user/reset/" + user["USER_ID"].ToString();
                                                         <a href="@Url.Action("",RejectActionURL)" title="Reject" class="btn btn-warning btn-xs"> <i class="fa fa-ban"></i> </a>
-                                                        <a href="@Url.Action("",QrUrl)" title="Download Qr Code to reset password" class="btn btn-warning btn-xs"> <i class="fa fa-unlock"></i> </a>
+                                                        @*<a href="@Url.Action("",QrUrl)" title="Download Qr Code to reset password" class="btn btn-warning btn-xs"> <i class="fa fa-unlock"></i> </a>*@
                                                     }
                                                     else
                                                     {

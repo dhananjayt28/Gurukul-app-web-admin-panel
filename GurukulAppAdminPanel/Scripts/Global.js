@@ -1571,9 +1571,9 @@
 
                     ],
                     class: "table kullaniciTablosu",
-                    id: "tableGrid"
+                    id: "tableGrid1"
                 });
-                $("#tableGrid").DataTable();
+                $("#tableGrid1").DataTable();
             },
             error: function (data) {
                 alert("Oops! Something went wrong...");
