@@ -90,14 +90,16 @@
                                         </li>
                                     </ul>
                                 </li>
+                                @if (Session["ROLE_ID"].ToString() != "6")//6-> Business Approver can't see anything other than user groups
+                                {
                                 <li>
                                     <a><i class="fa fa-calendar"></i> Seva <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","event/event-add")"> Add Event</a>
+                                            <a href="@Url.Action("", "event/event-add")"> Add Event</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action("","event/event-list")"> Event List</a>
+                                            <a href="@Url.Action("", "event/event-list")"> Event List</a>
                                         </li>
                                         
                                     </ul>
@@ -106,25 +108,25 @@
                                     <a><i class="fa fa-thumbs-o-up"></i> Approvals <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","event/volunteer-event-reg-list")"> Volunteer's Event Register</a>
+                                            <a href="@Url.Action("", "event/volunteer-event-reg-list")"> Volunteer's Event Register</a>
                                         </li>
                                     </ul>
                                 </li>  
-                                
+
                                 <li>
                                     <a><i class="fa fa-thumbs-o-up"></i>Master Maintenance <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","master/view-master")"> Master Data</a>
+                                            <a href="@Url.Action("", "master/view-master")"> Master Data</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action("","chapter/chapter-list")"> Chapter List</a>
+                                            <a href="@Url.Action("", "chapter/chapter-list")"> Chapter List</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action("","event/get-country")"> Country List</a>
+                                            <a href="@Url.Action("", "event/get-country")"> Country List</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action("","event/get-city")"> City List</a>
+                                            <a href="@Url.Action("", "event/get-city")"> City List</a>
                                         </li>
                                     </ul>
                                 </li> 
@@ -132,9 +134,9 @@
                                     <a><i class="fa fa-thumbs-o-up"></i>Report<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","event/daily-summary-report")">@*Daily Requirement*@ Summary Report</a>
+                                            <a href="@Url.Action("", "event/daily-summary-report")">@*Daily Requirement*@ Summary Report</a>
                                             
-                                            <a href="@Url.Action("","event/volunteer-report")">@*ApprovedVolunteer*@Arrival Departure Report</a>
+                                            <a href="@Url.Action("", "event/volunteer-report")">@*ApprovedVolunteer*@Arrival Departure Report</a>
                                         </li>
                                     </ul>
                                 </li>  
@@ -142,12 +144,13 @@
                                     <a><i class="fa fa-thumbs-o-up"></i>IAS Coaching <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","iascoaching/iascoaching")">IAS Coaching</a>
+                                            <a href="@Url.Action("", "iascoaching/iascoaching")">IAS Coaching</a>
                                         </li>
                                     </ul>
                                 </li>
-                               
-                                                         
+                                }
+
+
                             </ul>
                         </div>
                     </div>
