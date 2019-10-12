@@ -15,6 +15,104 @@ namespace GurukulAppAdminPanel.App_Start
             //    defaults: new { Controller = "WebApi", Action = "" }
             //);
             config.Routes.MapHttpRoute(
+      name: "GET CHAPTER",
+      routeTemplate: "api/get-chapter-data/{country_id}/{city_id}",
+      defaults: new
+      {
+          Controller = "WebApi",
+          Action = "get_chapter_data",
+          country_id = RouteParameter.Optional,
+          city_id = RouteParameter.Optional
+
+      }
+  );
+            config.Routes.MapHttpRoute(
+       name: "GET CITY",
+       routeTemplate: "api/get-city-data/{country_id}",
+       defaults: new
+       {
+           Controller = "WebApi",
+           Action = "get_city_data",
+           country_id = RouteParameter.Optional
+
+       }
+   );
+            config.Routes.MapHttpRoute(
+        name: "UPDATE ITINERARY STATUS",
+        routeTemplate: "api/update-itinerary-status",
+        defaults: new
+        {
+            Controller = "WebApi",
+            Action = "update_itinerary_status"
+           
+        }
+    );
+            config.Routes.MapHttpRoute(
+        name: "GET ITINERARY INFORMATION",
+        routeTemplate: "api/get-itinerary-information/{event_reg_id}/{user_id}",
+        defaults: new
+        {
+            Controller = "WebApi",
+            Action = "get_itinerary_information",
+            event_reg_id = RouteParameter.Optional,
+            user_id =RouteParameter.Optional
+        }
+    );
+            config.Routes.MapHttpRoute(
+        name: "PASSWORD RESET",
+        routeTemplate: "api/password-reset/{user_id}",
+        defaults: new
+        {
+            Controller = "WebApi",
+            Action = "password_reset",
+            user_id = RouteParameter.Optional 
+        }
+    );
+            config.Routes.MapHttpRoute(
+        name: "GET COUNTRY",
+        routeTemplate: "api/get-country-data",
+        defaults: new
+        {
+            Controller = "WebApi",
+            Action = "get_country_data",
+            
+
+        }
+    );
+            config.Routes.MapHttpRoute(
+          name: "GET SUBJECT BY EDUCATION ID",
+          routeTemplate: "api/get-education-data/{education_id}",
+          defaults: new
+          {
+              Controller = "WebApi",
+              Action = "get_education_data",
+              education_id = RouteParameter.Optional
+
+          }
+      );
+            config.Routes.MapHttpRoute(
+           name: "UPDATE USER",
+           routeTemplate: "api/user-profile-update",
+           defaults: new
+           {
+               Controller = "WebApi",
+               Action = "user_profile_update",
+               country_id = RouteParameter.Optional
+
+           }
+       );
+            config.Routes.MapHttpRoute(
+            name: "GET SATSANG CHAPTER DATA",
+            routeTemplate: "api/get-satsang-chapter-data/{country_id}",
+            defaults: new
+            {
+                Controller = "WebApi",
+                Action = "get_satsang_chapter_data",
+                country_id=RouteParameter.Optional
+
+            }
+        );
+            config.Routes.MapHttpRoute(
              name: "USER REGISTRATION",
              routeTemplate: "api/user-registration",
              defaults: new

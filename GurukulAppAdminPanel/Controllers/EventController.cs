@@ -14,7 +14,11 @@ using System.Text;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using ClosedXML.Excel;
-
+using System.Security.AccessControl;
+//using QRCoder;
+using System.Drawing;
+using System.Drawing.Imaging;
+using QRCoder;
 
 namespace GurukulAppAdminPanel.Controllers
 {
@@ -58,7 +62,7 @@ namespace GurukulAppAdminPanel.Controllers
                     ArrayList _EventType = (ArrayList)data["response"];
                     //SelectListItem[] item = new SelectListItem[_EventType.Count + 1];
                     item = new List<SelectListItem>();
-                    item.Add(new SelectListItem() { Value = "", Text = "Choose Project Name" });
+                    //item.Add(new SelectListItem() { Value = "", Text = "Choose Project Name" });
                     foreach (Dictionary<string, object> _data in _EventType)
                     {
                         //string _val = _data["EVENT_ID"].ToString();
@@ -118,7 +122,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Event Add View part.
          **************************************/
         [HttpPost]
-        public ActionResult Index(EventManagement _eventObj)
+        public dynamic Index(EventManagement _eventObj)
         {
             if (ModelState.IsValid)
             {
@@ -132,20 +136,24 @@ namespace GurukulAppAdminPanel.Controllers
                     if (status)
                     {
                         string _url = Constant.BASEURL + "event/event-list";
-                        TempData["MSG"] = "Event Added Successfully";
-                        return Redirect(_url);
+                        TempData["MSG"] = "";
+                        //return Redirect(_url);
+                        return _response;
                     }
                     else
                     {
                         string _url = Constant.BASEURL + "event/event-list";
                         TempData["MSG"] = "";
-                        return Redirect(_url);
+                        //return Redirect(_url);
+                        return _response;
                     }
                 }
                 else
                 {
                     string _url = Constant.BASEURL + "event/event-add";
-                    return Redirect(_url);
+                    // return Redirect(_url);
+                    //return RedirectToAction("EventList");
+                    return _response;
                 }
                 
             }
@@ -259,7 +267,7 @@ namespace GurukulAppAdminPanel.Controllers
                     ArrayList _EventType = (ArrayList)data["response"];
                     //SelectListItem[] item = new SelectListItem[_EventType.Count + 1];
                     List<SelectListItem> item = new List<SelectListItem>();
-                    item.Add(new SelectListItem() { Value = "0", Text = "Choose Event" });
+                    //item.Add(new SelectListItem() { Value = "0", Text = "Choose Event" });
                     foreach (Dictionary<string,object> _data in _EventType)
                     {
                         //string _val = _data["EVENT_ID"].ToString();
@@ -288,17 +296,20 @@ namespace GurukulAppAdminPanel.Controllers
                 bool status = Convert.ToBoolean(data["status"]);
                 if (status)
                 {
-                    if (_eventid == 1)
+                    if (data.ContainsKey("response"))
                     {
-                        _emObj.EventNivrittilist = (ArrayList)data["response"];
-                    }
-                    else if (_eventid == 2)
-                    {
-                        _emObj.EventWorkshoplist = (ArrayList)data["response"];
-                    }
-                    else if (_eventid == 3)
-                    {
-                        _emObj.EventGitalist = (ArrayList)data["response"];
+                        if (_eventid == 1)
+                        {
+                            _emObj.EventNivrittilist = (ArrayList)data["response"];
+                        }
+                        else if (_eventid == 2)
+                        {
+                            _emObj.EventWorkshoplist = (ArrayList)data["response"];
+                        }
+                        else if (_eventid == 3)
+                        {
+                            _emObj.EventGitalist = (ArrayList)data["response"];
+                        }
                     }
 
                 }
@@ -320,7 +331,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Event list View part.
          **************************************/
         [HttpGet]
-        public ActionResult VolunteerEventList(string vstatus = "")
+        public ActionResult VolunteerEventList(string vstatus = "",string etype ="")
         {
             EventManagement _emObj = new EventManagement();
             string _jsonString = string.Empty;
@@ -330,12 +341,17 @@ namespace GurukulAppAdminPanel.Controllers
             _dtable = new DataTable();
             if (vstatus == "")
             {
-                _dtable = _MM.Get_Event_Volunteer_Reg_Data("Waiting For Approval");
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data("Waiting For Approval","");
+
+            }
+            else if (etype == "Select")
+            {
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data(vstatus, "");
 
             }
             else
             {
-                _dtable = _MM.Get_Event_Volunteer_Reg_Data(vstatus);
+                _dtable = _MM.Get_Event_Volunteer_Reg_Data(vstatus,etype);
             }
 
             if (_dtable.Rows.Count > 0)
@@ -510,6 +526,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Row affected.
          **************************************/
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult AddSatsangChapter()
         {
             string _response;
@@ -563,7 +580,25 @@ namespace GurukulAppAdminPanel.Controllers
 
                 _postArrData.Add("CHAPTER_NAME", _smObj.chaptername);
                 _postArrData.Add("CHAPTER_DESC", _smObj.chaperdescription);
-                _postArrData.Add("COUNTRY_ID", _smObj.countryid);
+                if (_smObj.countryid == "0")
+                {
+                    _postArrData.Add("COUNTRY_NAME", _smObj.country);
+                    _postArrData.Add("COUNTRY_ID", _smObj.countryid);
+                }
+                else
+                {
+                    _postArrData.Add("COUNTRY_ID", _smObj.countryid);
+                }
+                if (_smObj.stateid == "0")
+                {
+                    _postArrData.Add("CITY_NAME", _smObj.state);
+                    _postArrData.Add("CITY_ID", _smObj.stateid);
+                }
+                else
+                {
+                    _postArrData.Add("CITY_ID", _smObj.stateid);
+                }
+               
                 postdata.Add(_postArrData);
                 var _postContent = System.Web.Helpers.Json.Encode(postdata);
                 MasterManagement _mmobj = new MasterManagement();
@@ -581,10 +616,11 @@ namespace GurukulAppAdminPanel.Controllers
                 }
                 else
                 {
-                    TempData["CHP_MSG"] = "";
+                    TempData["CHP_MSG"] = "Oops! Something went wrong...";
                     return Redirect(Constant.BASEURL + "chapter/chapter-add");
                 }
             }
+            TempData["CHP_MSG"] = "Please Fill All the Fields";
             return Redirect(Constant.BASEURL + "chapter/chapter-add");
         }
         /***************************************
@@ -594,6 +630,7 @@ namespace GurukulAppAdminPanel.Controllers
          * Return :: Table.
          **************************************/
         [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
         public ActionResult SatsangChapterList()
         {
 
@@ -619,33 +656,47 @@ namespace GurukulAppAdminPanel.Controllers
         {
            Session["event_id_"] = event_id;
             string response = string.Empty;
-
-            RestClient.RestClient _client = new RestClient.RestClient();
-            _client.URL = "http://gurukulweb.tangenttechsolutions.com/api/get-event-calendar-breakup-data?event_id="+ event_id;
-            _client.Method = HttpMethod.GET;
-            _client.Type = ContentType.JSON;
-            _client.Execute();
-             response = _client.Response();
-            if (response == string.Empty)
+            EventManagement _EM = new EventManagement();
+            _dtable = new DataTable();
+            _dtable = _EM.Get_event_date(event_id);
+            if (_dtable.Rows.Count > 0)
             {
-                response = _client.errordata();
+                response = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
             }
-            return response;
+                //RestClient.RestClient _client = new RestClient.RestClient();
+
+                //_client.URL = Constant.API_BASEURL+"api/get-event-calendar-breakup-data?event_id="+ event_id;
+                //_client.Method = HttpMethod.GET;
+                //_client.Type = ContentType.JSON;
+                //_client.Execute();
+                // response = _client.Response();
+                //if (response == string.Empty)
+                //{
+                //    response = _client.errordata();
+                //}
+                return response;
         }
         public FileResult GenExcel()
         {
            string  global_event_id = Session["event_id_"].ToString();
             string response = string.Empty;
 
-            RestClient.RestClient _client = new RestClient.RestClient();
-            _client.URL = "http://gurukulweb.tangenttechsolutions.com/api/get-event-calendar-breakup-data?event_id="+ global_event_id;
-            _client.Method = HttpMethod.GET;
-            _client.Type = ContentType.JSON;
-            _client.Execute();
-            response = _client.Response();
-            if (response == string.Empty)
+            //RestClient.RestClient _client = new RestClient.RestClient();
+            //_client.URL = Constant.API_BASEURL + "api/get-event-calendar-breakup-data?event_id=" + global_event_id;
+            //_client.Method = HttpMethod.GET;
+            //_client.Type = ContentType.JSON;
+            //_client.Execute();
+            //response = _client.Response();
+            //if (response == string.Empty)
+            //{
+            //    response = _client.errordata();
+            //}
+            EventManagement _EM = new EventManagement();
+            _dtable = new DataTable();
+            _dtable = _EM.Get_event_date(global_event_id);
+            if (_dtable.Rows.Count > 0)
             {
-                response = _client.errordata();
+                response = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
             }
 
             try
@@ -716,6 +767,9 @@ namespace GurukulAppAdminPanel.Controllers
             _postArrData.Add("TOPIC_ID", topic_id);
             _postArrData.Add("USER_ID", UserId);
             _postArrData.Add("CONTENT_SOURCE", content);
+            _postArrData.Add("STATUS",29);
+            _postArrData.Add("MESSAGE", 84);
+            //16,USP_EVENT_MANAGEMENT,245
             postdata.Add(_postArrData);
             var _postContent = System.Web.Helpers.Json.Encode(postdata);
 
@@ -723,7 +777,7 @@ namespace GurukulAppAdminPanel.Controllers
             _dtable = _mm.TopicContent(_postContent);
             if (_dtable.Rows.Count > 0)
             {
-                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"]);
                 //response = this.Request.CreateResponse(HttpStatusCode.OK);
             }
             else
@@ -763,8 +817,14 @@ namespace GurukulAppAdminPanel.Controllers
         {
             string file_name = ob.file.FileName;
             string response = string.Empty;
-          
 
+            if (!Directory.Exists(Server.MapPath("~/Uploaded_files")))
+            {
+                DirectorySecurity securityRules = new DirectorySecurity();
+                securityRules.AddAccessRule(new FileSystemAccessRule(@"Domain\YourAppAllowedGroup", FileSystemRights.FullControl, AccessControlType.Allow));
+                Directory.CreateDirectory(Server.MapPath("~/Uploaded_files"), securityRules);
+
+            }
             try
             {
                 string _FileName = Path.GetFileName(file_name);
@@ -819,6 +879,399 @@ namespace GurukulAppAdminPanel.Controllers
             string response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
             return response;
 
+        }
+        /***********************
+         * Name - GetEventType
+         * param- null
+         * return- Event type list in json string
+         * ************/
+         public string GetEventType()
+        {
+            MasterManagement _mmobj = new MasterManagement();
+            DataTable dt = new DataTable();
+            dt = _mmobj.View_Master_List("EVENT_MASTER");
+            string response = string.Empty;
+            string _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            return _response;
+        }
+        /**********************
+         * Name-GetCountryList
+         * param-null
+         * return- json
+         * Author- Sayan Chatterjee
+         * *****************/
+         public string GetCountryList()
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            //_dtable = _MM.View_Master_List("MASTER_COUNTRY");
+            _dtable = _MM.GetCountry();
+
+
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);                
+            }
+            return _jsonString;
+        }
+        /**********************
+         * Name-GetCityList
+         * param-null
+         * return- json
+         * Author- Sayan Chatterjee
+         * *****************/
+        public string GetCityList(string Country_id)
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            //_dtable = _MM.View_Master_List("MASTER_CITY");
+            _dtable = _MM.GetCityByCountry(Country_id);
+
+
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+            }
+            return _jsonString;
+        }
+        /*************************
+         * Name- DailyRequirementSummaryReport
+         * param- null
+         * Return - View
+         * Author- Sayan Chatterjee
+         * ***********************/
+        public ActionResult DailyRequirementSummaryReport()
+        {
+            //EventManagement _evObj = new EventManagement();
+            //string _response = string.Empty;
+            //DataTable dt = new DataTable();
+            //dt = _evObj.GetSummaryReport("","");
+            //_response = dt.Rows[0]["JSON_VALUE"].ToString();
+            //if (_response != string.Empty)
+            //{
+            //    JavaScriptSerializer jsObj = new JavaScriptSerializer();
+            //    var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
+            //    bool status = Convert.ToBoolean(data["status"]);
+            //    if (status)
+            //    {
+            //        _evObj.SummaryList = (ArrayList)data["response"];
+            //    }
+            //}
+            ViewBag.breadcrumbController = "Report";
+            ViewBag.breadcrumbAction = "Daily Requirement Summary Report";
+            //ViewBag.Title = "Chapter List" + Constant.PROJECT_NAME;
+            return View();
+
+        }
+        ///*************************
+        // * Name- DailyRequirementDetailedReport
+        // * param- null
+        // * Return - View
+        // * Author- Sayan Chatterjee
+        // * ***********************/
+        //public ActionResult DailyRequirementDetailedReport()
+        //{
+        //    EventManagement _evObj = new EventManagement();
+        //    string _response = string.Empty;
+        //    DataTable dt = new DataTable();
+        //    dt = _evObj.GetDetailedReport();
+        //    _response = dt.Rows[0]["JSON_VALUE"].ToString();
+        //    if (_response != string.Empty)
+        //    {
+        //        JavaScriptSerializer jsObj = new JavaScriptSerializer();
+        //        var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
+        //        bool status = Convert.ToBoolean(data["status"]);
+        //        if (status)
+        //        {
+        //            _evObj.DetailedList = (ArrayList)data["response"];
+        //        }
+        //    }
+        //    ViewBag.breadcrumbController = "Report";
+        //    ViewBag.breadcrumbAction = "Daily Requirement Detailed Report";
+        //    //ViewBag.Title = "Chapter List" + Constant.PROJECT_NAME;
+        //    return View(_evObj);
+
+        //}
+        /*************************
+         * Name- ApprovedVolunteerArrivaldepartureReport
+         * param- null
+         * Return - View
+         * Author- Sayan Chatterjee
+         * ***********************/
+        public ActionResult ApprovedVolunteerArrivaldepartureReport()
+        {
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt = new DataTable();
+            dt = _evObj.GetArrivalDepurtureReport();
+            _response = dt.Rows[0]["JSON_VALUE"].ToString();
+            if (_response != string.Empty)
+            {
+                JavaScriptSerializer jsObj = new JavaScriptSerializer();
+                var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
+                bool status = Convert.ToBoolean(data["status"]);
+                if (status)
+                {
+                    //_evObj.ArrivalDepurtureList = (ArrayList)data["response"];
+                }
+            }
+            ViewBag.breadcrumbController = "Report";
+            ViewBag.breadcrumbAction = "Approved Volunteer Arrival/Departure Report";
+            //ViewBag.Title = "Chapter List" + Constant.PROJECT_NAME;
+            //_evObj
+            return View();
+
+        }
+        /**************************
+         * Name - GetSummaryReport
+         * param- null
+         * Return json string
+         * Author - Sayan chatterjee
+         * **********************/
+         public string GetSummaryReport(string from_date,string to_date)
+        {
+            string response = string.Empty;
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt = new DataTable();
+            dt = _evObj.GetSummaryReport(from_date,to_date);
+            response = dt.Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
+        /**************************
+        * Name - GetSummaryReport
+        * param- date
+        * Return json string
+        * Author - Sayan chatterjee
+        * **********************/
+        public string GetDetailedReport(string date,string event_name)
+        {
+            string response = string.Empty;
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt = new DataTable();
+            dt = _evObj.GetDetailedReport(date,event_name);
+            response = dt.Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
+        /**************************
+     * Name - GetArrivalDepurtureReport
+     * param- date
+     * Return json string
+     * Author - Sayan chatterjee
+     * **********************/
+        public string GetArrivalDepurtureReport(string from_date, string to_date)
+        {
+            string response = string.Empty;
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt = new DataTable();
+            dt = _evObj.GetArrivalDepurtureReport(from_date, to_date);
+            response = dt.Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
+        /***********************
+         * Name- Country
+         * param- null
+         * Return - View
+         * Author- Sayan Chatterjee
+         * *********************/
+        public ActionResult Country()
+        {
+            return View();
+        }
+        /***********************
+         * Name- City
+         * param- null
+         * Return - View
+         * Author- Sayan Chatterjee
+         * *********************/
+        public ActionResult City()
+        {
+            return View();
+        }
+        /**********************
+        * Name-GetCityList
+        * param-null
+        * return- json
+        * Author- Sayan Chatterjee
+        * *****************/
+        public string GetAllCityList()
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            //_dtable = _MM.View_Master_List("MASTER_CITY");
+            _dtable = _MM.GetAllCity();
+
+
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+            }
+            return _jsonString;
+        }
+        /**********************
+         * Name- Get Sate List
+         * param- null
+         * return - json string
+         * Author- Sayan chatterjee
+         * **********************/
+        public string GetStateList()
+        {
+            string _response = string.Empty;
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.GET_MASTER_STATE_DATA;
+            //_client.Method = HttpMethod.GET;
+            //_client.Execute();
+            //_response = _client.Response();
+            EventManagement evObj = new EventManagement();
+            _response = evObj.GetStateData().Rows[0]["JSON_VALUE"].ToString();
+            return _response;
+        }
+        /*****************************
+         * Name - SaveStateAllocation
+         * param- null
+         * return - json string
+         * Author- Sayan Chatterjee
+         * ***************************/
+         
+         public string SaveStateAllocation(string jsondata)
+        {
+            jsondata=  System.Uri.UnescapeDataString(jsondata);
+            string response = string.Empty;
+            EventManagement evObj = new EventManagement();
+            response = evObj.SaveStateAllocatrion(jsondata).Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
+        /***********************
+         * Name - Delete Country
+         * param- country id 
+         * Return - json string
+         * Author - Sayan Chatterjee
+         * **********************/ 
+         public string DeleteCountry(string country_id)
+        {
+            string response = string.Empty;
+            EventManagement evObj = new EventManagement();
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+            _postArrData.Add("COUNTRY_SYS_ID", country_id);  
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            response = evObj.DeleteCountry(_postContent).Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
+        /***********************
+        * Name - Delete City
+        * param- city id 
+        * Return - json string
+        * Author - Sayan Chatterjee
+        * **********************/
+        public string DeleteCity(string city_id)
+        {
+            string response = string.Empty;
+            EventManagement evObj = new EventManagement();
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+            _postArrData.Add("CITY_SYS_ID", city_id);           
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            response = evObj.DeleteCity(_postContent).Rows[0]["JSON_VALUE"].ToString();
+            return response;
+        }
+        //[HttpPost]
+        //public ActionResult Index(string qrcode)
+        //{
+        //    using (MemoryStream ms = new MemoryStream())
+        //    {
+        //        QRCoder.QRCodeGenerator qrGenerator = new QRCodeGenerator();
+        //        QRCodeGenerator.QRCode qrCode = qrGenerator.CreateQrCode(qrcode, QRCodeGenerator.ECCLevel.Q);
+        //        using (Bitmap bitMap = qrCode.GetGraphic(20))
+        //        {
+        //            bitMap.Save(ms, ImageFormat.Png);
+        //            ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+        //        }
+        //    }
+
+        //    return View();
+        //}
+        /********************
+         * Name - ExcelExportOfSummaryReport
+         * param- null
+         * Return Excel file
+         * Author - Sayan Chatterjee
+         * *********************/
+        public FileResult ExcelExportOfSummaryReport(string from_date,string to_date)
+        {
+           
+            string response = string.Empty;
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt1 = new DataTable();
+            dt1 = _evObj.GetSummaryReport(from_date,to_date);
+            response = dt1.Rows[0]["JSON_VALUE"].ToString();         
+
+            try
+            {
+                DataTable dt = new DataTable();
+                MemoryStream stream = new MemoryStream();
+                dt = Data.JsonToDatatable(response, "dataSheet");
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+
+                    wb.Worksheets.Add(dt);
+                    wb.SaveAs(stream);
+                    wb.Dispose();
+                }
+
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Summary_Report.xlsx");
+            }
+            catch (Exception ex)
+            {
+                return File(new MemoryStream(Encoding.UTF8.GetBytes(ex.Message.ToString())).ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+            }
+        }
+        /********************
+       * Name - ExcelExportOfSummaryReport
+       * param- null
+       * Return Excel file
+       * Author - Sayan Chatterjee
+       * *********************/
+        public FileResult ExcelExportOfArrivalDepurtureReport(string from_date,string to_date)
+        {
+
+            string response = string.Empty;
+            EventManagement _evObj = new EventManagement();
+            string _response = string.Empty;
+            DataTable dt1 = new DataTable();
+            dt1 = _evObj.GetArrivalDepurtureReport(from_date, to_date);
+            response = dt1.Rows[0]["JSON_VALUE"].ToString();
+
+            try
+            {
+                DataTable dt = new DataTable();
+                MemoryStream stream = new MemoryStream();
+                dt = Data.JsonToDatatable(response, "dataSheet");
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+
+                    wb.Worksheets.Add(dt);
+                    wb.SaveAs(stream);
+                    wb.Dispose();
+                }
+
+                return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Approved_Volunteer_Arrival_Depurture_Report.xlsx");
+            }
+            catch (Exception ex)
+            {
+                return File(new MemoryStream(Encoding.UTF8.GetBytes(ex.Message.ToString())).ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+            }
         }
 
 

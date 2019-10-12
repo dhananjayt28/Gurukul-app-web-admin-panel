@@ -12,6 +12,7 @@
     using System.Data.SqlClient;
     using DatabaseManagementClient;
     using System.Web;
+    using System.Web.Script.Serialization;
 
     public class EventManagement
     {
@@ -59,6 +60,9 @@
         public ArrayList EventGitalist = new ArrayList();
         public ArrayList VolunteerEventList = new ArrayList();
         public ArrayList ChapterList = new ArrayList();
+        public ArrayList SummaryList = new ArrayList();
+        public ArrayList DetailedList = new ArrayList();
+        public ArrayList ArrivalDepurtureList = new ArrayList();
         public List<SelectListItem> List = new List<SelectListItem>();
         public List<SelectListItem> StateList = new List<SelectListItem>();
         public List<SelectListItem> LocationList = new List<SelectListItem>();
@@ -161,11 +165,12 @@
         public string GetEventMasterType()
         {
             string _response = string.Empty;
-            RestClient _client = new RestClient();
-            _client.URL = Constant.GET_EVENT_MASTER_TYPE;
-            _client.Method = HttpMethod.GET;
-            _client.Execute();
-            _response = _client.Response();
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.GET_EVENT_MASTER_TYPE;
+            //_client.Method = HttpMethod.GET;
+            //_client.Execute();
+            //_response = _client.Response();
+            _response = GetEventMasterTypeDt().Rows[0]["JSON_VALUE"].ToString();
             return _response;
         }
         /***************************************
@@ -201,11 +206,12 @@
         public string GetEventData()
         {
             string _response = string.Empty;
-            RestClient _client = new RestClient();
-            _client.URL = Constant.GET_MASTER_STATE_DATA;
-            _client.Method = HttpMethod.GET;
-            _client.Execute();
-            _response = _client.Response();
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.GET_MASTER_STATE_DATA;
+            //_client.Method = HttpMethod.GET;
+            //_client.Execute();
+            //_response = _client.Response();
+            _response = GetStateData().Rows[0]["JSON_VALUE"].ToString();
             return _response;
         }
         /***************************************
@@ -217,12 +223,13 @@
         public string GetVolunteerEventRegData()
         {
             string _response = string.Empty;
-            string _URL = Constant.GET_VOLUNTER_EVENT_DATA;
-            RestClient _client = new RestClient();
-            _client.URL = _URL;
-            _client.Method = HttpMethod.GET;
-            _client.Execute();
-            _response = _client.Response();
+            //string _URL = Constant.GET_VOLUNTER_EVENT_DATA;
+            //RestClient _client = new RestClient();
+            //_client.URL = _URL;
+            //_client.Method = HttpMethod.GET;
+            //_client.Execute();
+            //_response = _client.Response();
+            _response = GetEventVolunteerRegData().Rows[0]["JSON_VALUE"].ToString();
             return _response;
         }
         /***************************************
@@ -234,18 +241,32 @@
         public string ApproveVolunteerEventRegData(string eventid, string status, int sessionUserId)
         {
             string _response = string.Empty;
-            SortedList<string, object> _list = new SortedList<string, object>();
-            _list.Add("USER_ID", sessionUserId);
-            _list.Add("EVENT_REG_ID", eventid);
-            _list.Add("STATUS", 18);
+            Dictionary<string, object> _MainArr = new Dictionary<string, object>();
+            JavaScriptSerializer _JSObj = new JavaScriptSerializer();
+        //SortedList<string, object> _list = new SortedList<string, object>();
+        //_list.Add("USER_ID", sessionUserId);
+        //_list.Add("EVENT_REG_ID", eventid);
+        //_list.Add("STATUS", 18);
 
-            RestClient _client = new RestClient();
-            _client.URL = Constant.VOLUNTER_EVENT_DATA_ACTION;
-            _client.Method = HttpMethod.PUT;
-            _client.Content = Json.Encode(_list);
-            _client.Execute();
-            _response = _client.Response();
-
+        //RestClient _client = new RestClient();
+        //_client.URL = Constant.VOLUNTER_EVENT_DATA_ACTION;
+        //_client.Method = HttpMethod.PUT;
+        //_client.Content = Json.Encode(_list);
+        //_client.Execute();
+        //_response = _client.Response();
+        int res = 0;
+           res =  VolunteerRegisterEventAction(sessionUserId,eventid,status,"");
+            if (res > 0)
+            {
+                _MainArr.Add("status", true);
+                _MainArr.Add("response", "Volunteer Event Registration Approved Successfully.");
+            }
+            else
+            {
+                _MainArr.Add("status", false);
+                _MainArr.Add("response", "Volunteer Event Registration Approved Already");
+            }
+            _response = _JSObj.Serialize(_MainArr);
             return _response;
         }
         /***************************************
@@ -257,18 +278,35 @@
         public string RejectionVolunteerEventRegData(string eventid, string status, string message, int sessionUserId)
         {
             string _response = string.Empty;
-            SortedList<string, object> _list = new SortedList<string, object>();
-            _list.Add("USER_ID", sessionUserId);
-            _list.Add("EVENT_ID", eventid);
-            _list.Add("STATUS", status);
-            _list.Add("MESSAGE", message);
+            Dictionary<string, object> _MainArr = new Dictionary<string, object>();
+            JavaScriptSerializer _JSObj = new JavaScriptSerializer();
 
-            RestClient _client = new RestClient();
-            _client.URL = Constant.VOLUNTER_EVENT_DATA_ACTION;
-            _client.Method = HttpMethod.PUT;
-            _client.Content = Json.Encode(_list);
-            _client.Execute();
-            _response = _client.Response();
+            //SortedList<string, object> _list = new SortedList<string, object>();
+            //_list.Add("USER_ID", sessionUserId);
+            //_list.Add("EVENT_ID", eventid);
+            //_list.Add("STATUS", status);
+            //_list.Add("MESSAGE", message);
+
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.VOLUNTER_EVENT_DATA_ACTION;
+            //_client.Method = HttpMethod.PUT;
+            //_client.Content = Json.Encode(_list);
+            //_client.Execute();
+            //_response = _client.Response();
+            int res = 0;
+            res = VolunteerRegisterEventAction(sessionUserId, eventid, status, "");
+            if (res > 0)
+            {
+                _MainArr.Add("status", true);
+                _MainArr.Add("response", "Volunteer Event Registration Rejected Successfully.");
+            }
+            else
+            {
+                _MainArr.Add("status", false);
+                _MainArr.Add("response", "Volunteer Event Registration Rejected Already");
+            }
+            _response = _JSObj.Serialize(_MainArr);
+
 
             return _response;
         }
@@ -281,16 +319,32 @@
         public string ApproveEventCalender(int calendertid, int sessionUserId)
         {
             string _response = string.Empty;
-            SortedList<string, object> _list = new SortedList<string, object>();
-            _list.Add("USER_ID", sessionUserId);
-            _list.Add("EVENT_ID", calendertid);
+            Dictionary<string, object> _MainArr = new Dictionary<string, object>();
+            JavaScriptSerializer _JSObj = new JavaScriptSerializer();
 
-            RestClient _client = new RestClient();
-            _client.URL = Constant.APPROVE_EVENT_CALENDER;
-            _client.Method = HttpMethod.PUT;
-            _client.Content = Json.Encode(_list);
-            _client.Execute();
-            _response = _client.Response();
+            //SortedList<string, object> _list = new SortedList<string, object>();
+            //_list.Add("USER_ID", sessionUserId);
+            //_list.Add("EVENT_ID", calendertid);
+
+            //RestClient _client = new RestClient();
+            //_client.URL = Constant.APPROVE_EVENT_CALENDER;
+            //_client.Method = HttpMethod.PUT;
+            //_client.Content = Json.Encode(_list);
+            //_client.Execute();
+            //_response = _client.Response();
+            int res = 0;
+            res = ApprovedEventCalenderAction(sessionUserId,calendertid);
+            if (res > 0)
+            {
+                _MainArr.Add("status", true);
+                _MainArr.Add("response", "Event Calender Approved Successfully.");
+            }
+            else
+            {
+                _MainArr.Add("status", false);
+                _MainArr.Add("response", "Event Calender Approved Already.");
+            }
+            _response = _JSObj.Serialize(_MainArr);
 
             return _response;
         }
@@ -318,6 +372,150 @@
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
             return _dtable;
         }
+        public DataTable GetSummaryReport(string from_date,string to_date)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",1) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input },
+                new SqlParameter("@START_DATE",from_date) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input },
+                  new SqlParameter("@END_DATE",to_date) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_REPORT", _param);
+            return _dtable;
+        }
+        public DataTable GetDetailedReport(string date,string event_name)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",2) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input },
+                new SqlParameter("@DATE",date) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input },
+                  new SqlParameter("@EVENT_NAME",event_name) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_REPORT", _param);
+            return _dtable;
+        }
+        public DataTable GetArrivalDepurtureReport(string from_date, string to_date)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",3) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input },
+                new SqlParameter("@START_DATE",from_date) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input },
+                  new SqlParameter("@END_DATE",to_date) {SqlDbType=SqlDbType.VarChar,Direction=ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_REPORT", _param);
+            return _dtable;
+        }
+        public DataTable GetArrivalDepurtureReport()
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",2) {SqlDbType=SqlDbType.Int,Direction=ParameterDirection.Input }
+            };
+            _dtable = _dbObj.Select("USP_REPORT", _param);
+            return _dtable;
+        }
+        public DataTable GetEventMasterTypeDt()
+        {
+            //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=2 
+           DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return _datatable;
+        }
+        public DataTable GetStateData()
+        {
+            //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=5
+           DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 5) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return _datatable;
+        }
+        //Need to put OPERATIONID & USP name
+        public DataTable SaveStateAllocatrion(string jsondata)
+        {            
+            DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 33) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _datatable;
+        }
+        public DataTable DeleteCountry(string jsondata)
+        {//EXEC USP_POST_ALL_MASTER_DATA @OPERATIONID=6,@JSON='[{"COUNTRY_SYS_ID":"8"}]'
+            DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_POST_ALL_MASTER_DATA", _param);
+            return _datatable;
+        }
+        public DataTable DeleteCity(string jsondata)
+        {// EXEC USP_POST_ALL_MASTER_DATA @OPERATIONID=7,@JSON='[{"CITY_SYS_ID":"48"}]
+            DataTable _datatable = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_POST_ALL_MASTER_DATA", _param);
+            return _datatable;
+        }
+        /*************************************
+        * Title :: Get Event Data by Event ID method
+        * Description :: Get Data from this method using Event ID
+        * Parameter :: OperationId, id
+        * Return :: Table data
+        *************************************/
+        public DataTable GetEventVolunteerRegData()
+        {
+           DataTable _datatable = new DataTable();
+            // EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=9
+
+            SqlParameter[] _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID", 9) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _datatable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+            return _datatable;
+        }
+        public Int32 VolunteerRegisterEventAction(int UserId, string EventId, string Status, string Message = "")
+        {
+            int _rsponse = 0;
+            // EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=10,@STATUS=1,@MESSAGE='',@USER_ID=12,@EVENT_ID=3
+            SqlParameter[] _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID", 10) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@STATUS", Status) { SqlDbType = SqlDbType.SmallInt, Direction = ParameterDirection.Input },
+                new SqlParameter("@MESSAGE", Message) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                new SqlParameter("@USER_ID", UserId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EVENT_ID", EventId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _rsponse = _dbObj.Update("USP_EVENT_MANAGEMENT", _param);
+            return _rsponse;
+        }
+        public Int32 ApprovedEventCalenderAction(int UserId, int EventId)
+        {
+            int _response = 0;
+            // EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=11,@USER_ID=12,@EVENT_ID=3
+            SqlParameter[] _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID", 11) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@USER_ID", UserId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EVENT_ID", EventId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _response = _dbObj.Update("USP_EVENT_MANAGEMENT", _param);
+            return _response;
+        }
+
 
     }
 }

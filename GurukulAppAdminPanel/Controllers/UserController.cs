@@ -59,16 +59,17 @@ namespace GurukulAppAdminPanel.Controllers
                 {
                     JavaScriptSerializer jsObj = new JavaScriptSerializer();
                     var data = jsObj.Deserialize<Dictionary<string, object>>(response);
-                    bool status = Convert.ToBoolean(data["status"]);
-                    //if (status)
-                    //{
-                    //    _umObj.UserData = (ArrayList)data["response"];
-                    //}
                     dictionaryObj = new Dictionary<string, object>();
                     dictionaryObj = Data.Deserialize(response, typeof(Dictionary<string, object>));
-                    if (dictionaryObj.ContainsKey("response")) {
-                        _umObj.UserData = (ArrayList)data["response"];
-                    }
+                    bool status = Convert.ToBoolean(data["status"]);
+                    if (status)
+                    {
+                        if (dictionaryObj.ContainsKey("response"))
+                        {
+                            _umObj.UserData = (ArrayList)data["response"];
+                        }
+                    }                  
+                    
                     else
                     {
 
@@ -185,6 +186,72 @@ namespace GurukulAppAdminPanel.Controllers
                 int exception = ex.Data.Count;
             }
             return RedirectToAction("", "user/user-list");
+        }
+        /*******************
+         * Name - QrCodeGenerator
+         * param- user_id,email
+         * Return -
+         * Author - Sayan Chatterjee
+         * ************************/
+        public ActionResult UserReset(string userid)
+        {
+            string _response = string.Empty;
+            try
+            {
+                UserManagement _umObj = new UserManagement();
+                 MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.View_User_Data(userid, null, null);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _response = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                    //response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+
+
+
+                // _response = GetUserProfileData(userid);
+                //string _response = "";
+                if (_response != string.Empty)
+                {
+                    JavaScriptSerializer jsObj = new JavaScriptSerializer();
+                    var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
+                    bool status = Convert.ToBoolean(data["status"]);                   
+                    ArrayList UserData = (ArrayList)data["response"];
+                    Dictionary<string, object> user = (Dictionary<string, object>)UserData[0];
+                    string email_id = Convert.ToString(user["EMAIL_ID"]);
+                    string qrstring = Constant.QR_CODE;
+                  
+                   
+                    List<object> postdata = new List<object>();
+                    SortedList<string, object> _postArrData = new SortedList<string, object>();
+
+                    _postArrData.Add("USER_ID", userid);
+                    _postArrData.Add("EMAIL_ID", email_id);
+                     postdata.Add(_postArrData);
+                    var _postContent = System.Web.Helpers.Json.Encode(postdata);
+                    string json = _postContent.ToString();
+                    json = json.Replace("[", "");
+                    json = json.Replace("]", "");
+                    qrstring = qrstring + json;
+                    TempData["QRCODE"] = qrstring;
+                    //return File(qrstring, "application/unknown", "QrCode.png");
+                    return Redirect(qrstring);
+                }
+                else
+                {
+                    return RedirectToAction("", "user/user-list");
+                }
+            }
+            catch (Exception ex)
+            {
+                int exception = ex.Data.Count;
+                return RedirectToAction("", "user/user-list");
+            }
+           // return RedirectToAction("", "user/user-list");
         }
         /*******************************
          * Title :: User Profile Data

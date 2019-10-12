@@ -559,10 +559,6 @@ namespace GurukulAppAdminPanel.Controllers
                 _MM = new MasterManagement();
                 _dtable = new DataTable();
                 _dtable = _MM.View_User_Data(User_id, Status, Role);
-
-
-
-
                 if (_dtable.Rows.Count > 0)
                 {
                     _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
@@ -1235,8 +1231,339 @@ namespace GurukulAppAdminPanel.Controllers
             response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
             return response;
         }
+        [HttpGet]
+        //[Route[("api/get-satsang-chapter-data/{country_id}")]
+        public HttpResponseMessage get_satsang_chapter_data(string country_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetSatsangChapterData(country_id);
 
 
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpPost]
+        //[Route("api/user-profile-update")]
+        public HttpResponseMessage user_profile_update(HttpRequestMessage request)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                var data = request.Content.ReadAsStringAsync().Result;
+                string Jsondata = data.ToString();
+
+                _dtable = new DataTable();
+                _MM = new MasterManagement();
+                if (data != null)
+                {
+                    _dtable = _MM.user_update(Jsondata);
+                }
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+            }
+
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/get-education-data/{education_id}")]
+        public HttpResponseMessage get_education_data(string education_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetSubjectDatabyEducationId(education_id);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/get-country-data")]
+        public HttpResponseMessage get_country_data()
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetCountry();
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/password-reset/{user_id}")]
+        public HttpResponseMessage password_reset(string user_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.PasswordReset(user_id);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/get-itinerary-information/{event_reg_id}/{user_id}")]
+        public HttpResponseMessage get_itinerary_information(string event_reg_id,string user_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetItineraryInformation(event_reg_id,user_id);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpPost]
+        //[Route("api/update-itinerary-status")]
+        public HttpResponseMessage update_itinerary_status(HttpRequestMessage request)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                var data = request.Content.ReadAsStringAsync().Result;
+                string Jsondata = data.ToString();
+
+                _dtable = new DataTable();
+                _MM = new MasterManagement();
+                if (data != null)
+                {
+                    _dtable = _MM.UpdateItineraryStatus(Jsondata);
+                }
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+            }
+
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/get-city-data/{country_id}")]
+        public HttpResponseMessage get_city_data(string country_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetCityByCountry(country_id);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+        [HttpGet]
+        //[Route[("api/get-chapter-data/{country_id}/{city_id}")]
+        public HttpResponseMessage get_chapter_data(string country_id,string city_id)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.GetChapterData(country_id,city_id);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["JSON_VALUE"].ToString());
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+
+            }
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
+
+        [HttpPost]
+        //[Route("api/update-event-status")]
+        public HttpResponseMessage update_event_status(HttpRequestMessage request)
+        {
+            try
+            {
+                MasterManagement _MM = new MasterManagement();
+                var data = request.Content.ReadAsStringAsync().Result;
+                string Jsondata = data.ToString();
+
+                _dtable = new DataTable();
+                _MM = new MasterManagement();
+                if (data != null)
+                {
+                    _dtable = _MM.UpdateEventStatus(Jsondata);
+                }
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                _jsonString = Data.ExceptionToJsonString(ex.Message);
+                response = this.Request.CreateResponse(HttpStatusCode.ExpectationFailed);
+            }
+
+            response.Content = new StringContent(_jsonString, Encoding.UTF8, "application/json");
+            return response;
+        }
     }
 }
 

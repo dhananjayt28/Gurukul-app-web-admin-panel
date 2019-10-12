@@ -13,10 +13,17 @@
     <div class="row margin-row-0">
         <div class="col-sm-3 col-md-3">
             @*<h5>User Status:</h5>*@
+            Event Type: <select id="dd_type" class="form-control">
+                <option value="0">Type</option>
+            </select>
+        </div>
+        <div class="col-sm-3 col-md-3">
+            @*<h5>User Status:</h5>*@
             Event Status: <select id="dd_statuses" class="form-control">
                 <option value="0">Status</option>
             </select>
         </div>
+       
     </div>
 
     <div class="row" style="margin-top:20px">
@@ -52,6 +59,7 @@
                                 int _msg_id = 0;
                                 int reject_msg = 0;
                                 string _event_reg_id = _volunteer["EVENT_REG_ID"].ToString();
+                                int _event_type = Convert.ToInt16(_volunteer["EVENT_TYPE"]);
 
                                 //switch (_statusVal)
                                 //{
@@ -86,8 +94,8 @@
                                     <td>
                                         <div class="btn-group">
                                             @*//Check-In & Check-Out approved*@
-                                            @if (_statusVal == 24)
-                                            {
+                                            @if (_statusVal == 24|| _statusVal == 29)
+                                            {//29 Topic details allocated
                                                 _statusVal = 25;//Check-In & Check-Out Rejected
                                                 _msg_id = 82;//Check-In & Check-Out Rejected
                                                 _rejectUrl = "event/volunteer-event-rejected/" + _statusVal + "/" + _event_reg_id;
@@ -156,21 +164,47 @@
                                                 reject_msg = 79;//Event Rejected
                                                 _rejectUrl = "event/volunteer-event-rejected/" + _statusVal + "/" + _event_reg_id ;
                                             <a href="javascript:void(0);" title="Reject" id="rejectBtn" data-eventid="@rejectval" data-url="@_rejectUrl" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal9"> <i class="fa fa-ban"></i> </a>
+
+                                                if (@_volunteer["EVENT_TYPE"].ToString() == "2")//Workshop
+                                                {
+                                                    <a href="javascript:void(0);" id="state_allocate_" data-id="@_volunteer["EVENT_REG_ID"]" class="btn btn-primary btn-xs" title="State Allocate" data-toggle="modal" data-target="#state_allocate_popup"><i class="fa fa-plane" aria-hidden="true"></i></a>
+                                                }
                                             }
+                                            //Deleted
                                             else if (_statusVal == 21)
                                             {
                                                 <label class="btn-danger">Deleted</label>
                                             }
+                                            //Booking Confirmed
                                             else if (_statusVal == 27)
                                             {
                                                 @*<label class="btn-success">Confirmed</label>*@
+                                                //No action is allowed as booking is confirmed.
                                             }
+                                            //Booking info Shared
                                             else if (_statusVal == 28)
                                             {
-                                                _statusVal = 27;//Event Rejected
-                                                _msg_id = 75;//Event Approved
+                                                _statusVal = 27;//Booking confirm
+                                                _msg_id = 75;//Booking confirm
                                                 _approveUrl = "event/volunteer-event-approved/" + _statusVal + "/" + _event_reg_id + "/" + _msg_id;
                                                 <a href="@Url.Action("", _approveUrl)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>  
+                                            }
+                                            //
+                                            else if (_statusVal == 30)
+                                            {
+                                                //No action is allowed as volunteering is complete.
+                                            }
+                                            else if (_statusVal == 114)
+                                            {
+                                                //No action is allowed as itinerary is confirmed.
+                                            }
+                                            else if (_statusVal == 115)
+                                            {
+                                                //No action is allowed as workshop is complete.
+                                            }
+                                            else
+                                            {
+                                                //No action is allowed as status  is invalid.
                                             }
 
                                         </div>
@@ -205,7 +239,85 @@
 
                 </div>
             </div>
+            <!--------sate allocate popup-->
+            <div class="modal fade" id="state_allocate_popup" role="dialog">
+                <div class="modal-dialog  panal-modal" style="min-width:750px">
 
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">State Allocation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <!-----------------Sate Allocate Body------------------->
+                            <input type="hidden" id="event_reg_sys_id_hidden" />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>States</label>
+
+                                    <div class="form-control clearfix" id="check_list" style="height:250px; overflow-y:auto; padding:0;">
+
+                                        <ul class="checkboxList" type="checkbox" id="State_list" style="list-style-type: none;padding:10px"></ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 row" style="margin-top:20px">
+                                    <div class="row" style="margin-left:5px"><h5><b> Mode of Tansportation:</b></h5></div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            Origin:<select class="form-control" id="trans_origin_ddl">
+                                                <option value="0">Select Mode of Transportaion</option>
+                                                <option value="1">Railway</option>
+                                                <option value="2">Flight</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            End: <select class="form-control" id="trans_end_ddl">
+                                                <option value="0">Select Mode of Transporation</option>
+                                                <option value="1">Railway</option>
+                                                <option value="2">Flight</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-left:5px">
+                                        <h5><b> Select Origin State & End State:</b></h5>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            Origin:<select class="form-control" id="ddl_origin"></select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            End:<select class="form-control" id="ddl_end"></select>
+                                        </div>
+                                    </div>
+                                    
+                                        <div class="row" style="margin-left:5px">
+                                            <h5><b> Put Railway Station Name or Airport Name for origin place and end place:</b></h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6" >
+                                               Origin Place: <input type="text" id="origin_place_name" class="form-control" />
+                                            </div>
+                                            <div class="col-md-6">
+                                              Destination Place: <input type="text" id="destination_place_name" class="form-control" />
+                                            </div>
+                                        </div>
+                                  
+                                  
+                                </div>
+                            </div>
+                           
+                            <!------------------------------------------------------>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="btn_save_state_allocation" class="btn btn-primary">Save </button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-------end----------->
             <div class="modal fade" id="myModal10" role="dialog">
                 <div class="modal-dialog  panal-modal">
 
@@ -230,8 +342,8 @@
                                         @Html.HiddenFor(model => Model.hide_event_reg_id, new { @id = "hide_event_reg_id" })
                                         @*@Html.HiddenFor(model => Model.file_, new { @id = "file_" })*@
                                         @*<input type="hidden" id="hidden_mou_id" />*@
-                                        @Html.TextBox("file", "", new { type = "file" }) <br />
-
+                                        @Html.TextBox("file", "", new { type = "file",id="itinerary_file" }) <br />
+                                        <span class="text-danger">Upload only pdf file</span>
                                         <button type="button" id="sv_file" class="btn btn-default" data-dismiss="modal">Save</button>
 
 
@@ -378,6 +490,7 @@
         //$.AlertBox([{ type: "abc", con: "jay" }]);
         //$.AlertBox("Abc");
         //$.AlertBox("1");
+       
     });
 </script>
 

@@ -1,6 +1,8 @@
 ﻿using GurukulAppAdminPanel.App_Start;
 using System;
 using System.Web.Mvc;
+using GurukulAppAdminPanel.Models;
+using System.Collections.Generic;
 
 namespace GurukulAppAdminPanel.Controllers
 {
@@ -52,5 +54,6 @@ namespace GurukulAppAdminPanel.Controllers
             return Redirect(Constant.LOGOUT);
             //return RedirectPermanent(Constant.LOGOUT);
         }
+       
     }
 }

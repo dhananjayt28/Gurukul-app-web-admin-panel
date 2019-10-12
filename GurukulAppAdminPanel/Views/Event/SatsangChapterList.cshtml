@@ -9,6 +9,7 @@
             <li><a href="javascript:void();"><i class="fa fa-table mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbAction </a></li>
         </ul>
     </div>
+    <p>@TempData["CHP_MSG"]</p>
     <div class="row" style="margin-top:20px">
         <div class="panel panel-default widget1">
             <div class="panel-heading">
@@ -23,8 +24,10 @@
                             <tr>
                                 <th>Sl. No</th>
                                 <th>Country</th>
+                                <th>City Name</th>
                                 <th>Chapter Name</th>
-                                <th>Description</th>                                
+                                <th>Description</th>      
+                                                         
                                 @*<th></th>*@
                             </tr>
                         </thead>
@@ -38,8 +41,10 @@
                                     <tr>
                                         <td>@i</td>
                                         <td>@_data["COUNTRY_NAME"]</td>
+                                        <td>@_data["CITY_NAME"]</td>  
                                         <td>@_data["CHAPTER_NAME"]</td>
-                                        <td>@_data["DESCRIPTION"]</td>                                        
+                                        <td>@_data["DESCRIPTION"]</td>
+                                                                             
                                         @*<td></td>*@
                                     </tr>
                                 }

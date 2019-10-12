@@ -14,6 +14,7 @@ namespace GurukulAppAdminPanel.Models
         private DataTable _dtable;
         private SqlParameter[] _param;
         public string CATEGORYID { get; set; }
+        public string DELETESUBCATEGORYID { get; set; }
         public string ADDCATEGORY { get; set; }
         public string ADDSUBCATEGORY { get; set; }
 
@@ -36,6 +37,18 @@ namespace GurukulAppAdminPanel.Models
             _param = new SqlParameter[]
             {
                 new SqlParameter("@OPERATIONID",1) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_POST_ALL_MASTER_DATA", _param);
+            return _dtable;
+        }
+        public DataTable Delete_sub_category(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",5) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
@@ -207,7 +220,7 @@ namespace GurukulAppAdminPanel.Models
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
-            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=7,@JSON=''
+            {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=7,@USER_ID=''
                 new SqlParameter("@OPERATIONID",7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@USER_ID", user_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
 
@@ -229,13 +242,14 @@ namespace GurukulAppAdminPanel.Models
             return _dtable;
         }
 
-        public DataTable Get_Event_Volunteer_Reg_Data(string Status = null)
+        public DataTable Get_Event_Volunteer_Reg_Data(string Status = null,string etype=null)
         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
             {//EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=9
                 new SqlParameter("@OPERATIONID",9) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                new SqlParameter("@V_STATUS",Status) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+                new SqlParameter("@V_STATUS",Status) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_TYPE",etype) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
             _dtable = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
@@ -382,6 +396,49 @@ namespace GurukulAppAdminPanel.Models
 
             return dt;
         }
+        public DataTable user_update(string jsondata)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_USERS_MANAGEMENT @OPERATION_ID = 2,@JSON=
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_USERS_MANAGEMENT", _param);
+
+            return dt;
+        }
+        public DataTable UpdateItineraryStatus(string jsondata)
+        {
+            DataTable dt;
+            //--## EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=31,@JSON=[{"EVENT_REG_SYS_ID":"7","ITINERARY_STATUS":"95","ITINERARY_COMMENTS":"GOOD"}]
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 31) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
+        public DataTable UpdateEventStatus(string jsondata)
+        {
+            // EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=34,@JSON='[{"EVENT_REG_SYS_ID":"7","STATUS":"38","MESSAGE":"40"}]'
+            DataTable dt;
+            //--## EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=31,@JSON=[{"EVENT_REG_SYS_ID":"7","ITINERARY_STATUS":"95","ITINERARY_COMMENTS":"GOOD"}]
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 34) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
+
+            return dt;
+        }
         /*************************************
          * Title :: User Approved by Admin
          * Description :: Fetch Data method using Procedure name by Opeation Id
@@ -498,7 +555,7 @@ namespace GurukulAppAdminPanel.Models
             DataTable dt;
             //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=27, @JSON='[{"TOPIC_ID":"","STATUS_ID":"","EVENT_REG_ID":"","HOD_COMMENT":""}]'
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 27) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATIONID", 27) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
@@ -591,6 +648,139 @@ namespace GurukulAppAdminPanel.Models
 
             dt = _dbObj.Select("USP_DASHBOARD", _param);
 
+            return dt;
+        }
+        //Get City List in respect of Country
+        public DataTable GetCityByCountry(string Country_id)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 4) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_COUNTRY_ID", Country_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+
+
+            };
+
+            dt = _dbObj.Select("USP_GET_ALL_MASTER_DATA", _param);
+
+            return dt;
+        }
+        public DataTable GetChapterData(string Country_id, string City_id)
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 8) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_COUNTRY_ID", Country_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                 new SqlParameter("@V_CITY_ID", City_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+
+
+            };
+
+            dt = _dbObj.Select("USP_GET_ALL_MASTER_DATA", _param);
+
+            return dt;
+        }
+        public DataTable GetAllCity()
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 7) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+              
+            };
+
+            dt = _dbObj.Select("USP_GET_ALL_MASTER_DATA", _param);
+
+            return dt;
+        }
+        //Get Country List in respect of Country
+        public DataTable GetCountry()
+        {
+            DataTable dt;
+            //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=31, @JSON=''
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 3) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }               
+
+
+            };
+
+            dt = _dbObj.Select("USP_GET_ALL_MASTER_DATA", _param);
+
+            return dt;
+        }
+        public DataTable GetSatsangChapterData(string country_id = "")
+        {
+            DataTable dt;
+            // EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID=6,@COUNTRYID='2'
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@COUNTRYID", country_id) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+            };
+
+            dt = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
+            return dt;
+        }
+
+        public DataTable PasswordReset(string Userid)
+        {
+            //Int32 Status = 0;
+            DataTable dt = new DataTable();
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=5,@USER_ID='abc@gmail.com'
+            SqlParameter[] _Param = new SqlParameter[] {
+                new SqlParameter("@OPERATION_ID", 5) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@USER_ID", Userid) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+            };
+
+            dt = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _Param);
+            return dt;
+            //return Status;
+        }
+        public DataTable GetItineraryInformation(string event_reg_id,string user_id)
+        {
+            //Int32 Status = 0;
+            DataTable dt = new DataTable();
+            //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=5,@USER_ID='abc@gmail.com'
+            SqlParameter[] _Param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 32) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_EVENT_REG_SYS_ID", event_reg_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_USER_ID", user_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+            };
+
+            dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _Param);
+            return dt;
+            //return Status;
+        }
+        public Int32 EventRegistrationCancel(int UserId, int EventId)
+        {
+            int _response = 0;
+            // EXEC dbo.USP_EVENT_MANAGEMENT @OPERATIONID=12,@USER_ID=1,@EVENT_ID=8
+            SqlParameter[] _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID", 12) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@USER_ID", UserId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EVENT_ID", EventId) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            _response = _dbObj.Update("USP_EVENT_MANAGEMENT", _param);
+            return _response;
+        }
+        /*************************************
+       * Title :: Get Subject Data by Education Id method
+       * Description :: Get Data from this method using Education ID
+       * Parameter :: OperationId, id
+       * Return :: Table data
+       * Author - Sayan Chatterjee
+       *************************************/
+        public DataTable GetSubjectDatabyEducationId(string education_id="")
+        {
+            //EXEC dbo.USP_MASTER_MANAGEMENT @OPERATIONID = 4, @EDUCATION_ID = 2
+           DataTable dt = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 4) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@EDUCATION_ID", education_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            dt = _dbObj.Select("USP_MASTER_MANAGEMENT", _param);
             return dt;
         }
 

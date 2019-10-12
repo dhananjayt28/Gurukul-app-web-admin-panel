@@ -92,7 +92,7 @@ html , body{height:100%; }
 .nav-md .container.body .col-md-3.left_col.menu_fixed {height: 100%;position: fixed}
 body .container.body .right_col {background: #F7F7F7}
 .nav-md .container.body .right_col {padding: 10px 20px 0;margin-left: 230px}
-.nav_title {width: 230px;float: left;background: #2A3F54;border-radius: 0;height: 57px}
+.nav_title {width: 230px;float: left;background: #fff;border-radius: 0;height: 57px}
 @media (max-width: 991px) {
 .nav-md .container.body .right_col,.nav-md .container.body .top_nav {width: 100%;margin: 0}
 .nav-md .container.body .col-md-3.left_col {display: none}
@@ -187,7 +187,7 @@ a:hover,a:focus {text-decoration: none}
 .nav li li.current-page a {color: #fff}
 .nav.side-menu>li.active>a {text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;background: linear-gradient(#334556, #2C4257), #2A3F54;box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0}
 .navbar-brand,.navbar-nav>li>a {font-weight: 500;color: #ECF0F1 !important;margin-left: 0 !important;line-height: 32px}
-.site_title {text-overflow: ellipsis;overflow: hidden;font-weight: 400;font-size: 22px;width: 100%;color: #ECF0F1 !important;margin-left: 0 !important;line-height: 59px;display: block;height: 55px;margin: 0;padding-left: 10px}
+.site_title {text-overflow: ellipsis;overflow: hidden;font-weight: 400;font-size: 22px;width: 100%;color: #ECF0F1 !important;margin-left: 0 !important;line-height: 59px;display: block;height: 55px;margin: 0;text-align:center;}
 .site_title:hover,.site_title:focus {text-decoration: none}
 .nav.navbar-nav>li>a {color: #fff !important}
 .nav.top_menu>li>a {position: relative;display: block;padding: 10px 15px;color: #34495E !important}
@@ -906,3 +906,11 @@ right: 20px;
 top: 42px;
 font-size: 18px !important;
  }
+ .clickable{transform:rotate(90deg);}
+  .rotate-90{transform:rotate(90deg);}
+   .clickable_Actions{font-size:28px !important;
+                     transition:0.5s;
+                     position:relative;
+  }
+  .actionRotate{transform:rotate(90deg);}
+  .remove-actionRotate{transform:rotate(0deg);}

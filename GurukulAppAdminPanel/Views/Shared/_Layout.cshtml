@@ -6,9 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title</title>
-    <link rel="shortcut icon" href="@Url.Content("~/Images/ico/fav_icon.png")">
+    @*<link rel="shortcut icon" href="@Url.Content("~/Images/ico/fav_icon.png")">*@
+    <link rel="shortcut icon" href="@Url.Content("~/Images/Marg_Image.png")">
     <link href="@Url.Content("~/Content/bootstrap.css")" rel="stylesheet">
-    <link href="@Url.Content("~/Content/font-awesome.css")" rel="stylesheet">
+    @*<link href="@Url.Content("~/Content/font-awesome.css")" rel="stylesheet">*@
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     <link href="@Url.Content("~/Content/custom.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/breadcrumb.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/jquery-ui.css")" rel="stylesheet">
@@ -26,7 +28,8 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="#" class="site_title"><i class="fa fa-wrench"></i><span><img src="@Url.Content("~/Images/logo.png")" style="max-width: 180px" /></span></a>
+                        @*<a href="#" class="site_title"><i class="fa fa-wrench"></i><span><img src="@Url.Content("~/Images/logo.png")" style="max-width: 180px" /></span></a>*@
+                        <a href="#" class="site_title"><span><img class="image-responsive _logo_image" src="@Url.Content("~/Images/Marg_Image.png")" style="width:145px;height:40px;"/></span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
@@ -87,14 +90,16 @@
                                         </li>
                                     </ul>
                                 </li>
+                                @if (Session["ROLE_ID"].ToString() != "6")//6-> Business Approver can't see anything other than user groups
+                                {
                                 <li>
                                     <a><i class="fa fa-calendar"></i> Seva <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","event/event-add")"> Add Event</a>
+                                            <a href="@Url.Action("", "event/event-add")"> Add Event</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action("","event/event-list")"> Event List</a>
+                                            <a href="@Url.Action("", "event/event-list")"> Event List</a>
                                         </li>
                                         
                                     </ul>
@@ -103,31 +108,49 @@
                                     <a><i class="fa fa-thumbs-o-up"></i> Approvals <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","event/volunteer-event-reg-list")"> Volunteer's Event Register</a>
+                                            <a href="@Url.Action("", "event/volunteer-event-reg-list")"> Volunteer's Event Register</a>
                                         </li>
                                     </ul>
                                 </li>  
-                                
+
                                 <li>
-                                    <a><i class="fa fa-thumbs-o-up"></i>Master Management <span class="fa fa-chevron-down"></span></a>
+                                    <a><i class="fa fa-thumbs-o-up"></i>Master Maintenance <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","master/view-master")"> Master Data</a>
+                                            <a href="@Url.Action("", "master/view-master")"> Master Data</a>
                                         </li>
                                         <li>
-                                            <a href="@Url.Action("","chapter/chapter-list")"> Chapter List</a>
+                                            <a href="@Url.Action("", "chapter/chapter-list")"> Chapter List</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("", "event/get-country")"> Country List</a>
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("", "event/get-city")"> City List</a>
                                         </li>
                                     </ul>
                                 </li> 
-                                    
+                                <li>
+                                    <a><i class="fa fa-thumbs-o-up"></i>Report<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li>
+                                            <a href="@Url.Action("", "event/daily-summary-report")">@*Daily Requirement*@ Summary Report</a>
+                                            
+                                            <a href="@Url.Action("", "event/volunteer-report")">@*ApprovedVolunteer*@Arrival Departure Report</a>
+                                        </li>
+                                    </ul>
+                                </li>  
                                 <li>
                                     <a><i class="fa fa-thumbs-o-up"></i>IAS Coaching <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li>
-                                            <a href="@Url.Action("","iascoaching/iascoaching")">IAS Coaching</a>
+                                            <a href="@Url.Action("", "iascoaching/iascoaching")">IAS Coaching</a>
                                         </li>
                                     </ul>
-                                </li>                         
+                                </li>
+                                }
+
+
                             </ul>
                         </div>
                     </div>
@@ -142,14 +165,18 @@
                             <a id="menu_toggle"><i class="fa fa-bars"></i></a>
                         </div>
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="">
-                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <li>
+                                <a href="@Url.Action("","logout")"><i class="fa fa-sign-out pull-right">Log Out</i></a>
+                            </li>
+                            @*<li class="">*@
+                                @*<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">*@
+                                
                                     @*<img src="@Url.Content("~/Images/img.jpg")" alt="">*@
-                                    @ViewBag.Name
-                                    <span class="fa fa-angle-down"></span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li>
+                                    @*@ViewBag.Name
+                                    <span class="fa fa-angle-down"></span>*@
+                              
+                                @*<ul class="dropdown-menu dropdown-usermenu pull-right">*@
+                                    @*<li>
                                         <a href="javascript:;"> Profile</a>
                                     </li>
                                     <li>
@@ -160,12 +187,12 @@
                                     </li>
                                     <li>
                                         <a href="javascript:;">Help</a>
-                                    </li>
-                                    <li>
-                                        <a href="@Url.Action("","logout")"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                    </li>*@
+                                    @*<li>
+            <a href="@Url.Action("","logout")"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+        </li>
+    </ul>*@
+                            @*</li>*@
                         </ul>
                     </nav>
                 </div>
@@ -185,6 +212,7 @@
     <script src="@Url.Content("~/Scripts/bootstrap-progressbar.min.js")"></script>
     <script src="@Url.Content("~/Scripts/custom.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Global.js")"></script>
+    <script src="@Url.Content("~/Scripts/dataTables.min.js")"></script>
     <script src="~/Scripts/Common.min.js"></script>
     <script src="~/Scripts/dropdown.min.js"></script>   
     <script src="~/Scripts/newAdd.js"></script>

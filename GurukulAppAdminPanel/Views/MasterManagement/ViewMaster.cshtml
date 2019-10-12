@@ -14,6 +14,7 @@
                 <h4 class="panel-title"><i class="fa fa-table"></i> @ViewBag.breadcrumbAction </h4>
             </div>
         </div>*@
+        
         <div class="row" id="add_category_btn">
             <div class="col-md-3">
                 <button type="button" class="btn btn-info" id="add_category_OpenBtn" data-toggle="modal" data-target="#add_category_div">
@@ -27,6 +28,7 @@
         @*table_matrix container-fluid*@
 
     </div>
+
     <div class="modal fade common-popup" id="myModal1" role="dialog">
         <div class="modal-dialog">
 
@@ -37,6 +39,9 @@
                     <h4 class="modal-title">Category List</h4>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="category_id_hidden" />
+                    <input type="hidden" id="category_name_hidden" />
+                    <input type="hidden" id="data_access_hidden" />
                     <div id="ViewParentGridview" class="container-fluid Ownershop_background view_activity_table"></div>
                 </div>
                 @*<div class="modal-footer">
@@ -61,7 +66,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Event Details</h4>
+                    <h4 class="modal-title">Add Sub Category</h4>
                 </div>
                 <div class="modal-body">
 
@@ -103,7 +108,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Event Details</h4>
+                <h4 class="modal-title">Add Category</h4>
             </div>
             <div class="modal-body">
                 @using (Html.BeginForm("", "", FormMethod.Post, new { @id = "AddCategoryName" }))
@@ -141,8 +146,35 @@
             
         @*</div>
             </div>*@
+<!------------Delete Sub Category Popup-->
+<div class="modal fade" id="DeleteSubMasterCategoryModal" role="dialog">
+    <div class="modal-dialog  panal-modal">
 
+        <!-- Modal content-->
+        <div class="modal-content" style="box-shadow: 2px 2px 3px #333;">
+            <div class="subCategory-modal-header" style="background:rgb(7,71,166) !important; color:#fff;">
+                <button type="button" class="close" data-dismiss="modal" style="color: #fff; opacity: 1 !important;">&times;</button>
+                <h4 class="modal-title">Delete Sub Category</h4>
+            </div>
+            <div class="modal-body">
+                <form id="Delete_Sub_Category_Form">
+                   
+                    @Html.HiddenFor(model => Model.DELETESUBCATEGORYID, new { @id = "delete_sub_category_id" })
+                    Do you want to delete the sub category?
+                    @Html.HiddenFor(model => Model.CATEGORYID, new { @id = "delete_category_id" })
+                    @*<input type="hidden" id="delete_category_id" />*@
+                </form>
+                <button type="button" id="yes_delete_sub_category" class="btn btn-success">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 
+            </div>
+            @*<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>*@
+        </div>
+
+    </div>
+</div>
 
 
 

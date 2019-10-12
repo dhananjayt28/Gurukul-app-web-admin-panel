@@ -7,7 +7,112 @@ namespace GurukulAppAdminPanel.App_Start
     public class RouteConfig
     {
         public static void Configure(RouteCollection routes)
-        {//GetEventStatus
+        {//ExcelExportOfArrivalDepurtureReport
+            routes.MapRoute(
+          name: "ExcelExportOfArrivalDepurtureReport",
+          url: "api/excel-export-arrival-depurture-report/{from_date}/{to_date}",
+          defaults: new { controller = "Event", action = "ExcelExportOfArrivalDepurtureReport", from_date = UrlParameter.Optional, to_date = UrlParameter.Optional }
+        );
+            routes.MapRoute(
+          name: "ExcelExportOfSummaryReport",
+          url: "api/excel-export-summary-report/{from_date}/{to_date}",
+          defaults: new { controller = "Event", action = "ExcelExportOfSummaryReport",from_date=UrlParameter.Optional,to_date=UrlParameter.Optional }
+        );
+            routes.MapRoute(
+           name: "update_event_status",
+           url: "api/update-event-status",
+           defaults: new { controller = "User", action = "update_event_status" }
+         );
+            routes.MapRoute(
+             name: "UserReset",
+             url: "user/reset/{userid}",
+             defaults: new { controller = "User", action = "UserReset", userid = UrlParameter.Optional }
+           );
+            routes.MapRoute(
+             name: "DeleteCity",
+             url: "event/delete-city/{city_id}",
+             defaults: new { controller = "Event", action = "DeleteCity", city_id = UrlParameter.Optional }
+           );
+            routes.MapRoute(
+              name: "DeleteCountry",
+              url: "event/delete-country/{country_id}",
+              defaults: new { controller = "Event", action = "DeleteCountry",country_id=UrlParameter.Optional }
+            );
+            routes.MapRoute(
+              name: "DeleteSubCategory",
+              url: "master/delete-sub-category",
+              defaults: new { controller = "MasterManagement", action = "DeleteSubCategory" }
+            );
+            routes.MapRoute(
+            name: "SaveStateAllocation",
+            url: "event/post-state-allocation/{jsondata}",
+            defaults: new { controller = "Event", action = "SaveStateAllocation",jsondata=UrlParameter.Optional }
+            );
+            routes.MapRoute(
+name: "GetStateList",
+url: "event/get-state-list",
+defaults: new { controller = "Event", action = "GetStateList" }
+);
+            routes.MapRoute(
+name: "GetArrivalDepurtureReport",
+url: "event/get-arrival-depurture-report/{from_date}/{to_date}",
+defaults: new { controller = "Event", action = "GetArrivalDepurtureReport",from_date=UrlParameter.Optional,to_date=UrlParameter.Optional }
+);
+            routes.MapRoute(
+name: "GetAllCityList",
+url: "event/get-city-list",
+defaults: new { controller = "Event", action = "GetAllCityList" }
+);
+            routes.MapRoute(
+name: "City",
+url: "event/get-city",
+defaults: new { controller = "Event", action = "City" }
+);
+            routes.MapRoute(
+      name: "Country",
+      url: "event/get-country",
+      defaults: new { controller = "Event", action = "Country" }
+ );
+            routes.MapRoute(
+       name: "GetDetailedReport",
+       url: "event/get-detailed-report/{date}/{event_name}",
+       defaults: new { controller = "Event", action = "GetDetailedReport" }
+  );
+            routes.MapRoute(
+       name: "GetSummaryReport",
+       url: "event/get-summary-report/{from_date}/{to_date}",
+       defaults: new { controller = "Event", action = "GetSummaryReport",from_date=UrlParameter.Optional,to_date=UrlParameter.Optional}
+  );
+            routes.MapRoute(
+        name: "ApprovedVolunteerArrivaldepartureReport",
+        url: "event/volunteer-report",
+        defaults: new { controller = "Event", action = "ApprovedVolunteerArrivaldepartureReport" }
+   );
+            routes.MapRoute(
+          name: "DailyRequirementDetailedReport",
+          url: "event/daily-detailed-report",
+          defaults: new { controller = "Event", action = "DailyRequirementDetailedReport" }
+     );
+            routes.MapRoute(
+            name: "DailyRequirementSummaryReport",
+            url: "event/daily-summary-report",
+            defaults: new { controller = "Event", action = "DailyRequirementSummaryReport" }
+       );
+            routes.MapRoute(
+             name: "GetCityList",
+             url: "event/get-city-list/{Country_id}",
+             defaults: new { controller = "Event", action = "GetCityList", Country_id = UrlParameter.Optional }
+        );
+            routes.MapRoute(
+             name: "GetCountryList",
+             url: "event/get-country-list/{category_name}",
+             defaults: new { controller = "Event", action = "GetCountryList" ,category_name=UrlParameter.Optional}
+        );
+            routes.MapRoute(
+             name: "GetEventType",
+             url: "event/get-event-type",
+             defaults: new { controller = "Event", action = "GetEventType" }
+        );
             routes.MapRoute(
             name: "GetEventStatus",
             url: "event/get-event-status",
