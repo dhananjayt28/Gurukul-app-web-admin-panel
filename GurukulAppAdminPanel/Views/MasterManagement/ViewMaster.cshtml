@@ -75,7 +75,7 @@
                         @Html.HiddenFor(model => Model.CATEGORYID, new { @id = "category_id" })
                         <h5 class="Sub-Category">Sub Category Name</h5>
                         <div class="row margin-row-0">
-                            <div class="col-md-5 Sub-Category-btn addCategory_button">
+                            <div class="col-md-12 Sub-Category-btn addCategory_button">
                                 @Html.EditorFor(model => Model.ADDSUBCATEGORY, new { htmlAttributes = new { @id = "TxtSavesabcategory", @placeholder = "Enter Sub Category Name", @class = "form-control category_input" } })
                             </div>
                             <div class="col-md-7"></div>
@@ -118,7 +118,7 @@
                     </div>
                     //input_catecory
                     <div class="row " id="save_master_category_div">
-                        <div class="col-md-5">
+                        <div class="col-md-12">
                             @Html.EditorFor(model => Model.ADDCATEGORY, new { htmlAttributes = new { @id = "TxtSavecategory", @placeholder = "Enter Category Name", @class = "form-control category_input" } })
                         </div>
                         <div class="col-md-7"></div>
