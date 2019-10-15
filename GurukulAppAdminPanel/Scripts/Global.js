@@ -587,6 +587,7 @@
            contentType: false,
            success: function (data) {
                alert(data.response);
+               $.redirect(_BaseURL + "/event/event-list");
            }
        });
 
