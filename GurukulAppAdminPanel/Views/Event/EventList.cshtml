@@ -120,8 +120,14 @@
                                         <td> @_event["END_DATE"] </td>
                                         <td><button id="btn_panel" class="btn-info" data-toggle="modal" data-target="#myModal1" value="@_eventid">Details</button></td>
                                         <td> @_event["EXPIRE"] </td>
-                                        <td> @_event["HOLY_START_DATE"] </td>
+                                       
+                                        @*@*raju
+                                        <td> @_event["VACATION_START_DATE"] </td>
+                                        <td> @_event["VACATION_END_DATE"] </td>*@
+
+                                         <td> @_event["HOLY_START_DATE"] </td>
                                         <td> @_event["HOLY_END_DATE"] </td>
+
                                         @*<td>
                                             @if (_activecheck == 1)
                                             {
