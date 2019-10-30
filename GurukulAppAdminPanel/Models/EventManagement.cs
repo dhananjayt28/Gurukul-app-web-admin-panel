@@ -53,6 +53,9 @@
         public string HolidayStartDate { get; set; }
         public string HolidayEndDate { get; set; }
 
+        public string STATE_ID { get; set; }
+        public string LOCATION_NAME { get; set; }
+        
 
 
         public ArrayList EventNivrittilist = new ArrayList();

@@ -1,0 +1,34 @@
+﻿@model GurukulAppAdminPanel.Models.EventManagement
+@{
+    ViewBag.Title = "AddLocation";
+}
+
+<div class="right_col" role="main">
+    <div class="row">
+        <ul id="breadcrumb">
+            <li><a href="@ViewBag.breadcrumbHomeURL"><i class="fa fa-home mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbHome </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-thumbs-o-up mar_right_5" aria-hidden="true"></i> @ViewBag.breadcrumbController </a></li>
+            <li><a href="javascript:void();"><i class="fa fa-table mar_right_5" aria-hidden="true"></i> AddLocation </a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <form id="Location_Form">
+            <div class="row margin-row-0">
+                <div class="col-sm-3 col-md-3">
+                    Country: <select id="ddl_country" class="form-control">
+                        <option value="1">India</option>
+                    </select>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    Choose State: @Html.DropDownListFor(model => model.EventStateId, Model.StateList, new { @class = "form-control" })
+                    <div class="text-danger">@Html.ValidationMessageFor(model => model.EventStateId)</div>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    Enter Location Name:<input type="text" id="txt_location" autocomplete="off" class="form-control" />
+                </div><br />&nbsp;&nbsp;
+                <input type="button" id="btn_save_location" class="btn btn-success" value="Save" />
+            </div>
+            </form>
+    </div>
+    </div>
+

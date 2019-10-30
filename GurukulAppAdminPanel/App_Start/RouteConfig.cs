@@ -8,6 +8,27 @@ namespace GurukulAppAdminPanel.App_Start
     {
         public static void Configure(RouteCollection routes)
         {//ExcelExportOfArrivalDepurtureReport
+            //raju work start
+            routes.MapRoute(
+            name: "Location",
+            url: "event/add-location",
+            defaults: new { controller = "Event", action = "AddLocation" }
+            );
+
+            routes.MapRoute(
+             name: "AddLocationMaster",
+             url: "event/add-location-master",
+             defaults: new { controller = "Event", action = "AddLocationName" }
+        );
+
+            routes.MapRoute(
+            name: "GetLocationaName",
+            url: "event/get-location-name/{state_id}",
+            defaults: new { controller = "Event", action = "GetAllLocationList", state_id=UrlParameter.Optional }
+       );
+
+            //raju work end
+
             routes.MapRoute(
           name: "ExcelExportOfArrivalDepurtureReport",
           url: "api/excel-export-arrival-depurture-report/{from_date}/{to_date}",
@@ -319,6 +340,8 @@ defaults: new { controller = "Event", action = "City" }
                 url: "user/user-list",
                 defaults: new { controller = "User", action = "UserList" }
             );
+
+
             routes.MapRoute(
                 name: "Dashboard",
                 url: "dashboard/{id}",

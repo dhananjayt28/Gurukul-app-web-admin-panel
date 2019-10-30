@@ -785,6 +785,44 @@ namespace GurukulAppAdminPanel.Models
         }
 
 
+        /*************************************
+     * Title :: Location Master
+     * Parameter :: OperationId, id
+     * Return :: Table data
+     * Author - Raju Kumar
+     *************************************/
+        public DataTable Add_location_master_data(string jsondata)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {
+                new SqlParameter("@OPERATIONID",8) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_POST_ALL_MASTER_DATA", _param);
+            return _dtable;
+        }
+
+
+        /*************************************
+     * Title :: Get Location Data by State Id 
+     * Description :: Get Data from this method using Education ID
+     * Parameter :: OperationId, id
+     * Return :: Table data
+     * Author -  Raju Kumar
+     *************************************/
+        public DataTable GetLocationNameByStatID(string state_id =null)
+        {
+            //EXEC dbo.USP_GET_ALL_MASTER_DATA @OPERATIONID = 10, @STATE_ID = 2
+            DataTable dt = new DataTable();
+            SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 10) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_STATE_ID", state_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+            };
+            dt = _dbObj.Select("USP_GET_ALL_MASTER_DATA", _param);
+            return dt;
+        }
 
 
     }

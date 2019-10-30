@@ -592,8 +592,33 @@
        });
 
     });
+    //raju
+    $(document).on("change", "#EventStateId", function () {
+        var State_id = $("#EventStateId option:selected").val();
+        $.ajax({
+            url: _BaseURL + "/event/get-location-name/" + State_id,
+            type: "GET",
+            async: false,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+                success: function (data) {
+                    if (data.status) {
+                        $("#EventLocationId").Dropdown(data.response, {
+                            value: {
+                                text: "LOCATION_NAME",
+                                value: "LOCATION_SYS_ID"
+                            }
+                        });
+                    } else {
+                        $.alert({ title: "Info", content: data.response, type: "orange" });
 
-
+                    }
+                },
+        });
+    });
+    
+    //raju
     //add_ias
     $(document).on("click", "#btn_save", function () {
         var sub_ = $("#subject option:selected").text();
@@ -737,7 +762,6 @@
         });
 
     }
-
     if (action_name === "user-list")
     {
         //dd_status
@@ -841,10 +865,6 @@
             
         });
     }
-
-
-
-    
     $(document).on("click", ".showEventDetails", function () {
         var $this = $(this);
         var event_id_ = $this.data("id");
@@ -934,7 +954,6 @@
             }
         });
     });
-
     $(document).on("click", "#btn_update_bp", function () {
         var $this = $(this);
         var user_id = $this.val();
@@ -1052,8 +1071,6 @@
         $.redirect(_BaseURL + "/event/add-topic-event?enent_reg_id=" + event_reg_id_hide + "&subject_id=" + id_of_sub + "&topic_id=" + id_of_topic + "&content=" + content_id);
 
     });
-     
-    
     $(document).on("click", "#rejectBtn", function () {
         var thisObj = $(this);
         url = thisObj.data("url");
@@ -1079,7 +1096,6 @@
         $.redirect(full_url);
 
     });
-
     $(document).on("click", "#sv_file", function () {
         
         var formdata = $.formdata("#form_sv_itinerary");
@@ -1820,5 +1836,39 @@
             }
         })
     });
-    
+    if (action_name === "add-location") {
+        $(document).on("click", "#btn_save_location", function () {
+            var State_text = $("#EventStateId option:selected").text();
+            var location_text = $("#txt_location").val();
+            
+            if (State_text === "Choose State")
+            {
+                alert("Please Select State Name First...!");
+                return false;
+            }
+            if (location_text === "") {
+                alert("Location Name should be mandatory");
+                return false;
+            }
+            
+
+            var State_id_ = $("#EventStateId option:selected").val();
+            var location_name_ = $("#txt_location").val();
+            var formdata = $.formdata("#Location_Form");
+            formdata.append("EventManagement.STATE_ID", State_id_);
+            formdata.append("LOCATION_NAME",location_name_);
+            $.ajax({
+                url: _BaseURL + "/event/add-location-master",
+                type: "POST",
+                async: false,
+                dataType: "json",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                alert(data.response);
+                }
+            });
+        });
+    }
 });

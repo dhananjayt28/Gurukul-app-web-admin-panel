@@ -1274,7 +1274,116 @@ namespace GurukulAppAdminPanel.Controllers
             }
         }
 
+        public ActionResult AddLocation()
+        {
+            EventManagement _eventObj = new EventManagement();
+            List<SelectListItem> item;
+            string _response = string.Empty;
+            // Event Type Dropdown Data
+            //View_Master_List("EVENT MASTER")
+            MasterManagement _mmobj = new MasterManagement();
+            DataTable dt = new DataTable();
+            dt = _mmobj.View_Master_List("EVENT_MASTER");
+            string response = string.Empty;
+            _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+
+            dt = _mmobj.View_Master_List("MASTER_STATE");
+
+            _response = Convert.ToString(dt.Rows[0]["JSON_VALUE"]);
+            if (_response != string.Empty)
+            {
+                JavaScriptSerializer jsObj = new JavaScriptSerializer();
+                var data = jsObj.Deserialize<Dictionary<string, object>>(_response);
+                bool status = Convert.ToBoolean(data["status"]);
+                if (status)
+                {
+                    ArrayList _EventType = (ArrayList)data["response"];
+                    //SelectListItem[] item = new SelectListItem[_EventType.Count + 1];
+                    item = new List<SelectListItem>();
+                    item.Add(new SelectListItem() { Value = "0", Text = "Choose State" });
+                    foreach (Dictionary<string, object> _data in _EventType)
+                    {
+                        string _val = _data["LOV_ID"].ToString();
+                        string _text = _data["LOV_NAME"].ToString();
+                        item.Add(new SelectListItem() { Value = _val, Text = _text });
+                    }
+                    _eventObj.StateList = item;
+                }
+            }
+            // Location Dropdown Data
+            item = new List<SelectListItem>();
+            item.Add(new SelectListItem() { Value = "0", Text = "Choose Location" });
+            item.Add(new SelectListItem() { Value = "1", Text = "Satsang Mumbai" });
+            _eventObj.LocationList = item;
+
+            ViewBag.breadcrumbController = "Event";
+            ViewBag.breadcrumbAction = "Add New Event";
+            ViewBag.Title = "Add New Event" + Constant.PROJECT_NAME;
+            return View(_eventObj);
+            // return View();
+        }
 
 
+        [HttpPost]
+        public string AddLocationName(EventManagement ob)
+        {
+            string _jsonString = string.Empty;
+            if (Request.IsAjaxRequest())
+            {
+                if (ModelState.IsValid)
+                {
+                    MasterManagement _MM = new MasterManagement();
+                    //string _jsonString = string.Empty;
+                    int UserId = Convert.ToInt32(Session["USER_ID"]);
+                    List<object> postdata = new List<object>();
+                    SortedList<string, object> _postArrData = new SortedList<string, object>();
+                    _postArrData.Add("CREATED_BY", UserId);
+                    _postArrData.Add("COUNTRY_ID",1);
+                    _postArrData.Add("STATE_ID", ob.EventStateId);
+                    _postArrData.Add("LOCATION_NAME", ob.LOCATION_NAME);
+                     postdata.Add(_postArrData);
+                    var _postContent = System.Web.Helpers.Json.Encode(postdata);
+                    if (_postContent != null)
+                    {
+                        _dtable = _MM.Add_location_master_data(_postContent);
+                    }
+                    if (_dtable.Rows.Count > 0)
+                    {
+                        _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+                    }
+                    else
+                    {
+                        _jsonString = Data.DatatableEmpty();
+                    }
+                    return _jsonString;
+                }
+                else
+                {
+                    errordata = new Dictionary<string, object>();
+                    errordata.Add("status", false);
+                   // errordata.Add("response", ModelError(ModelState));
+                    return Data.ObjectToJsonString(errordata);
+                }
+            }
+            else
+            {
+                return Constant.UNAUTH_ACCESS;
+            }
+        }
+
+        public string GetAllLocationList(string state_id)
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _MM = new MasterManagement();
+            _dtable = new DataTable();
+            //_dtable = _MM.View_Master_List("MASTER_CITY");
+            _dtable = _MM.GetLocationNameByStatID(state_id);
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+            }
+            return _jsonString;
+        }
     }
 }

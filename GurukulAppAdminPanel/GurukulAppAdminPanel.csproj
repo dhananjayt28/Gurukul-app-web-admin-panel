@@ -274,6 +274,7 @@
     <Content Include="Views\Event\ApprovedVolunteerArrivaldepartureReport.cshtml" />
     <Content Include="Views\Event\Country.cshtml" />
     <Content Include="Views\Event\City.cshtml" />
+    <Content Include="Views\Event\AddLocation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
