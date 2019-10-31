@@ -866,49 +866,142 @@
         });
     }
     $(document).on("click", ".showEventDetails", function () {
-        var $this = $(this);
-        var event_id_ = $this.data("id");
-        var formArray = {};
-        formArray["event_id_"] = event_id_;
-        $.ajax({
-            url: _BaseURL + "/event/get-event",
-            type: "POST",
-            async: false,
-            dataType: "json",
-            data: formArray,
-            success: function (data) {
-                //************************************
-                if (data.status==="true") {
-                    if (data.response != null) {
-                        console.log(data.response);
-                        var responseData = data.response[0];
-                        var event_type = responseData.EVENT_TYPE;
-                        console.log(event_type);
-                        var _content = '<table class="table table-responsive"><tbody><tr><td>Event Name(Start Date-End Date)</td><th>' + responseData.EVENT_NAME +'('+ responseData.EVENT_START_DATE+'-'+responseData.EVENT_END_DATE+')'+'</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr></tbody></table>';
-                        // var modalbody = modalBlock.children("div.modal-dialog").children("div.modal-content").children("div.modal-body");
-                        //modalbody.html(_content);
-                        //content_div
-                        //<tr><td>Content Source</td><th>' + responseData.CONTENT_SOURCE + '</th></tr><tr><td>Subject</td><th>' + responseData.SUBJECT + '</th></tr><tr><td>Topic</td><th>' + responseData.TOPIC + '</th></tr>
-
-                        $("#event_details_Div").html(_content);
-
-
-                       
-
+        var event_type_ = $("#dd_type option:selected").text();
+        if (event_type_ === "Nivritti Gurukul")
+        {
+            var $this = $(this);
+            var event_id_ = $this.data("id");
+            var formArray = {};
+            formArray["event_id_"] = event_id_;
+            $.ajax({
+                url: _BaseURL + "/event/get-event",
+                type: "POST",
+                async: false,
+                dataType: "json",
+                data: formArray,
+                success: function (data) {
+                    //************************************
+                    if (data.status === "true") {
+                        if (data.response != null) {
+                            console.log(data.response);
+                            var responseData = data.response[0];
+                            var event_type = responseData.EVENT_TYPE;
+                            console.log(event_type);
+                            var _content = '<table class="table table-responsive"><tbody><tr><td>Event Type</td><th>' + responseData.EVENT_TYPE + '</th></tr><tr><td>Event Name</td><th>' + responseData.EVENT_NAME + '</th></tr><tr><td>Event Start Date</td><th>' + responseData.EVENT_START_DATE + '</th></tr><tr><td>Event End Date</td><th>' + responseData.EVENT_END_DATE + '</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Note</td><th>' + responseData.NOTES + '</th></tr></tbody></table>';
+                            //var _content = '<table class="table table-responsive"><tbody><tr><td>Event Name(Start Date-End Date)</td><th>' + responseData.EVENT_NAME + '(' + responseData.EVENT_START_DATE + '-' + responseData.EVENT_END_DATE + ')' + '</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr></tbody></table>';
+                            $("#event_details_Div").html(_content);
+                        }
+                        else {
+                            $("#event_details_Div").html(null);
+                        }
                     }
                     else {
                         $("#event_details_Div").html(null);
-
-
                     }
                 }
-                else
-                {
-                    $("#event_details_Div").html(null);
-                }
+            });
 
-            }
-        });
+        }
+        if (event_type_ === "Workshop") {
+            var $this = $(this);
+            var event_id_ = $this.data("id");
+            var formArray = {};
+            formArray["event_id_"] = event_id_;
+            $.ajax({
+                url: _BaseURL + "/event/get-event",
+                type: "POST",
+                async: false,
+                dataType: "json",
+                data: formArray,
+                success: function (data) {
+                    //************************************
+                    if (data.status === "true") {
+                        if (data.response != null) {
+                            console.log(data.response);
+                            var responseData = data.response[0];
+                            var event_type = responseData.EVENT_TYPE;
+                            console.log(event_type);
+                            var _content = '<table class="table table-responsive"><tbody><tr><td>Event Type</td><th>' + responseData.EVENT_TYPE + '</th></tr><tr><td>Event Name</td><th>' + responseData.EVENT_NAME + '</th></tr><tr><td>Event Start Date</td><th>' + responseData.EVENT_START_DATE + '</th></tr><tr><td>Event End Date</td><th>' + responseData.EVENT_END_DATE + '</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Origin Place</td><th>' + responseData.ORIGIN_PLACE + '</th></tr><tr><td>Destination Place</td><th>' + responseData.DESTINATION_PALACE + '</th></tr><tr><td>Transport mode origin</td><th>' + responseData.TRANSPORT_MODE_ORIGIN + '</th></tr><tr><td>Origin Location</td><th>' + responseData.ORIGIN_LOCATION + '</th></tr><tr><td>Transport Mode End</td><th>' + responseData.TRANSPORT_MODE_END + '</th></tr><tr><td>End Location</td><th>' + responseData.END_LOCATION + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Note</td><th>' + responseData.NOTES + '</th></tr><tr><td>Comment For Approver</td><th>' + responseData.COMMENT_FOR_APPROVER + '</th></tr></tbody></table>';
+                          //  var _content = '<table class="table table-responsive"><tbody><tr><td>Event Name(Start Date-End Date)</td><th>' + responseData.EVENT_NAME + '(' + responseData.EVENT_START_DATE + '-' + responseData.EVENT_END_DATE + ')' + '</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr></tbody></table>';
+                            $("#event_details_Div").html(_content);
+                        }
+                        else {
+                            $("#event_details_Div").html(null);
+                        }
+                    }
+                    else {
+                        $("#event_details_Div").html(null);
+                    }
+                }
+            });
+
+        }
+        if (event_type_ === "Gita Distribution")
+        {
+            var $this = $(this);
+            var event_id_ = $this.data("id");
+            var formArray = {};
+            formArray["event_id_"] = event_id_;
+            $.ajax({
+                url: _BaseURL + "/event/get-event",
+                type: "POST",
+                async: false,
+                dataType: "json",
+                data: formArray,
+                success: function (data) {
+                    //************************************
+                    if (data.status === "true") {
+                        if (data.response != null) {
+                            console.log(data.response);
+                            var responseData = data.response[0];
+                            var event_type = responseData.EVENT_TYPE;
+                            console.log(event_type);
+                            var _content = '<table class="table table-responsive"><tbody><tr><td>Event Type</td><th>' + responseData.EVENT_TYPE + '</th></tr><tr><td>Event Name</td><th>' + responseData.EVENT_NAME + '</th></tr><tr><td>Event Start Date</td><th>' + responseData.EVENT_START_DATE + '</th></tr><tr><td>Event End Date</td><th>' + responseData.EVENT_END_DATE + '</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Transportaion Arrangement Required</td><th>' + responseData.TRANSPORTAION_ARRANGEMENT_REQUIRED + '</th></tr><tr><td>Accomodation Arrangement Required</td><th>' + responseData.ACCOMODATION_ARRANGEMENT_REQUIRED + '</th></tr><tr><td>Card Type</td><th>' + responseData.CARD_TYPE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Note</td><th>' + responseData.NOTES + '</th></tr></tbody></table>';
+                            //var _content = '<table class="table table-responsive"><tbody><tr><td>Event Name(Start Date-End Date)</td><th>' + responseData.EVENT_NAME + '(' + responseData.EVENT_START_DATE + '-' + responseData.EVENT_END_DATE + ')' + '</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr></tbody></table>';
+                            $("#event_details_Div").html(_content);
+                        }
+                        else {
+                            $("#event_details_Div").html(null);
+                        }
+                    }
+                    else {
+                        $("#event_details_Div").html(null);
+                    }
+                }
+            });
+
+        }
+        //var $this = $(this);
+        //var event_id_ = $this.data("id");
+        //var formArray = {};
+        //formArray["event_id_"] = event_id_;
+        //$.ajax({
+        //    url: _BaseURL + "/event/get-event",
+        //    type: "POST",
+        //    async: false,
+        //    dataType: "json",
+        //    data: formArray,
+        //    success: function (data) {
+        //        //************************************
+        //        if (data.status==="true") {
+        //            if (data.response != null) {
+        //                console.log(data.response);
+        //                var responseData = data.response[0];
+        //                var event_type = responseData.EVENT_TYPE;
+        //                console.log(event_type);
+        //                var _content = '<table class="table table-responsive"><tbody><tr><td>Event Name(Start Date-End Date)</td><th>' + responseData.EVENT_NAME +'('+ responseData.EVENT_START_DATE+'-'+responseData.EVENT_END_DATE+')'+'</th></tr><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Registration Start Date</td><th>' + responseData.REG_START_DATE + '</th></tr><tr><td>Registration End Date</td><th>' + responseData.REG_END_DATE + '</th></tr><tr><td>Status</td><th>' + responseData.STATUS + '</th></tr><tr><td>Message</td><th>' + responseData.MESSAGE + '</th></tr><tr><td>Person number</td><th>' + responseData.PERSON_NO + '</th></tr><tr><td>Comment</td><th>' + responseData.COMMENT + '</th></tr><tr><td>Class Val</td><th>' + responseData.CLASS_VAL + '</th></tr><tr><td>Checking Date</td><th>' + responseData.CHECKIN_DATE + '</th></tr><tr><td>Checking Time</td><th>' + responseData.CHECKIN_TIME + '</th></tr><tr><td>Checkout Date</td><th>' + responseData.CHECKOUT_DATE + '</th></tr><tr><td>Checkout Time</td><th>' + responseData.CHECKOUT_TIME + '</th></tr><tr><td>Co Person Email 1</td><th>' + responseData.CO_PERSON_EMAIL_1 + '</th></tr><tr><td>Co Person Email 2</td><th>' + responseData.CO_PERSON_EMAIL_2 + '</th></tr></tbody></table>';
+        //                $("#event_details_Div").html(_content);
+        //            }
+        //            else {
+        //                $("#event_details_Div").html(null);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            $("#event_details_Div").html(null);
+        //        }
+        //    }
+        //});
 
         //here
         $.ajax({
@@ -1841,13 +1934,13 @@
             var State_text = $("#EventStateId option:selected").text();
             var location_text = $("#txt_location").val();
             
-            if (State_text === "Choose State")
+            if (State_text === "Select State")
             {
                 alert("Please Select State Name First...!");
                 return false;
             }
             if (location_text === "") {
-                alert("Location Name should be mandatory");
+                alert("Location Name is mandatory");
                 return false;
             }
             

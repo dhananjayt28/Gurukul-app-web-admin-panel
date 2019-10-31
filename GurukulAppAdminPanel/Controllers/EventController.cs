@@ -92,7 +92,7 @@ namespace GurukulAppAdminPanel.Controllers
                     ArrayList _EventType = (ArrayList)data["response"];
                     //SelectListItem[] item = new SelectListItem[_EventType.Count + 1];
                     item = new List<SelectListItem>();
-                    item.Add(new SelectListItem() { Value = "0", Text = "Choose State" });
+                    item.Add(new SelectListItem() { Value = "0", Text = "Select State" });
                     foreach (Dictionary<string, object> _data in _EventType)
                     {
                         string _val = _data["LOV_ID"].ToString();
@@ -105,8 +105,8 @@ namespace GurukulAppAdminPanel.Controllers
 
             // Location Dropdown Data
             item = new List<SelectListItem>();
-            item.Add(new SelectListItem() { Value = "0", Text = "Choose Location" });
-            item.Add(new SelectListItem() { Value = "1", Text = "Satsang Mumbai" });
+            item.Add(new SelectListItem() { Value = "0", Text = "Select Location" });
+            //item.Add(new SelectListItem() { Value = "1", Text = "Satsang Mumbai" });
             _eventObj.LocationList = item;
 
             ViewBag.breadcrumbController = "Event";
@@ -1300,7 +1300,7 @@ namespace GurukulAppAdminPanel.Controllers
                     ArrayList _EventType = (ArrayList)data["response"];
                     //SelectListItem[] item = new SelectListItem[_EventType.Count + 1];
                     item = new List<SelectListItem>();
-                    item.Add(new SelectListItem() { Value = "0", Text = "Choose State" });
+                    item.Add(new SelectListItem() { Value = "0", Text = "Select State" });
                     foreach (Dictionary<string, object> _data in _EventType)
                     {
                         string _val = _data["LOV_ID"].ToString();
@@ -1312,8 +1312,8 @@ namespace GurukulAppAdminPanel.Controllers
             }
             // Location Dropdown Data
             item = new List<SelectListItem>();
-            item.Add(new SelectListItem() { Value = "0", Text = "Choose Location" });
-            item.Add(new SelectListItem() { Value = "1", Text = "Satsang Mumbai" });
+            item.Add(new SelectListItem() { Value = "0", Text = "Select Location" });
+            //item.Add(new SelectListItem() { Value = "1", Text = "Satsang Mumbai" });
             _eventObj.LocationList = item;
 
             ViewBag.breadcrumbController = "Event";
