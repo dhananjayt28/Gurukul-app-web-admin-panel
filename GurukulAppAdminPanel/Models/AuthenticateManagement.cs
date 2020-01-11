@@ -37,8 +37,8 @@
             // Initialize Post Data
             //{"USER_ID":"admin@gurukul.com","PASSWORD":"Abc@123","IS_ADMIN":true}
             SortedList<string, object> _postArrData = new SortedList<string, object>();
-            _postArrData.Add("USER_ID", _user_name);
-            _postArrData.Add("PASSWORD", _password);
+            _postArrData.Add("V_USER_NAME", _user_name);
+            _postArrData.Add("V_PASSWORD", _password);
            // _postArrData.Add("IS_ADMIN", _isadmin);
            //role id is hardcode in backend
 

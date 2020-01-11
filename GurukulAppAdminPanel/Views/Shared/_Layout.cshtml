@@ -90,7 +90,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                @if (Session["ROLE_ID"].ToString() != "6")//6-> Business Approver can't see anything other than user groups
+                                @if (Session["SYSTEM_ROLE_CODE"].ToString() == "BADM")//6-> Business Approver can't see anything other than user groups
                                 {
                                 <li>
                                     <a><i class="fa fa-calendar"></i> Seva <span class="fa fa-chevron-down"></span></a>

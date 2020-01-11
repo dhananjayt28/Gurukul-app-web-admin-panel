@@ -330,26 +330,22 @@ namespace GurukulAppAdminPanel.Models
             DataTable dt;
             //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=1, @USER_ID='jayanta@tangenttechsolutions.com', @PASSWORD='215023'
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 1) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATIONID", 1) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
-               
             };
-
-            dt = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _param);
-
+            dt = _dbObj.Select("USP_USER_AUTHENTICATION_ACTIVITY", _param);
             return dt;
         }
         public DataTable Admin_Login(string jsondata)
         {
             DataTable dt;
             //EXEC dbo.USP_AUTHENTICATE_MANAGEMENT @OPERATION_ID=1, @USER_ID='jayanta@tangenttechsolutions.com', @PASSWORD='215023'
-            SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                SqlParameter[] _param = new SqlParameter[] {
+                new SqlParameter("@OPERATIONID", 1) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
-
             };
 
-            dt = _dbObj.Select("USP_AUTHENTICATE_MANAGEMENT", _param);
+            dt = _dbObj.Select("USP_USER_AUTHENTICATION_ACTIVITY", _param);
 
             return dt;
         }
@@ -360,7 +356,6 @@ namespace GurukulAppAdminPanel.Models
             SqlParameter[] _param = new SqlParameter[] {
                 new SqlParameter("@OPERATIONID", 28) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
-
             };
 
             dt = _dbObj.Select("USP_EVENT_MANAGEMENT", _param);
