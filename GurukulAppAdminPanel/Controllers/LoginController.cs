@@ -41,7 +41,7 @@ namespace GurukulAppAdminPanel.Controllers
                 {
                     JavaScriptSerializer jsObj = new JavaScriptSerializer();
                     var data = jsObj.Deserialize<Dictionary<string, object>>(response);
-                   // Dictionary<string, object> JSONObj = Data.Deserialize(response.Content.ToString(), typeof(Dictionary<string, object>));
+                    //Dictionary<string, object> JSONObj = Data.Deserialize(response.Content.ToString(), typeof(Dictionary<string, object>));
                     bool status = Convert.ToBoolean(data["status"].ToString().ToLower().Trim() == "true");
                     if (status)
                     {
@@ -53,8 +53,13 @@ namespace GurukulAppAdminPanel.Controllers
                         if(user.Count > 0)
                         {
                             UserId = Convert.ToInt32(user["USER_ID"]);
+                           // UserId = Convert.ToInt32(user["USERID"]);
                             Role_code = Convert.ToString(user["SYSTEM_ROLE_CODE"]);
                             name = user["FIRST_NAME"].ToString();
+                           // name = user["NAME"].ToString();
+
+
+
                             //email = user["EMAIL_ID"].ToString();
                             //mobile = user["MOBILE_NO"].ToString();
 

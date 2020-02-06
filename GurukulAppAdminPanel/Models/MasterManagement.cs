@@ -132,13 +132,13 @@ namespace GurukulAppAdminPanel.Models
             _dtable = new DataTable();
             _param = new SqlParameter[]
             {//EXEC dbo.USP_USERS_MANAGEMENT @OPERATION_ID=4,@V_Status
-                new SqlParameter("@OPERATION_ID",4) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                new SqlParameter("@USER_ID",User_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
-                new SqlParameter("@V_Role",Role) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATIONID",2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+               // new SqlParameter("@USER_ID",User_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+               // new SqlParameter("@V_Role",Role) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
                 new SqlParameter("@V_Status",Status) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
-            _dtable = _dbObj.Select("USP_USERS_MANAGEMENT", _param);
+            _dtable = _dbObj.Select("USP_USER_PROFILE_ACTIVITY", _param);
             return _dtable;
         }
         public DataTable View_Registered_Event_Data(string Event_id)
@@ -178,15 +178,19 @@ namespace GurukulAppAdminPanel.Models
             return _dtable;
         }
         public DataTable Update_user_status(string jsondata)
-        {
+         {
             _dtable = new DataTable();
             _param = new SqlParameter[]
-            {//EXEC dbo.USP_USERS_MANAGEMENT @OPERATION_ID=6
-                new SqlParameter("@OPERATION_ID",6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+            {
+                //EXEC dbo.USP_USER_PROFILE_ACTIVITY @OPERATIONID=4
+                new SqlParameter("@OPERATIONID",4) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                //new SqlParameter("@OPERATION_ID",6) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
-            _dtable = _dbObj.Select("USP_USERS_MANAGEMENT", _param);
+            //_dtable = _dbObj.Select("USP_USERS_MANAGEMENT", _param);
+            _dtable = _dbObj.Select("USP_USER_PROFILE_ACTIVITY", _param);
+            
             return _dtable;
         }
 
@@ -382,7 +386,7 @@ namespace GurukulAppAdminPanel.Models
             DataTable dt;
             //EXEC dbo.USP_EVENT_MANAGEMENT @OPERATION_ID=26, @JSON=[{"EVENT_REG_ID":"","STATUS_ID":"","HOD_COMMENT":""}]''
             SqlParameter[] _param = new SqlParameter[] {
-                new SqlParameter("@OPERATION_ID", 3) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATIONID", 3) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };

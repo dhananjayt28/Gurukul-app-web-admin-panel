@@ -37,6 +37,11 @@
             MasterManagement _MM = new MasterManagement();
             _MM = new MasterManagement();
             _dtable = new DataTable();
+
+         //   User_id = "1";
+              //  Session["USER_ID"].ToString();
+          //  Role = "BADM";
+
             _dtable = _MM.View_User_Data(User_id, Status, Role);
 
 

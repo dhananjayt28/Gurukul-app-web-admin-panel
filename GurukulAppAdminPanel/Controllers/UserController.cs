@@ -380,24 +380,17 @@ namespace GurukulAppAdminPanel.Controllers
 
         public ActionResult UserStatusUpdate(int userid = 0,int status=0)
         { string _jsonString = string.Empty;
-            
                 MasterManagement _MM = new MasterManagement();
-               
-
                 _dtable = new DataTable();
                 _MM = new MasterManagement();
-            //string Jsondata = data.ToString();
             List<object> postdata = new List<object>();
             SortedList<string, object> _postArrData = new SortedList<string, object>();
-
             _postArrData.Add("USER_ID", userid);
-            _postArrData.Add("Status", status);
-
+            _postArrData.Add("ACTION", "ACTIVATE");
+            //_postArrData.Add("Status", status);
             postdata.Add(_postArrData);
             var _postContent = System.Web.Helpers.Json.Encode(postdata);
-
             _dtable = _MM.Update_user_status(_postContent);
-                
                 if (_dtable.Rows.Count > 0)
                 {
                     _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
@@ -408,7 +401,6 @@ namespace GurukulAppAdminPanel.Controllers
                     _jsonString = Data.DatatableEmpty();
                    // response = this.Request.CreateResponse(HttpStatusCode.OK);
                 }
-               
                         //_umObj.UserData = (ArrayList)data["response"];
                         return RedirectToAction("", "user/user-list");
                     

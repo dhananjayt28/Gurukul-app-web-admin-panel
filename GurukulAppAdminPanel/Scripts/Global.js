@@ -764,6 +764,7 @@
     }
     if (action_name === "user-list")
     {
+        
         //dd_status
         $.ajax({
             url: _BaseURL + "/user/get-status",
