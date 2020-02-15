@@ -408,5 +408,33 @@ namespace GurukulAppAdminPanel.Controllers
             
         }
 
+        //single record
+        public string GetUserIndividualProfileData(string userid)
+        {
+            string _jsonString = string.Empty;
+            if (Request.IsAjaxRequest())
+            {
+                UserManagement _umObj = new UserManagement();
+                MasterManagement _MM = new MasterManagement();
+                _MM = new MasterManagement();
+                _dtable = new DataTable();
+                _dtable = _MM.View_User_individual_Data(userid, null, null);
+
+
+                if (_dtable.Rows.Count > 0)
+                {
+                    _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
+                    //response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    _jsonString = Data.DatatableEmpty();
+                    //response = this.Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+            return _jsonString;
+
+        }
+
     }
 }

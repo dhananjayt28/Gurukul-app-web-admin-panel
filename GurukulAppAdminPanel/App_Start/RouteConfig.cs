@@ -315,6 +315,13 @@ defaults: new { controller = "Event", action = "City" }
                 url: "user/user-profile-data/{userid}",
                 defaults: new { controller = "User", action = "GetUserProfileData", userid = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+               name: "User Profile  individual Data",
+               url: "user/user-profile-individual-data/{userid}",
+               defaults: new { controller = "User", action = "GetUserIndividualProfileData", userid = UrlParameter.Optional }
+           );
+
             routes.MapRoute(
                 name: "User Delete",
                 url: "user/user-delete/{userid}",

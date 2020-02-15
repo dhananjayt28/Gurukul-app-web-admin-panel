@@ -824,6 +824,24 @@ namespace GurukulAppAdminPanel.Models
         }
 
 
+
+
+        //single record show
+        public DataTable View_User_individual_Data(string User_id, string Status, string Role)
+        {
+            _dtable = new DataTable();
+            _param = new SqlParameter[]
+            {//EXEC dbo.USP_USERS_MANAGEMENT @OPERATION_ID=4,@V_Status
+                new SqlParameter("@OPERATIONID",2) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@V_USER_ID",User_id) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+               // new SqlParameter("@V_Role",Role) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input },
+                //new SqlParameter("@V_Status",Status) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
+
+            };
+            _dtable = _dbObj.Select("USP_USER_PROFILE_ACTIVITY", _param);
+            return _dtable;
+        }
+
     }
 
 }

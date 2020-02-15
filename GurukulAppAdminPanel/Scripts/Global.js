@@ -145,21 +145,15 @@
     });
     //Using in Volunteer Event List
     $(document).on("click", "#showVolunteerProfile", function (e) {
-
         var thisObj = $(this);
         var _userId = thisObj.data("id");
-        
         var modalBlock = $(".common-popup");
-        var URL =  _BaseURL + "/user/user-profile-data/" + _userId
+        var URL = _BaseURL + "/user/user-profile-individual-data/" + _userId
         $.getJSON(URL, function (data) {            
             if (data.status) {
                 if (data.response !== null) {
-                    //user_profile_div
                     var responseData = data.response[0];
                     var _content = '<table class="table table-responsive"><tbody><tr><td>Full Name</td><th>' + responseData.NAME + '</th></tr><tr><td>Date Of Birth</td><th>' + responseData.DOB + '</th></tr><tr><td>Gender</td><th>' + responseData.GENDER + '</th></tr><tr><td>Mobile No</td><th>' + responseData.MOBILE_NO + '</th></tr><tr><td>E-Mail ID</td><th>' + responseData.EMAIL_ID + '</th></tr><tr><td>Satsang Country</td><th>' + responseData.COUNTRY + '</th></tr><tr><td>Satsang City</td><th>' + responseData.CITY + '</th></tr><tr><td>Satsang Chapter</td><th>' + responseData.SATSANG_CHAPTER + '</th></tr><tr><td>Education</td><th>' + responseData.EDUCATION + '</th></tr></tbody></table>';
-                    //var modalbody = modalBlock.children("div.modal-dialog").children("div.modal-content").children("div.modal-body");
-                    //modalbody.html(_content);
-                    //modalBlock.modal("show");
                     $("#user_profile_div").html(_content);
                 }
                 else { $("#user_profile_div").html(null); }
