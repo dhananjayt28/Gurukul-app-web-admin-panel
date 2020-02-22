@@ -87,7 +87,7 @@ else
                                             }
                                             else
                                             {
-                                                string DeleteActionURL = "user/update-status/" + user["USER_ID"]+ "/" + 21;
+                                                string DeleteActionURL = "user/update-status-delete/" + user["USER_ID"]+ "/" + 21;
                                                 <div class="btn-group">
                                                     @if (Convert.ToString(user["STATUS"]) == "Approved")
                                                     {
@@ -106,9 +106,12 @@ else
                                                         <a href="@Url.Action("",ApproveActionURL)" title="Approve" class="btn btn-success btn-xs"><i class="fa fa-check"> </i> </a>
                                                         @*<a href="javascript:void(0)" title="Rejected" class="btn btn-warning btn-xs">Rejected </a>*@
                                                     }
+
                                                     <a href="@Url.Action("",DeleteActionURL)" onclick="return confirm('Do you want to delete this user?')" title="Delete" class="btn btn-danger btn-xs"> <i class="fa fa-times"> </i> </a>
                                                 </div>
                                             }
+
+
                                     </td>
                                     <td>@user["HELP_IN_OTHER_ACTIVITY"]</td>
                                 </tr>
@@ -132,8 +135,10 @@ else
                         <form id="update_bp_frm">
                             <div>
                                 <input type="hidden" id="hide_user_id" />
-                                App Role: <select id="bp_dd"><option value="0">New</option></select>
-                            </div>
+                                App Role: <select id="bp_dd">
+                                <option value="Select">Select</option>
+                                </select>
+                            </div><br />
                             <div>
                                 <button type="button" id="btn_save_bp">Save</button>
                             </div>

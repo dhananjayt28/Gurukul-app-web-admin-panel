@@ -158,11 +158,11 @@ namespace GurukulAppAdminPanel.Models
             _dtable = new DataTable();
             _param = new SqlParameter[]
             {//EXEC dbo.USP_USERS_MANAGEMENT @OPERATION_ID=5,@JSON ='[{"USER_ID":12,"ROLE_ID":6}]'
-                new SqlParameter("@OPERATION_ID",5) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                new SqlParameter("@OPERATIONID",4) { SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                 new SqlParameter("@JSON", jsondata) { SqlDbType = SqlDbType.VarChar, Direction = ParameterDirection.Input }
 
             };
-            _dtable = _dbObj.Select("USP_USERS_MANAGEMENT", _param);
+            _dtable = _dbObj.Select("USP_USER_PROFILE_ACTIVITY", _param);
             return _dtable;
         }
         public DataTable Delete_Coaching_detail_Data(string Record_ld)

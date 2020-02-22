@@ -351,9 +351,10 @@ namespace GurukulAppAdminPanel.Controllers
             //string Jsondata = data.ToString();
             List<object> postdata = new List<object>();
             SortedList<string, object> _postArrData = new SortedList<string, object>();
-
-            _postArrData.Add("ROLE_ID", ob.bp_dd);
+            //_postArrData.Add("ROLE_ID", ob.bp_dd);
+            _postArrData.Add("SYSTEM_ROLE_CODE", ob.bp_dd);
             _postArrData.Add("USER_ID", ob.hide_user_id);
+            _postArrData.Add("ACTION", "ROLE");
             postdata.Add(_postArrData);
             var _postContent = System.Web.Helpers.Json.Encode(postdata);
             _dtable = new DataTable();
@@ -408,7 +409,7 @@ namespace GurukulAppAdminPanel.Controllers
             
         }
 
-        //single record
+        //Raju Work- Single record
         public string GetUserIndividualProfileData(string userid)
         {
             string _jsonString = string.Empty;
@@ -419,20 +420,47 @@ namespace GurukulAppAdminPanel.Controllers
                 _MM = new MasterManagement();
                 _dtable = new DataTable();
                 _dtable = _MM.View_User_individual_Data(userid, null, null);
-
-
                 if (_dtable.Rows.Count > 0)
                 {
                     _jsonString = Convert.ToString(_dtable.Rows[0]["Json_Value"]);
-                    //response = this.Request.CreateResponse(HttpStatusCode.OK);
                 }
                 else
                 {
                     _jsonString = Data.DatatableEmpty();
-                    //response = this.Request.CreateResponse(HttpStatusCode.OK);
                 }
             }
             return _jsonString;
+        }
+
+        //Raju Work
+        public ActionResult UserStatusDelete(int userid = 0, int status = 0)
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _MM = new MasterManagement();
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+            _postArrData.Add("USER_ID", userid);
+            _postArrData.Add("ACTION", "DELETE");
+            //_postArrData.Add("Status", status);
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            _dtable = _MM.Update_user_status(_postContent);
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+                // response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            else
+            {
+                _jsonString = Data.DatatableEmpty();
+                // response = this.Request.CreateResponse(HttpStatusCode.OK);
+            }
+            //_umObj.UserData = (ArrayList)data["response"];
+            return RedirectToAction("", "user/user-list");
+
+
 
         }
 

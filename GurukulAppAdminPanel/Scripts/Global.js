@@ -448,7 +448,7 @@
                 $("#bp_dd").Dropdown(data.response, {
                     value: {
                         text: "LOV_NAME",
-                        value: "LOV_ID"
+                        value: "LOV_CODE"
                     }
                 });
             }
@@ -1027,7 +1027,6 @@
         // var formdata = $.formdata("#update_bp_frm");
         var hide_user_id = $("#hide_user_id").val();
         var bp_dd = $("#bp_dd option:selected").val();
-        
         var formArray = {};
         formArray["hide_user_id"] = hide_user_id;
         formArray["bp_dd"] = bp_dd;
