@@ -1038,6 +1038,23 @@
             success: function (result)
             {
                 alert(result.response);
+                var ddlvalue = $("#dd_status option:selected").text();
+                if (ddlvalue === "Approved")
+                {
+                    $.redirect(_BaseURL + "/user/user-list?ustatus=Approved&ustatusv=101");
+                }
+                if (ddlvalue === "Deleted") {
+                    $.redirect(_BaseURL + "/user/user-list?ustatus=Deleted&ustatusv=104");
+                }
+                if (ddlvalue === "Rejected") {
+                    $.redirect(_BaseURL + "/user/user-list?ustatus=Rejected&ustatusv=102");
+                }
+                if (ddlvalue === "Blocked") {
+                    $.redirect(_BaseURL + "/user/user-list?ustatus=Blocked&ustatusv=103");
+                }
+                if (ddlvalue === "Waiting For Approval") {
+                    $.redirect(_BaseURL + "/user-list?ustatus=Waiting%20For%20Approval&ustatusv=100");
+                }
             }
         });
     });
@@ -1051,7 +1068,9 @@
             console.log(responseData);
             var bp = responseData.ROLE;
             var bp_id = responseData.ROLE_ID;
+
             $("#bp_dd").val(bp_id);
+
             //$("#bp_dd option:selected").text(bp);
             //alert(bp);
 

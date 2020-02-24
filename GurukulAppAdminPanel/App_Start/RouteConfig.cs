@@ -20,6 +20,11 @@ namespace GurukulAppAdminPanel.App_Start
            url: "user/update-status-delete/{userid}/{status}",
            defaults: new { controller = "User", action = "UserStatusDelete", userid = UrlParameter.Optional, status = UrlParameter.Optional }
       );
+            routes.MapRoute(
+          name: "UserStatusBlock",
+          url: "user/update-status-block/{userid}/{status}",
+          defaults: new { controller = "User", action = "UserStatusBlock", userid = UrlParameter.Optional, status = UrlParameter.Optional }
+     );
 
 
             routes.MapRoute(
