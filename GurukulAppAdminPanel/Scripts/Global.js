@@ -1052,8 +1052,14 @@
                     $.redirect(_BaseURL + "/user/user-list?ustatus=Blocked&ustatusv=103");
                 }
                 if (ddlvalue === "Waiting For Approval") {
-                    $.redirect(_BaseURL + "/user-list?ustatus=Waiting%20For%20Approval&ustatusv=100");
+                    $.redirect(_BaseURL + "/user/user-list?ustatus=Waiting%20For%20Approval&ustatusv=100");
                 }
+                if (ddlvalue === "Select") {
+                    $.redirect(_BaseURL + "/user/user-list");
+                }
+
+
+                
             }
         });
     });
