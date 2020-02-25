@@ -1039,8 +1039,7 @@
             {
                 alert(result.response);
                 var ddlvalue = $("#dd_status option:selected").text();
-                if (ddlvalue === "Approved")
-                {
+                if (ddlvalue === "Approved"){
                     $.redirect(_BaseURL + "/user/user-list?ustatus=Approved&ustatusv=101");
                 }
                 if (ddlvalue === "Deleted") {

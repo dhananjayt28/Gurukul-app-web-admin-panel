@@ -15,6 +15,19 @@ namespace GurukulAppAdminPanel.App_Start
             defaults: new { controller = "Event", action = "AddLocation" }
             );
 
+
+            routes.MapRoute(
+            name: "UserStatusReject",
+            url: "user/update-status-reject/{userid}/{status}",
+            defaults: new { controller = "User", action = "UserStatusReject", userid = UrlParameter.Optional, status = UrlParameter.Optional }
+           );
+
+            routes.MapRoute(
+            name: "UserStatusActive",
+            url: "user/update-status-active/{userid}/{status}",
+            defaults: new { controller = "User", action = "UserStatusActive", userid = UrlParameter.Optional, status = UrlParameter.Optional }
+           );
+
             routes.MapRoute(
            name: "UserStatusDelete_",
            url: "user/update-status-delete/{userid}/{status}",

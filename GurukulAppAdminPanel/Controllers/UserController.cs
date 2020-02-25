@@ -488,5 +488,57 @@ namespace GurukulAppAdminPanel.Controllers
             }
             return RedirectToAction("", "user/user-list");
         }
+
+
+        //Raju Work-UserBlock
+        public ActionResult UserStatusActive(int userid = 0, int status = 0)
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _MM = new MasterManagement();
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+            _postArrData.Add("USER_ID", userid);
+            _postArrData.Add("ACTION", "ACTIVE");
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            _dtable = _MM.Update_user_status(_postContent);
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+            }
+            else
+            {
+                _jsonString = Data.DatatableEmpty();
+            }
+            return RedirectToAction("", "user/user-list");
+        }
+
+
+        //Raju Work-UserReject
+        public ActionResult UserStatusReject(int userid = 0, int status = 0)
+        {
+            string _jsonString = string.Empty;
+            MasterManagement _MM = new MasterManagement();
+            _dtable = new DataTable();
+            _MM = new MasterManagement();
+            List<object> postdata = new List<object>();
+            SortedList<string, object> _postArrData = new SortedList<string, object>();
+            _postArrData.Add("USER_ID", userid);
+            _postArrData.Add("ACTION", "REJECT");
+            postdata.Add(_postArrData);
+            var _postContent = System.Web.Helpers.Json.Encode(postdata);
+            _dtable = _MM.Update_user_status(_postContent);
+            if (_dtable.Rows.Count > 0)
+            {
+                _jsonString = _dtable.Rows[0]["JSON_VALUE"].ToString();
+            }
+            else
+            {
+                _jsonString = Data.DatatableEmpty();
+            }
+            return RedirectToAction("", "user/user-list");
+        }
     }
 }
